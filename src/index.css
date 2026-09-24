@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@layer base {
+  * {
+    border-color: #F0E8DD;
+  }
+  
+  html, body {
+    font-family: 'Baloo 2', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #231C14;
+    background-color: #FFFDF7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+.font-titan {
+  font-family: 'Titan One', cursive, sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.font-baloo {
+  font-family: 'Baloo 2', cursive, sans-serif;
+}
+
+.font-bebas {
+  font-family: 'Bebas Neue', cursive, sans-serif;
+  letter-spacing: 0.04em;
+}
+
+.font-stencil-rank {
+  font-family: 'Big Shoulders Display', 'Bebas Neue', 'Oswald', sans-serif;
+  letter-spacing: 0.01em;
+}
+
+.font-oswald {
+  font-family: 'Oswald', sans-serif;
+}
+
+/* Outline / Stencil ranking numbers matching reference image */
+.text-outline-rank {
+  color: transparent;
+  -webkit-text-stroke: 1.5px #6A7B8E;
+  text-shadow: none;
+}
+
+.group:hover .text-outline-rank {
+  -webkit-text-stroke: 1.5px #FF5F1F;
+  color: rgba(255, 95, 31, 0.08);
+}
+
+/* Scrollbar styling for playful light theme */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #FFFDF7;
+}
+::-webkit-scrollbar-thumb {
+  background: #EADDCF;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FF5F1F;
+}
+
