@@ -81,9 +81,6 @@ export const UserLayout = ({
           <div className="w-full flex-1">
             {children}
           </div>
-
-          {/* Shared Standardized Footer */}
-          <FandomFooter onOpenLinkModal={onOpenLinkModal} />
         </main>
       </div>
     </div>

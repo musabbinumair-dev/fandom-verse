@@ -2,7 +2,6 @@ import { useState, useMemo, useEffect } from "react";
 import {
   LayoutGrid,
   FileText,
-  MessageSquare,
   Clock,
   Search,
   ChevronDown,
@@ -11,9 +10,6 @@ import {
   ChevronRight,
   X,
   Check,
-  Bug,
-  Lightbulb,
-  HelpCircle,
   Image as ImageIcon,
   CheckCircle2,
   Calendar
@@ -47,21 +43,17 @@ const ALL_CATEGORIES = [
   "Cosplay"
 ];
 
-const ALL_FEEDBACK_TYPES = ["All Types", "Bug", "Suggestion", "Query"];
-
 const PendingApprovalsPage = () => {
   const [items, setItems] = useState([]);
-  const [activeTab, setActiveTab] = useState("all"); // "all" | "submissions" | "feedback"
+  const [activeTab, setActiveTab] = useState("all"); // "all" | "submissions"
 
   // Filters & Search
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All Categories");
-  const [feedbackTypeFilter, setFeedbackTypeFilter] = useState("All Types");
   const [sortBy, setSortBy] = useState("Date (Newest First)");
 
   // Dropdown states
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const [isFeedbackTypeOpen, setIsFeedbackTypeOpen] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
 
   // Pagination
@@ -79,7 +71,8 @@ const PendingApprovalsPage = () => {
       try {
         const data = await fetchPendingApprovals();
         if (isMounted) {
-          setItems(data);
+          // Filter out feedback entirely from pending approvals
+          setItems(data.filter((i) => i.type !== "feedback"));
         }
       } catch (err) {
         console.error("Failed to fetch pending approvals", err);
@@ -98,7 +91,7 @@ const PendingApprovalsPage = () => {
     }, 3000);
   };
 
-  // Live stat counts derived directly from mock data (Requirement 4)
+  // Live stat counts
   const totalPendingCount = useMemo(() => {
     return items.filter((i) => i.status === "PENDING").length;
   }, [items]);
@@ -107,35 +100,18 @@ const PendingApprovalsPage = () => {
     return items.filter((i) => i.type === "submission" && i.status === "PENDING").length;
   }, [items]);
 
-  const feedbackPendingCount = useMemo(() => {
-    return items.filter((i) => i.type === "feedback" && i.status === "PENDING").length;
-  }, [items]);
-
   // Filtered and sorted items for active tab
   const filteredItems = useMemo(() => {
-    // Only pending items in moderation queue (Requirement 6)
     let list = items.filter((i) => i.status === "PENDING");
 
-    // Tab filter
     if (activeTab === "submissions") {
       list = list.filter((i) => i.type === "submission");
-    } else if (activeTab === "feedback") {
-      list = list.filter((i) => i.type === "feedback");
     }
 
-    // Category filter (for All and Submissions tabs)
-    if (activeTab !== "feedback" && categoryFilter !== "All Categories") {
+    if (categoryFilter !== "All Categories") {
       list = list.filter((i) => i.category === categoryFilter);
     }
 
-    // Feedback Type filter (for Feedback tab)
-    if (activeTab === "feedback" && feedbackTypeFilter !== "All Types") {
-      list = list.filter(
-        (i) => i.feedbackType?.toLowerCase() === feedbackTypeFilter.toLowerCase()
-      );
-    }
-
-    // Search filter
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
       list = list.filter((i) => {
@@ -144,13 +120,11 @@ const PendingApprovalsPage = () => {
         const userMatch =
           i.submittedBy?.name?.toLowerCase().includes(q) ||
           i.submittedBy?.username?.toLowerCase().includes(q);
-        const catMatch = (i.category || i.feedbackType || "").toLowerCase().includes(q);
-        const contentMatch = (i.content || i.message || "").toLowerCase().includes(q);
-        return titleMatch || subMatch || userMatch || catMatch || contentMatch;
+        const catMatch = (i.category || "").toLowerCase().includes(q);
+        return titleMatch || subMatch || userMatch || catMatch;
       });
     }
 
-    // Sorting
     list = [...list].sort((a, b) => {
       if (sortBy === "Date (Newest First)") {
         return new Date(b.date) - new Date(a.date);
@@ -159,7 +133,7 @@ const PendingApprovalsPage = () => {
     });
 
     return list;
-  }, [items, activeTab, categoryFilter, feedbackTypeFilter, searchQuery, sortBy]);
+  }, [items, activeTab, categoryFilter, searchQuery, sortBy]);
 
   // Pagination calculation
   const totalPages = Math.max(1, Math.ceil(filteredItems.length / itemsPerPage));
@@ -174,14 +148,12 @@ const PendingApprovalsPage = () => {
     }
   }, [totalPages, currentPage]);
 
-  // Reset page when tab or filters change
   const handleTabChange = (newTab) => {
     setActiveTab(newTab);
     setCurrentPage(1);
     setSearchQuery("");
   };
 
-  // Actions for Review side panel (Requirement 6)
   const handleApprove = async (id) => {
     try {
       await updatePendingApprovalStatus(id, "APPROVED");
@@ -210,20 +182,6 @@ const PendingApprovalsPage = () => {
     }
   };
 
-  const handleResolve = async (id) => {
-    try {
-      await updatePendingApprovalStatus(id, "RESOLVED");
-      setItems((prev) =>
-        prev.map((i) => (i.id === id ? { ...i, status: "RESOLVED" } : i))
-      );
-      setReviewItem(null);
-      showToast("Feedback marked as Resolved.");
-    } catch (err) {
-      console.error(err);
-      showToast("Error resolving feedback.");
-    }
-  };
-
   const getCategoryColor = (cat) => {
     return CATEGORY_COLORS[cat] || "bg-stone-100 text-stone-700";
   };
@@ -246,21 +204,21 @@ const PendingApprovalsPage = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 space-y-6">
         
-        {/* 1. TOP HEADER & 3 LIVE STAT CARDS */}
+        {/* 1. TOP HEADER & STAT CARDS */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div>
             <h1 className="text-2xl sm:text-3.5xl font-black tracking-tight uppercase font-titan text-[#111827]">
               PENDING APPROVALS
             </h1>
             <p className="text-xs sm:text-sm font-medium text-[#6B7280] mt-0.5">
-              Review and approve fan submissions and user feedback in one place.
+              Review and approve pending fan submissions for the platform.
             </p>
           </div>
 
-          {/* 3 Summary Stat Cards (pulling live counts) */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4 shrink-0">
+          {/* Stat Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4 shrink-0">
             {/* Card 1: TOTAL PENDING */}
-            <div className="bg-white border border-[#E5E7EB] rounded-xl px-5 py-4 flex items-center gap-4 shadow-2xs">
+            <div className="bg-white border border-[#E5E7EB] rounded-xl px-5 py-4 flex items-center gap-4 shadow-2xs min-w-[200px]">
               <div className="text-[#1F2937] shrink-0">
                 <Clock size={24} strokeWidth={1.5} />
               </div>
@@ -281,7 +239,7 @@ const PendingApprovalsPage = () => {
             </div>
 
             {/* Card 2: FAN SUBMISSIONS PENDING */}
-            <div className="bg-white border border-[#E5E7EB] rounded-xl px-5 py-4 flex items-center gap-4 shadow-2xs">
+            <div className="bg-white border border-[#E5E7EB] rounded-xl px-5 py-4 flex items-center gap-4 shadow-2xs min-w-[200px]">
               <div className="text-[#1F2937] shrink-0">
                 <FileText size={24} strokeWidth={1.5} />
               </div>
@@ -300,33 +258,11 @@ const PendingApprovalsPage = () => {
                 </p>
               </div>
             </div>
-
-            {/* Card 3: FEEDBACK PENDING */}
-            <div className="bg-white border border-[#E5E7EB] rounded-xl px-5 py-4 flex items-center gap-4 shadow-2xs">
-              <div className="text-[#1F2937] shrink-0">
-                <MessageSquare size={24} strokeWidth={1.5} />
-              </div>
-              <div className="min-w-0">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-[#6B7280]">
-                  FEEDBACK PENDING
-                </p>
-                <p className="text-2xl font-black text-[#111827] tracking-tight leading-tight">
-                  {feedbackPendingCount}
-                </p>
-                <p className="text-xs font-bold text-[#10B981] flex items-center gap-1 mt-0.5">
-                  <span>↑ +6%</span>
-                  <span className="text-[#9CA3AF] font-normal text-[11px]">
-                    vs. last week
-                  </span>
-                </p>
-              </div>
-            </div>
           </div>
         </div>
 
-        {/* 2. TAB BAR (All / Fan Submissions / Feedback) */}
+        {/* 2. TAB BAR (All / Fan Submissions) */}
         <div className="flex items-center gap-2 pt-2">
-          {/* Tab 1: All */}
           <button
             type="button"
             onClick={() => handleTabChange("all")}
@@ -340,7 +276,6 @@ const PendingApprovalsPage = () => {
             <span>All</span>
           </button>
 
-          {/* Tab 2: Fan Submissions */}
           <button
             type="button"
             onClick={() => handleTabChange("submissions")}
@@ -353,127 +288,59 @@ const PendingApprovalsPage = () => {
             <FileText size={16} />
             <span>Fan Submissions</span>
           </button>
-
-          {/* Tab 3: Feedback */}
-          <button
-            type="button"
-            onClick={() => handleTabChange("feedback")}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
-              activeTab === "feedback"
-                ? "bg-[#F59E0B] text-white shadow-xs"
-                : "bg-white border border-[#E5E7EB] text-[#4B5563] hover:bg-stone-50"
-            }`}
-          >
-            <MessageSquare size={16} />
-            <span>Feedback</span>
-          </button>
         </div>
 
         {/* 3. FILTERS & SEARCH ROW */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-end gap-3">
-          
-          {/* Left Dropdown (Category for All/Submissions, Feedback Type for Feedback) */}
-          {activeTab !== "feedback" ? (
-            /* Category Dropdown */
-            <div className="relative shrink-0 sm:w-52">
-              <label className="text-xs font-bold text-[#374151] mb-1.5 block">
-                Category
-              </label>
-              <button
-                type="button"
-                onClick={() => {
-                  setIsCategoryOpen(!isCategoryOpen);
-                  setIsSortOpen(false);
-                }}
-                className="w-full bg-white border border-[#E5E7EB] hover:border-[#D1D5DB] rounded-lg px-3.5 py-2 text-sm text-[#111827] font-medium flex items-center justify-between shadow-2xs transition-colors cursor-pointer"
-              >
-                <span>{categoryFilter}</span>
-                <ChevronDown size={16} className="text-[#6B7280]" />
-              </button>
+          {/* Category Dropdown */}
+          <div className="relative shrink-0 sm:w-52">
+            <label className="text-xs font-bold text-[#374151] mb-1.5 block">
+              Category
+            </label>
+            <button
+              type="button"
+              onClick={() => {
+                setIsCategoryOpen(!isCategoryOpen);
+                setIsSortOpen(false);
+              }}
+              className="w-full bg-white border border-[#E5E7EB] hover:border-[#D1D5DB] rounded-lg px-3.5 py-2 text-sm text-[#111827] font-medium flex items-center justify-between shadow-2xs transition-colors cursor-pointer"
+            >
+              <span>{categoryFilter}</span>
+              <ChevronDown size={16} className="text-[#6B7280]" />
+            </button>
 
-              {isCategoryOpen && (
-                <>
-                  <div
-                    className="fixed inset-0 z-20"
-                    onClick={() => setIsCategoryOpen(false)}
-                  />
-                  <div className="absolute left-0 top-full mt-1.5 w-full bg-white border border-[#E5E7EB] rounded-lg shadow-lg py-1 z-30 animate-in fade-in duration-100 max-h-60 overflow-y-auto">
-                    {ALL_CATEGORIES.map((cat) => (
-                      <button
-                        key={cat}
-                        type="button"
-                        onClick={() => {
-                          setCategoryFilter(cat);
-                          setIsCategoryOpen(false);
-                          setCurrentPage(1);
-                        }}
-                        className={`w-full text-left px-3.5 py-2 text-sm font-medium flex items-center justify-between transition-colors ${
-                          categoryFilter === cat
-                            ? "bg-amber-50 text-[#B45309] font-bold"
-                            : "text-[#374151] hover:bg-stone-50"
-                        }`}
-                      >
-                        <span>{cat}</span>
-                        {categoryFilter === cat && (
-                          <Check size={14} className="text-[#B45309]" />
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                </>
-              )}
-            </div>
-          ) : (
-            /* Feedback Type Dropdown */
-            <div className="relative shrink-0 sm:w-52">
-              <label className="text-xs font-bold text-[#374151] mb-1.5 block">
-                Feedback Type
-              </label>
-              <button
-                type="button"
-                onClick={() => {
-                  setIsFeedbackTypeOpen(!isFeedbackTypeOpen);
-                  setIsSortOpen(false);
-                }}
-                className="w-full bg-white border border-[#E5E7EB] hover:border-[#D1D5DB] rounded-lg px-3.5 py-2 text-sm text-[#111827] font-medium flex items-center justify-between shadow-2xs transition-colors cursor-pointer"
-              >
-                <span>{feedbackTypeFilter}</span>
-                <ChevronDown size={16} className="text-[#6B7280]" />
-              </button>
-
-              {isFeedbackTypeOpen && (
-                <>
-                  <div
-                    className="fixed inset-0 z-20"
-                    onClick={() => setIsFeedbackTypeOpen(false)}
-                  />
-                  <div className="absolute left-0 top-full mt-1.5 w-full bg-white border border-[#E5E7EB] rounded-lg shadow-lg py-1 z-30 animate-in fade-in duration-100">
-                    {ALL_FEEDBACK_TYPES.map((type) => (
-                      <button
-                        key={type}
-                        type="button"
-                        onClick={() => {
-                          setFeedbackTypeFilter(type);
-                          setIsFeedbackTypeOpen(false);
-                          setCurrentPage(1);
-                        }}
-                        className={`w-full text-left px-3.5 py-2 text-sm font-medium flex items-center justify-between transition-colors ${
-                          feedbackTypeFilter === type
-                            ? "bg-amber-50 text-[#B45309] font-bold"
-                            : "text-[#374151] hover:bg-stone-50"
-                        }`}
-                      >
-                        <span>{type}</span>
-                        {feedbackTypeFilter === type && (
-                          <Check size={14} className="text-[#B45309]" />
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                </>
-              )}
-            </div>
-          )}
+            {isCategoryOpen && (
+              <>
+                <div
+                  className="fixed inset-0 z-20"
+                  onClick={() => setIsCategoryOpen(false)}
+                />
+                <div className="absolute left-0 top-full mt-1.5 w-full bg-white border border-[#E5E7EB] rounded-lg shadow-lg py-1 z-30 animate-in fade-in duration-100 max-h-60 overflow-y-auto">
+                  {ALL_CATEGORIES.map((cat) => (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => {
+                        setCategoryFilter(cat);
+                        setIsCategoryOpen(false);
+                        setCurrentPage(1);
+                      }}
+                      className={`w-full text-left px-3.5 py-2 text-sm font-medium flex items-center justify-between transition-colors ${
+                        categoryFilter === cat
+                          ? "bg-amber-50 text-[#B45309] font-bold"
+                          : "text-[#374151] hover:bg-stone-50"
+                      }`}
+                    >
+                      <span>{cat}</span>
+                      {categoryFilter === cat && (
+                        <Check size={14} className="text-[#B45309]" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
 
           {/* Search Input Bar */}
           <div className="flex-1 relative">
@@ -489,13 +356,7 @@ const PendingApprovalsPage = () => {
                   setSearchQuery(e.target.value);
                   setCurrentPage(1);
                 }}
-                placeholder={
-                  activeTab === "all"
-                    ? "Search by title, subject, user or category..."
-                    : activeTab === "submissions"
-                    ? "Search by title, category, or user..."
-                    : "Search by subject, user or feedback type..."
-                }
+                placeholder="Search pending submissions by title, category, or user..."
                 className="w-full bg-white border border-[#E5E7EB] hover:border-[#D1D5DB] focus:border-[#FF5F1F] rounded-lg pl-10 pr-9 py-2 text-sm text-[#111827] placeholder:text-[#9CA3AF] focus:outline-none shadow-2xs transition-colors"
               />
               {searchQuery && (
@@ -510,7 +371,7 @@ const PendingApprovalsPage = () => {
             </div>
           </div>
 
-          {/* Right Dropdown: Sort by */}
+          {/* Sort by Dropdown */}
           <div className="relative shrink-0 sm:w-56">
             <label className="text-xs font-bold text-[#374151] mb-1.5 block">
               Sort by
@@ -520,7 +381,6 @@ const PendingApprovalsPage = () => {
               onClick={() => {
                 setIsSortOpen(!isSortOpen);
                 setIsCategoryOpen(false);
-                setIsFeedbackTypeOpen(false);
               }}
               className="w-full bg-white border border-[#E5E7EB] hover:border-[#D1D5DB] rounded-lg px-3.5 py-2 text-sm text-[#111827] font-medium flex items-center justify-between shadow-2xs transition-colors cursor-pointer"
             >
@@ -562,50 +422,25 @@ const PendingApprovalsPage = () => {
               </>
             )}
           </div>
-
         </div>
 
-        {/* 4. ADAPTIVE TABLE CONTAINER (Requirement 3) */}
+        {/* 4. TABLE CONTAINER */}
         <div className="bg-white border border-[#E5E7EB] rounded-xl overflow-hidden shadow-2xs">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse min-w-[800px]">
               <thead>
                 <tr className="border-b border-[#E5E7EB] text-[11px] font-bold tracking-wider text-[#6B7280] uppercase">
-                  {activeTab === "all" ? (
-                    <>
-                      <th className="py-3.5 px-5 w-28">TYPE</th>
-                      <th className="py-3.5 px-5">TITLE / SUBJECT</th>
-                      <th className="py-3.5 px-5">CATEGORY / FEEDBACK TYPE</th>
-                      <th className="py-3.5 px-5">SUBMITTED BY</th>
-                      <th className="py-3.5 px-5">DATE</th>
-                      <th className="py-3.5 px-5 text-center">STATUS</th>
-                      <th className="py-3.5 px-5 text-right">ACTIONS</th>
-                    </>
-                  ) : activeTab === "submissions" ? (
-                    <>
-                      <th className="py-3.5 px-5 w-32">CONTENT TYPE</th>
-                      <th className="py-3.5 px-5">TITLE</th>
-                      <th className="py-3.5 px-5">CATEGORY</th>
-                      <th className="py-3.5 px-5">SUBMITTED BY</th>
-                      <th className="py-3.5 px-5">DATE</th>
-                      <th className="py-3.5 px-5 text-center">STATUS</th>
-                      <th className="py-3.5 px-5 text-right">ACTIONS</th>
-                    </>
-                  ) : (
-                    <>
-                      <th className="py-3.5 px-5 w-36">FEEDBACK TYPE</th>
-                      <th className="py-3.5 px-5">SUBJECT</th>
-                      <th className="py-3.5 px-5">SUBMITTED BY</th>
-                      <th className="py-3.5 px-5">DATE</th>
-                      <th className="py-3.5 px-5 text-center">STATUS</th>
-                      <th className="py-3.5 px-5 text-right">ACTIONS</th>
-                    </>
-                  )}
+                  <th className="py-3.5 px-5 w-32">CONTENT TYPE</th>
+                  <th className="py-3.5 px-5">TITLE</th>
+                  <th className="py-3.5 px-5">CATEGORY</th>
+                  <th className="py-3.5 px-5">SUBMITTED BY</th>
+                  <th className="py-3.5 px-5">DATE</th>
+                  <th className="py-3.5 px-5 text-center">STATUS</th>
+                  <th className="py-3.5 px-5 text-right">ACTIONS</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#F3F4F6]">
                 {paginatedItems.length === 0 ? (
-                  /* EMPTY STATE (Requirement 7) */
                   <tr>
                     <td colSpan={7} className="py-16 text-center text-[#6B7280]">
                       <div className="flex flex-col items-center justify-center gap-2.5">
@@ -616,7 +451,7 @@ const PendingApprovalsPage = () => {
                           All caught up!
                         </p>
                         <p className="text-xs text-[#6B7280]">
-                          There are no pending approvals matching your current filters.
+                          There are no pending submissions matching your current filters.
                         </p>
                       </div>
                     </td>
@@ -627,139 +462,45 @@ const PendingApprovalsPage = () => {
                       key={item.id}
                       className="hover:bg-[#FAF9F6]/80 transition-colors group"
                     >
-                      {/* === TAB 1: ALL === */}
-                      {activeTab === "all" && (
-                        <>
-                          {/* Col 1: Type */}
-                          <td className="py-3.5 px-5">
-                            {item.type === "submission" ? (
-                              <span className="px-2.5 py-1 rounded-md text-xs font-semibold bg-[#E0F2FE] text-[#0284C7] inline-block">
-                                Submission
-                              </span>
-                            ) : (
-                              <span className="px-2.5 py-1 rounded-md text-xs font-semibold bg-[#F3E8FF] text-[#9333EA] inline-block">
-                                Feedback
-                              </span>
-                            )}
-                          </td>
+                      {/* Content Type */}
+                      <td className="py-3.5 px-5">
+                        <span
+                          className={`px-2.5 py-1 rounded-md text-xs font-semibold inline-flex items-center gap-1.5 ${
+                            item.contentType === "Article"
+                              ? "bg-[#E0F2FE] text-[#0284C7]"
+                              : "bg-[#F3E8FF] text-[#9333EA]"
+                          }`}
+                        >
+                          {item.contentType === "Article" ? (
+                            <FileText size={14} />
+                          ) : (
+                            <ImageIcon size={14} />
+                          )}
+                          <span>{item.contentType || "Submission"}</span>
+                        </span>
+                      </td>
 
-                          {/* Col 2: Title / Subject */}
-                          <td className="py-3.5 px-5">
-                            <p className="text-sm font-bold text-[#111827] leading-snug">
-                              {item.title || item.subject}
-                            </p>
-                            <p className="text-xs text-[#6B7280] leading-tight line-clamp-1">
-                              {item.subtitle}
-                            </p>
-                          </td>
+                      {/* Title */}
+                      <td className="py-3.5 px-5">
+                        <p className="text-sm font-bold text-[#111827] leading-snug">
+                          {item.title}
+                        </p>
+                        <p className="text-xs text-[#6B7280] leading-tight line-clamp-1">
+                          {item.subtitle}
+                        </p>
+                      </td>
 
-                          {/* Col 3: Category / Feedback Type */}
-                          <td className="py-3.5 px-5">
-                            {item.type === "submission" ? (
-                              <span
-                                className={`px-2.5 py-0.5 rounded text-xs font-semibold ${getCategoryColor(
-                                  item.category
-                                )}`}
-                              >
-                                {item.category}
-                              </span>
-                            ) : (
-                              <span
-                                className={`px-2.5 py-0.5 rounded text-xs font-semibold ${
-                                  item.feedbackType === "Bug"
-                                    ? "bg-[#FEE2E2] text-[#EF4444]"
-                                    : item.feedbackType === "Suggestion"
-                                    ? "bg-[#E0F2FE] text-[#0284C7]"
-                                    : "bg-[#F3E8FF] text-[#9333EA]"
-                                }`}
-                              >
-                                {item.feedbackType}
-                              </span>
-                            )}
-                          </td>
-                        </>
-                      )}
+                      {/* Category */}
+                      <td className="py-3.5 px-5">
+                        <span
+                          className={`px-2.5 py-0.5 rounded text-xs font-semibold ${getCategoryColor(
+                            item.category
+                          )}`}
+                        >
+                          {item.category}
+                        </span>
+                      </td>
 
-                      {/* === TAB 2: FAN SUBMISSIONS === */}
-                      {activeTab === "submissions" && (
-                        <>
-                          {/* Col 1: Content Type */}
-                          <td className="py-3.5 px-5">
-                            <span
-                              className={`px-2.5 py-1 rounded-md text-xs font-semibold inline-flex items-center gap-1.5 ${
-                                item.contentType === "Article"
-                                  ? "bg-[#E0F2FE] text-[#0284C7]"
-                                  : "bg-[#F3E8FF] text-[#9333EA]"
-                              }`}
-                            >
-                              {item.contentType === "Article" ? (
-                                <FileText size={14} />
-                              ) : (
-                                <ImageIcon size={14} />
-                              )}
-                              <span>{item.contentType}</span>
-                            </span>
-                          </td>
-
-                          {/* Col 2: Title */}
-                          <td className="py-3.5 px-5">
-                            <p className="text-sm font-bold text-[#111827] leading-snug">
-                              {item.title}
-                            </p>
-                            <p className="text-xs text-[#6B7280] leading-tight line-clamp-1">
-                              {item.subtitle}
-                            </p>
-                          </td>
-
-                          {/* Col 3: Category */}
-                          <td className="py-3.5 px-5">
-                            <span
-                              className={`px-2.5 py-0.5 rounded text-xs font-semibold ${getCategoryColor(
-                                item.category
-                              )}`}
-                            >
-                              {item.category}
-                            </span>
-                          </td>
-                        </>
-                      )}
-
-                      {/* === TAB 3: FEEDBACK === */}
-                      {activeTab === "feedback" && (
-                        <>
-                          {/* Col 1: Feedback Type Badge */}
-                          <td className="py-3.5 px-5">
-                            {item.feedbackType === "Bug" ? (
-                              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-[#FEE2E2] text-[#EF4444]">
-                                <Bug size={14} />
-                                <span>BUG</span>
-                              </span>
-                            ) : item.feedbackType === "Suggestion" ? (
-                              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-[#E0F2FE] text-[#0284C7]">
-                                <Lightbulb size={14} />
-                                <span>SUGGESTION</span>
-                              </span>
-                            ) : (
-                              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold bg-[#F3E8FF] text-[#9333EA]">
-                                <HelpCircle size={14} />
-                                <span>QUERY</span>
-                              </span>
-                            )}
-                          </td>
-
-                          {/* Col 2: Subject */}
-                          <td className="py-3.5 px-5">
-                            <p className="text-sm font-bold text-[#111827] leading-snug">
-                              {item.subject}
-                            </p>
-                            <p className="text-xs text-[#6B7280] leading-tight line-clamp-1">
-                              {item.subtitle}
-                            </p>
-                          </td>
-                        </>
-                      )}
-
-                      {/* === SHARED COLUMNS === */}
                       {/* Submitted By */}
                       <td className="py-3.5 px-5">
                         <div className="flex items-center gap-3">
@@ -815,7 +556,7 @@ const PendingApprovalsPage = () => {
             </table>
           </div>
 
-          {/* 5. TABLE PAGINATION FOOTER */}
+          {/* PAGINATION FOOTER */}
           <div className="px-5 py-3.5 border-t border-[#E5E7EB] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#6B7280]">
             <div>
               {filteredItems.length > 0 ? (
@@ -830,7 +571,6 @@ const PendingApprovalsPage = () => {
             </div>
 
             <div className="flex items-center gap-1.5">
-              {/* Prev */}
               <button
                 type="button"
                 disabled={currentPage <= 1}
@@ -844,7 +584,6 @@ const PendingApprovalsPage = () => {
                 <ChevronLeft size={16} />
               </button>
 
-              {/* Pages */}
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((pg) => {
                 const isActive = pg === currentPage;
                 return (
@@ -863,7 +602,6 @@ const PendingApprovalsPage = () => {
                 );
               })}
 
-              {/* Next */}
               <button
                 type="button"
                 disabled={currentPage >= totalPages}
@@ -882,14 +620,13 @@ const PendingApprovalsPage = () => {
 
       </div>
 
-      {/* 6. REVIEW DETAIL SIDE PANEL (DRAWER) */}
+      {/* REVIEW DETAIL SIDE PANEL */}
       <ReviewDetailDrawer
         item={reviewItem}
         isOpen={Boolean(reviewItem)}
         onClose={() => setReviewItem(null)}
         onApprove={handleApprove}
         onReject={handleReject}
-        onResolve={handleResolve}
       />
     </div>
   );

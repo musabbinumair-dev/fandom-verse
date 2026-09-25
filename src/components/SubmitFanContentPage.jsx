@@ -66,7 +66,9 @@ const INITIAL_SUBMISSIONS = [
 ];
 const SubmitFanContentPage = ({
   onNavigateHome,
-  onNavigateArticles
+  onNavigateArticles,
+  isLoggedIn = true,
+  onOpenAuth
 }) => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
@@ -116,6 +118,11 @@ const SubmitFanContentPage = ({
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!isLoggedIn) {
+      if (onOpenAuth) onOpenAuth("login");
+      setToastMessage("Please sign in to submit fan content.");
+      return;
+    }
     if (!title.trim()) {
       setToastMessage("Please enter a title for your content.");
       return;
@@ -178,24 +185,6 @@ const SubmitFanContentPage = ({
   }
         <div className="pt-0.5">
           <div className="flex items-center gap-2.5">
-            {
-    /* Tilted Pen / Edit Icon matching image */
-  }
-            <svg
-    width="27"
-    height="27"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="#1C1917"
-    strokeWidth="2.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="shrink-0 -rotate-45"
-  >
-              <path d="M12 19l7-7 3 3-7 7-3-3z" />
-              <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
-              <path d="M2 2l7.586 7.586" />
-            </svg>
             <h1 className="text-2xl sm:text-[30px] font-black text-[#1C1917] tracking-tight uppercase font-titan leading-none">
               SUBMIT FAN CONTENT
             </h1>
@@ -582,9 +571,6 @@ const SubmitFanContentPage = ({
     /* Header */
   }
               <div className="flex items-start gap-2">
-                <div className="w-6 h-6 rounded bg-[#171717] text-white flex items-center justify-center shrink-0 mt-0.5">
-                  <FileText size={13} />
-                </div>
                 <div>
                   <h3 className="text-sm sm:text-[15px] font-black uppercase tracking-tight font-titan text-[#171717]">
                     Your submissions

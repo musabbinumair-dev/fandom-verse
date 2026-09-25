@@ -31,22 +31,21 @@ const AdminSectionPlaceholder = ({ tabKey = "settings" }) => {
   const Icon = config.icon;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#EBE6DD] pb-5">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 space-y-6 text-gray-900">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-200 pb-5">
         <div>
-          <h1 className="text-2xl sm:text-3.5xl font-black tracking-tight uppercase font-titan text-[#171717] flex items-center gap-3">
-            <Icon size={28} className="text-[#FF5F1F]" />
+          <h1 className="text-2xl sm:text-3.5xl font-black tracking-tight uppercase font-titan text-gray-900 flex items-center gap-3">
+            <Icon size={28} className="text-[#FFA800]" />
             <span>{config.title}</span>
           </h1>
-          <p className="text-xs sm:text-sm font-semibold text-[#7A6F64] mt-1">
+          <p className="text-xs sm:text-sm font-semibold text-gray-500 mt-1">
             {config.desc}
           </p>
         </div>
 
         <button
           type="button"
-          onClick={() => alert(`Adding new entry to ${config.title}`)}
-          className="bg-[#FFCC00] hover:bg-[#F2C200] text-black font-black text-xs uppercase tracking-wider px-5 py-3 rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-2 self-start sm:self-auto"
+          className="bg-[#FFA800] hover:bg-[#FFB51A] text-black font-black text-xs uppercase tracking-wider px-5 py-3 rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-2 self-start sm:self-auto"
         >
           <Plus size={16} className="stroke-[3]" />
           <span>NEW ENTRY</span>
@@ -54,14 +53,14 @@ const AdminSectionPlaceholder = ({ tabKey = "settings" }) => {
       </div>
 
       {/* Admin Panel Summary Card */}
-      <div className="bg-white rounded-2xl border border-[#EBE6DD] p-8 shadow-2xs text-center space-y-3 py-16">
-        <div className="w-14 h-14 rounded-2xl bg-[#FFEBE5] text-[#FF5F1F] flex items-center justify-center mx-auto shadow-xs">
+      <div className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm border border-gray-200 text-center space-y-3 py-16">
+        <div className="w-14 h-14 rounded-2xl bg-[#FFA800]/20 text-[#FFA800] flex items-center justify-center mx-auto shadow-xs">
           <Icon size={28} />
         </div>
-        <h3 className="text-lg font-black text-[#171717] font-titan uppercase">
+        <h3 className="text-lg font-black text-gray-900 font-titan uppercase">
           {config.title} MANAGEMENT
         </h3>
-        <p className="text-xs sm:text-sm font-semibold text-[#7A6F64] max-w-md mx-auto leading-relaxed">
+        <p className="text-xs sm:text-sm font-semibold text-gray-500 max-w-md mx-auto leading-relaxed">
           Full management controls and real-time database sync for {config.title.toLowerCase()} are active in this separate Admin Portal.
         </p>
       </div>

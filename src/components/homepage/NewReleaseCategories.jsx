@@ -202,123 +202,109 @@ const NewReleaseCategories = ({
   }
         <div className="md:col-span-8">
           
-          {
-    /* Section Header: POPULAR FANDOMS on Left, Red SEE MORE on Right */
-  }
-          <div className="flex items-center justify-between pb-2 mb-3.5 sm:mb-4 border-b-2 border-[#231C14]/10">
-            <h2 className="text-[#231C14] text-lg sm:text-xl font-black tracking-wider uppercase font-titan">
+          {/* Section Header: POPULAR FANDOMS on Left, SEE MORE on Right */}
+          <div className="flex items-center justify-between pb-2 mb-3.5 sm:mb-4 border-b border-gray-200">
+            <h2 className="text-gray-900 text-lg sm:text-xl font-black tracking-wider uppercase font-titan">
               POPULAR FANDOMS
             </h2>
             <button
-    type="button"
-    onClick={handleSeeMore}
-    className="text-[#D9381E] hover:text-[#B82B14] transition-colors text-xs sm:text-[13px] font-bold tracking-wider uppercase cursor-pointer hover:underline"
-  >
+              type="button"
+              onClick={handleSeeMore}
+              className="text-[#F59E0B] hover:text-[#D97706] transition-colors text-xs sm:text-[13px] font-bold tracking-wider uppercase cursor-pointer hover:underline"
+            >
               SEE MORE
             </button>
           </div>
 
-          {
-    /* 8 Square Cards in Responsive Grid with Increased Size & 0 Radius Sharp Corners */
-  }
+          {/* 8 Square Cards in Responsive Grid with Increased Size & 0 Radius Sharp Corners */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 sm:gap-4.5 md:gap-5">
-            {POPULAR_FANDOMS.map((item) => <div
-    key={item.id}
-    onClick={() => onSelectCategory ? onSelectCategory(item.title) : onSelectItem(item)}
-    className="group cursor-pointer flex flex-col"
-  >
-                {
-    /* 100% Square Cover Card with 0 radius (sharp square corners) & increased visual presence */
-  }
-                <div className="relative w-full aspect-square overflow-hidden rounded-none bg-[#F5EFEB] border border-[#EADDCF] shadow-2xs transition-all duration-300 group-hover:border-[#FF5F1F] group-hover:shadow-md group-hover:-translate-y-1">
+            {POPULAR_FANDOMS.map((item) => (
+              <div
+                key={item.id}
+                onClick={() => onSelectCategory ? onSelectCategory(item.title) : onSelectItem(item)}
+                className="group cursor-pointer flex flex-col"
+              >
+                {/* 100% Square Cover Card with 0 radius (sharp square corners) & increased visual presence */}
+                <div className="relative w-full aspect-square overflow-hidden rounded-none bg-white border border-gray-200 shadow-theme-card transition-all duration-300 group-hover:border-[#F59E0B] group-hover:shadow-md group-hover:-translate-y-1">
                   <img
-    src={item.posterImage}
-    alt={item.title}
-    className="w-full h-full object-cover object-center rounded-none transition-transform duration-500 ease-out group-hover:scale-105"
-    loading="lazy"
-  />
+                    src={item.posterImage}
+                    alt={item.title}
+                    className="w-full h-full object-cover object-center rounded-none transition-transform duration-500 ease-out group-hover:scale-105"
+                    loading="lazy"
+                  />
                 </div>
 
-                {
-    /* Left-aligned title underneath matching reference screenshot typography */
-  }
+                {/* Left-aligned title underneath */}
                 <div className="mt-2">
-                  <h3 className="text-[#231C14] group-hover:text-[#FF5F1F] text-xs sm:text-sm md:text-[14px] font-bold tracking-tight truncate transition-colors font-baloo">
+                  <h3 className="text-gray-900 group-hover:text-[#F59E0B] text-xs sm:text-sm md:text-[14px] font-bold tracking-tight truncate transition-colors font-baloo">
                     {item.title}
                   </h3>
                 </div>
-              </div>)}
+              </div>
+            ))}
           </div>
 
         </div>
 
-        {
-    /* ================= RIGHT SECTION: RECENT (In exact same row) ================= */
-  }
+        {/* ================= RIGHT SECTION: RECENT ================= */}
         <div className="md:col-span-4 flex flex-col">
-          {
-    /* Header matching exact height & baseline alignment with POPULAR FANDOMS */
-  }
-          <div className="pb-2 mb-3.5 sm:mb-4 flex items-center justify-between border-b-2 border-[#231C14]/10">
-            <h2 className="text-[#231C14] text-lg sm:text-xl font-black tracking-wider uppercase font-titan">
+          {/* Header */}
+          <div className="pb-2 mb-3.5 sm:mb-4 flex items-center justify-between border-b border-gray-200">
+            <h2 className="text-gray-900 text-lg sm:text-xl font-black tracking-wider uppercase font-titan">
               RECENT
             </h2>
           </div>
 
-          {
-    /* Numbered List 01 to 10 for Recent Updates (Exact image clone) */
-  }
+          {/* Numbered List 01 to 10 for Recent Updates */}
           <div className="flex flex-col">
-            {RECENT_UPDATES_LIST.map((item) => <div
-    key={item.rank}
-    onClick={() => onSelectItem({
-      id: `recent-rank-${item.rank}`,
-      title: item.title,
-      category: item.category,
-      year: "2024",
-      rating: item.rating,
-      popularity: `Updated recently`,
-      posterImage: item.image,
-      type: "Series"
-    })}
-    className="group flex items-center gap-3 sm:gap-3.5 py-2.5 sm:py-3 border-b border-[#231C14]/10 last:border-b-0 hover:bg-[#F3ECE0]/60 transition-all duration-150 cursor-pointer"
-  >
-                {
-    /* 1. Large Outline / Stencil Rank Number (01, 02, etc.) */
-  }
+            {RECENT_UPDATES_LIST.map((item) => (
+              <div
+                key={item.rank}
+                onClick={() => onSelectItem({
+                  id: `recent-rank-${item.rank}`,
+                  title: item.title,
+                  category: item.category,
+                  year: "2024",
+                  rating: item.rating,
+                  popularity: `Updated recently`,
+                  posterImage: item.image,
+                  type: "Series"
+                })}
+                className="group flex items-center gap-3 sm:gap-3.5 py-2.5 sm:py-3 border-b border-gray-200 last:border-b-0 hover:bg-gray-100 transition-all duration-150 cursor-pointer"
+              >
+                {/* 1. Large Outline / Stencil Rank Number (01, 02, etc.) */}
                 <span className="font-stencil-rank text-3xl sm:text-[34px] md:text-[36px] font-extrabold text-outline-rank w-8 sm:w-9 text-center shrink-0 transition-all leading-none select-none">
                   {item.rank}
                 </span>
 
-                {
-    /* 2. 100% Square Thumbnail Cover (0-Radius) */
-  }
-                <div className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 aspect-square rounded-none overflow-hidden bg-[#EADDCF] shrink-0 border border-[#DFD1C2] shadow-2xs">
+                {/* 2. 100% Square Thumbnail Cover (0-Radius) */}
+                <div className="w-12 h-12 sm:w-13 sm:h-13 md:w-14 md:h-14 aspect-square rounded-none overflow-hidden bg-white shrink-0 border border-gray-200 shadow-2xs">
                   <img
-    src={item.image}
-    alt={item.title}
-    className="w-full h-full object-cover object-center rounded-none group-hover:scale-108 transition-transform duration-300"
-    loading="lazy"
-  />
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover object-center rounded-none group-hover:scale-108 transition-transform duration-300"
+                    loading="lazy"
+                  />
                 </div>
 
-                {
-    /* 3. Uppercase Title & Tag Chips */
-  }
+                {/* 3. Uppercase Title & Tag Chips */}
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-[#231C14] group-hover:text-[#D9381E] text-xs sm:text-[13px] md:text-[13.5px] font-extrabold uppercase tracking-tight truncate transition-colors font-baloo leading-tight">
+                  <h4 className="text-gray-900 group-hover:text-[#F59E0B] text-xs sm:text-[13px] md:text-[13.5px] font-extrabold uppercase tracking-tight truncate transition-colors font-baloo leading-tight">
                     {item.title}
                   </h4>
-                  <div className="flex items-center gap-1.5 text-[8.5px] sm:text-[9.5px] text-[#7A6B5D] font-bold mt-1 tracking-wider uppercase truncate">
-                    {item.tags.map((tag, i) => <span
-    key={i}
-    className="bg-[#EFE5D8] text-[#554536] px-1.5 py-0.5 rounded-none border border-[#DECFC0] shrink-0"
-  >
+                  <div className="flex items-center gap-1.5 text-[8.5px] sm:text-[9.5px] text-gray-500 font-bold mt-1 tracking-wider uppercase truncate">
+                    {item.tags.map((tag, i) => (
+                      <span
+                        key={i}
+                        className="bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded-none border border-gray-200 shrink-0"
+                      >
                         {tag}
-                      </span>)}
+                      </span>
+                    ))}
                   </div>
                 </div>
-              </div>)}
+              </div>
+            ))}
           </div>
         </div>
 

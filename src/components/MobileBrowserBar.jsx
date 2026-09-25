@@ -1,100 +1,88 @@
 import { X, ChevronDown, Share2, Bookmark, MoreVertical, Wifi, BatteryCharging } from "lucide-react";
+
 const MobileBrowserBar = ({
   onClose,
   isSaved = false,
   onToggleSave,
   onShare
 }) => {
-  return <div className="bg-[#121214] text-white select-none shrink-0 border-b border-white/10">
-      {
-    /* Top Phone Status Bar (Time, Wifi, Battery) */
-  }
+  return (
+    <div className="bg-white text-gray-900 select-none shrink-0 border-b border-gray-200">
+      {/* Top Phone Status Bar */}
       <div className="flex items-center justify-between px-6 pt-2 pb-1 text-xs font-semibold tracking-tight">
         <span>9:11</span>
         <div className="flex items-center gap-2">
-          {
-    /* Signal bars */
-  }
+          {/* Signal bars */}
           <div className="flex items-end gap-0.5 h-3">
-            <span className="w-0.5 h-1.5 bg-white rounded-xs" />
-            <span className="w-0.5 h-2 bg-white rounded-xs" />
-            <span className="w-0.5 h-2.5 bg-white rounded-xs" />
-            <span className="w-0.5 h-3 bg-white/40 rounded-xs" />
+            <span className="w-0.5 h-1.5 bg-[#0F172A] rounded-xs" />
+            <span className="w-0.5 h-2 bg-[#0F172A] rounded-xs" />
+            <span className="w-0.5 h-2.5 bg-[#0F172A] rounded-xs" />
+            <span className="w-0.5 h-3 bg-[#0F172A]/40 rounded-xs" />
           </div>
           <Wifi size={13} />
-          {
-    /* Battery 44% with charging bolt */
-  }
-          <div className="flex items-center gap-1 bg-green-500/20 text-emerald-400 px-1.5 py-0.5 rounded text-[11px] font-bold">
+          {/* Battery 44% */}
+          <div className="flex items-center gap-1 bg-[#4ADE80]/20 text-[#4ADE80] px-1.5 py-0.5 rounded text-[11px] font-bold">
             <span>44</span>
             <BatteryCharging size={13} />
           </div>
         </div>
       </div>
 
-      {
-    /* Browser Navigation Row */
-  }
+      {/* Browser Navigation Row */}
       <div className="flex items-center justify-between px-4 py-2">
-        {
-    /* Left actions: Close X and Down Chevron */
-  }
+        {/* Left actions */}
         <div className="flex items-center gap-4">
           <button
-    onClick={onClose}
-    className="text-white/80 hover:text-white transition-colors"
-    title="Close"
-  >
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-900 transition-colors cursor-pointer"
+            title="Close"
+          >
             <X size={20} />
           </button>
           <button
-    className="text-white/80 hover:text-white transition-colors"
-    title="Expand"
-  >
+            className="text-gray-500 hover:text-gray-900 transition-colors cursor-pointer"
+            title="Expand"
+          >
             <ChevronDown size={20} />
           </button>
         </div>
 
-        {
-    /* Center: Title and domain */
-  }
+        {/* Center */}
         <div className="flex flex-col items-center max-w-[160px] truncate">
-          <span className="text-sm font-semibold text-white truncate">
+          <span className="text-sm font-semibold text-gray-900 truncate">
             Personal Homep...
           </span>
-          <span className="text-[11px] text-white/60 tracking-tight">
+          <span className="text-[11px] text-gray-500 tracking-tight">
             fandomverse.com
           </span>
         </div>
 
-        {
-    /* Right actions: Share, Bookmark, More */
-  }
+        {/* Right actions */}
         <div className="flex items-center gap-4">
           <button
-    onClick={onShare}
-    className="text-white/80 hover:text-white transition-colors"
-    title="Share Page"
-  >
+            onClick={onShare}
+            className="text-gray-500 hover:text-gray-900 transition-colors cursor-pointer"
+            title="Share Page"
+          >
             <Share2 size={19} />
           </button>
           <button
-    onClick={onToggleSave}
-    className={`transition-colors ${isSaved ? "text-[#fa005a]" : "text-white/80 hover:text-white"}`}
-    title="Bookmark"
-  >
-            <Bookmark size={19} fill={isSaved ? "#fa005a" : "none"} />
+            onClick={onToggleSave}
+            className={`transition-colors cursor-pointer ${isSaved ? "text-[#FFA800]" : "text-gray-500 hover:text-gray-900"}`}
+            title="Bookmark"
+          >
+            <Bookmark size={19} fill={isSaved ? "#FFA800" : "none"} />
           </button>
           <button
-    className="text-white/80 hover:text-white transition-colors"
-    title="Menu"
-  >
+            className="text-gray-500 hover:text-gray-900 transition-colors cursor-pointer"
+            title="Menu"
+          >
             <MoreVertical size={19} />
           </button>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };
-export {
-  MobileBrowserBar
-};
+
+export { MobileBrowserBar };

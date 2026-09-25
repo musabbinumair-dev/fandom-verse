@@ -367,9 +367,6 @@ const MultimediaCenterPage = ({
   }
         <div>
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#1C1917] flex items-center justify-center text-white shrink-0 shadow-xs">
-              <Play size={18} className="fill-white ml-0.5" />
-            </div>
             <h1 className="text-3xl sm:text-4xl font-black text-[#1C1917] tracking-tight uppercase font-titan">
               MULTIMEDIA CENTER
             </h1>

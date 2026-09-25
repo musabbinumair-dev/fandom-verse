@@ -16,7 +16,7 @@ import {
   Book,
   Sparkles
 } from "lucide-react";
-const ExplorePage = ({ onOpenArticle }) => {
+const ExplorePage = ({ onOpenArticle, isLoggedIn = true }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedGenre, setSelectedGenre] = useState("All");
@@ -546,15 +546,15 @@ const ExplorePage = ({ onOpenArticle }) => {
       className="w-full h-full object-cover brightness-[0.85] group-hover:scale-105 transition-transform duration-500"
     />
                     
-                    {
-      /* Top-Right Bookmark Button - Rounded square exactly like the image */
-    }
-                    <button
-      onClick={(e) => handleToggleBookmark(card.id, e)}
-      className="absolute top-2.5 right-2.5 w-7.5 h-7.5 rounded-md bg-black/45 backdrop-blur-xs flex items-center justify-center text-white border border-white/10 hover:bg-[#FF5F1F] hover:text-white transition-colors"
-    >
-                      {isSaved ? <BookmarkCheck size={13} className="text-[#FFCC00] stroke-[2.5]" /> : <Bookmark size={13} className="stroke-[2.5]" />}
-                    </button>
+                    {/* Top-Right Bookmark Button - Only shown when logged in */}
+                    {isLoggedIn && (
+                      <button
+                        onClick={(e) => handleToggleBookmark(card.id, e)}
+                        className="absolute top-2.5 right-2.5 w-7.5 h-7.5 rounded-md bg-black/45 backdrop-blur-xs flex items-center justify-center text-white border border-white/10 hover:bg-[#FF5F1F] hover:text-white transition-colors"
+                      >
+                        {isSaved ? <BookmarkCheck size={13} className="text-[#FFCC00] stroke-[2.5]" /> : <Bookmark size={13} className="stroke-[2.5]" />}
+                      </button>
+                    )}
 
                     {
       /* Bottom Left Category Overlay - Pill shaped, custom background matching the image */

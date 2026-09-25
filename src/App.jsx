@@ -12,6 +12,7 @@ import { DashboardPage } from "./components/DashboardPage";
 import { UserDashboardPage } from "./components/UserDashboardPage";
 import { ManageContentPage } from "./components/ManageContentPage";
 import { ManageUsersPage } from "./components/admin/ManageUsersPage";
+import { ManageEventsPage } from "./components/admin/ManageEventsPage";
 import { PendingApprovalsPage } from "./components/admin/PendingApprovalsPage";
 import { ManageFeedbackPage } from "./components/admin/ManageFeedbackPage";
 import { AdminLayout } from "./components/admin/AdminLayout";
@@ -146,6 +147,10 @@ function App() {
   };
 
   const handleToggleSaveItem = (item) => {
+    if (!isLoggedIn) {
+      handleOpenAuth("login");
+      return;
+    }
     setSavedItemIds((prev) => {
       const next = new Set(prev);
       if (next.has(item.id)) {
@@ -180,6 +185,10 @@ function App() {
 
   const handleSelectTab = (tab) => {
     setSelectedItem(null);
+    if (tab === "saved" && !isLoggedIn) {
+      handleOpenAuth("login");
+      return;
+    }
     if (tab === "settings") {
       setIsSettingsOpen(true);
     } else {
@@ -235,6 +244,8 @@ function App() {
       >
         {adminTab === "content" ? (
           <ManageContentPage onOpenArticle={handleOpenItem} />
+        ) : adminTab === "events" ? (
+          <ManageEventsPage />
         ) : adminTab === "users" ? (
           <ManageUsersPage />
         ) : adminTab === "feedback" ? (
@@ -285,7 +296,7 @@ function App() {
           onLogout={handleLogout}
           unreadCount={2}
           onOpenLinkModal={(title, desc) => setInfoModal({ title, desc })}
-          navTheme={selectedItem ? "dark" : "light"}
+          navTheme={selectedItem ? "detail" : "light"}
         >
           {selectedItem ? (
             <div className="w-full">
@@ -305,6 +316,7 @@ function App() {
                 }}
                 onBack={() => setSelectedItem(null)}
                 onOpenArticle={handleOpenItem}
+                isLoggedIn={true}
               />
             </div>
           ) : (
@@ -356,6 +368,7 @@ function App() {
                     categoryDesc={`Explore a world of amazing stories, unique characters, and breathtaking animation in ${selectedCategory !== "All" ? selectedCategory : "ANIME"}.`}
                     onOpenArticle={handleOpenItem}
                     onOpenAuth={handleOpenAuth}
+                    isLoggedIn={true}
                   />
                 </div>
               )}
@@ -459,7 +472,7 @@ function App() {
         </UserLayout>
       ) : (
         /* GUEST / VISITOR USER PANEL CHASSIS */
-        <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#FFFDF7] text-[#231C14] font-baloo select-none">
+        <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#FFFDF7] text-[#231C14] select-none">
           <TopHeader
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
@@ -470,6 +483,7 @@ function App() {
             onOpenSaved={() => handleOpenAuth("login")}
             isLoggedIn={false}
             onLogout={handleLogout}
+            theme={selectedItem ? "detail" : "light"}
           />
           <div className="flex-1 flex h-full min-h-0 overflow-hidden" data-panel="guest">
             <LeftSidebar
@@ -493,6 +507,7 @@ function App() {
               }}
               onStartWiki={() => handleOpenAuth("login")}
               isLoggedIn={false}
+              theme={selectedItem ? "detail" : "light"}
             />
 
             <div className="flex-1 h-full min-w-0 overflow-y-auto bg-[#FFFDF7]">
@@ -584,6 +599,7 @@ function App() {
                                     onSelect={(content) => setSelectedItem(content)}
                                     onOpenAuth={handleOpenAuth}
                                     onToggleSave={handleToggleSaveItem}
+                                    isLoggedIn={isLoggedIn}
                                   />
                                 );
                               })}
@@ -591,7 +607,33 @@ function App() {
                           )}
                         </section>
                       </main>
-                      <Footer onOpenInfo={(title, desc) => setInfoModal({ title, desc })} />
+                    </div>
+                  )}
+
+                  {activeTab === "dashboard" && (
+                    <div className="w-full">
+                      <UserDashboardPage
+                        onNavigateHome={() => setActiveTab("home")}
+                        onNavigateCategory={(cat) => {
+                          setSelectedCategory(cat);
+                          setActiveTab("category");
+                        }}
+                        onNavigateSaved={() => handleSelectTab("saved")}
+                        onNavigateSubmit={() => setActiveTab("submit-content")}
+                        onNavigateProfile={() => setActiveTab("profile")}
+                        onOpenArticle={handleOpenItem}
+                      />
+                    </div>
+                  )}
+
+                  {activeTab === "profile" && (
+                    <div className="w-full">
+                      <ProfilePage
+                        onBackToHome={() => setActiveTab("home")}
+                        onSaveSuccess={() => {
+                          handleOpenAuth("login");
+                        }}
+                      />
                     </div>
                   )}
 
@@ -633,6 +675,8 @@ function App() {
                       <SubmitFanContentPage
                         onNavigateHome={() => setActiveTab("home")}
                         onNavigateArticles={() => setActiveTab("articles-events")}
+                        isLoggedIn={false}
+                        onOpenAuth={handleOpenAuth}
                       />
                     </div>
                   )}
@@ -655,7 +699,7 @@ function App() {
 
                   {activeTab === "feedback" && (
                     <div className="w-full">
-                      <FeedbackPage onNavigateHome={() => setActiveTab("home")} />
+                      <FeedbackPage onNavigateHome={() => setActiveTab("home")} isLoggedIn={false} onOpenAuth={handleOpenAuth} />
                     </div>
                   )}
 
@@ -668,6 +712,8 @@ function App() {
                         onRemoveSavedStory={() => {
                           setSavedCount((prev) => Math.max(0, prev - 1));
                         }}
+                        isLoggedIn={false}
+                        onOpenAuth={handleOpenAuth}
                       />
                     </div>
                   )}

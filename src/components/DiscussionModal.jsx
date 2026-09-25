@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { X, Heart, MessageSquare, Send } from "lucide-react";
+
 const DiscussionModal = ({
   discussion,
   isCreateMode = false,
@@ -25,7 +26,8 @@ const DiscussionModal = ({
   ]);
   const [createTitle, setCreateTitle] = useState("");
   const [createBody, setCreateBody] = useState("");
-  const [createCommunity, setCreateCommunity] = useState("Pok\xE9mon Community");
+  const [createCommunity, setCreateCommunity] = useState("Pokémon Community");
+
   const handleAddReply = (e) => {
     e.preventDefault();
     if (!replyText.trim()) return;
@@ -40,6 +42,7 @@ const DiscussionModal = ({
     ]);
     setReplyText("");
   };
+
   const handleCreateSubmit = (e) => {
     e.preventDefault();
     if (!createTitle.trim() || !createBody.trim()) return;
@@ -48,186 +51,182 @@ const DiscussionModal = ({
     }
     onClose();
   };
+
   if (!discussion && !isCreateMode) return null;
-  return <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-xs overflow-y-auto">
-      <div className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-200 my-auto animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] flex flex-col">
-        {
-    /* Modal Top Header */
-  }
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-100 bg-white sticky top-0 z-10">
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/70 backdrop-blur-xs overflow-y-auto">
+      <div className="relative w-full max-w-xl bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden border border-gray-200 my-auto animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] flex flex-col text-gray-900">
+        {/* Modal Top Header */}
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-gray-200 bg-white sticky top-0 z-10">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#fa005a]">
+            <span className="text-xs font-black uppercase tracking-wider text-[#FFA800]">
               {isCreateMode ? "Start New Discussion" : discussion?.community}
             </span>
           </div>
           <button
-    onClick={onClose}
-    className="p-1.5 rounded-full text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors"
-  >
+            onClick={onClose}
+            className="p-1.5 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors cursor-pointer"
+          >
             <X size={20} />
           </button>
         </div>
 
-        {
-    /* Create Mode */
-  }
-        {isCreateMode ? <form onSubmit={handleCreateSubmit} className="p-5 sm:p-6 overflow-y-auto flex-1 space-y-4">
+        {/* Create Mode */}
+        {isCreateMode ? (
+          <form onSubmit={handleCreateSubmit} className="p-5 sm:p-6 overflow-y-auto flex-1 space-y-4">
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+              <label className="block text-xs font-bold text-gray-900 uppercase mb-1">
                 Choose Community
               </label>
               <select
-    value={createCommunity}
-    onChange={(e) => setCreateCommunity(e.target.value)}
-    className="w-full text-xs border border-slate-300 rounded-lg p-2.5 bg-white focus:outline-none focus:border-[#fa005a]"
-  >
-                <option value="Pokémon Community">Pokémon Community</option>
-                <option value="One Piece Community">One Piece Community</option>
-                <option value="Elden Ring Community">Elden Ring Community</option>
-                <option value="Star Wars Community">Star Wars Community</option>
-                <option value="General Fandomverse Hub">General Fandomverse Hub</option>
+                value={createCommunity}
+                onChange={(e) => setCreateCommunity(e.target.value)}
+                className="w-full text-xs border border-gray-200 rounded-lg p-2.5 bg-[#F8F9FA] text-gray-900 focus:outline-none focus:border-[#FFA800] cursor-pointer"
+              >
+                <option value="Pokémon Community" className="bg-white">Pokémon Community</option>
+                <option value="One Piece Community" className="bg-white">One Piece Community</option>
+                <option value="Elden Ring Community" className="bg-white">Elden Ring Community</option>
+                <option value="Star Wars Community" className="bg-white">Star Wars Community</option>
+                <option value="General Fandomverse Hub" className="bg-white">General Fandomverse Hub</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+              <label className="block text-xs font-bold text-gray-900 uppercase mb-1">
                 Discussion Title
               </label>
               <input
-    type="text"
-    required
-    value={createTitle}
-    onChange={(e) => setCreateTitle(e.target.value)}
-    placeholder="What would you like to discuss or share?"
-    className="w-full text-sm border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:border-[#fa005a]"
-  />
+                type="text"
+                required
+                value={createTitle}
+                onChange={(e) => setCreateTitle(e.target.value)}
+                placeholder="What would you like to discuss or share?"
+                className="w-full text-sm border border-gray-200 rounded-lg p-2.5 bg-[#F8F9FA] text-gray-900 placeholder:text-gray-500/60 focus:outline-none focus:border-[#FFA800]"
+              />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+              <label className="block text-xs font-bold text-gray-900 uppercase mb-1">
                 Your Post & Details
               </label>
               <textarea
-    required
-    rows={5}
-    value={createBody}
-    onChange={(e) => setCreateBody(e.target.value)}
-    placeholder="Share your theories, artwork, character analysis, or question for fellow fans..."
-    className="w-full text-xs border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:border-[#fa005a]"
-  />
+                required
+                rows={5}
+                value={createBody}
+                onChange={(e) => setCreateBody(e.target.value)}
+                placeholder="Share your theories, artwork, character analysis, or question for fellow fans..."
+                className="w-full text-xs border border-gray-200 rounded-lg p-2.5 bg-[#F8F9FA] text-gray-900 placeholder:text-gray-500/60 focus:outline-none focus:border-[#FFA800]"
+              />
             </div>
 
             <div className="flex justify-end gap-2 pt-2">
               <button
-    type="button"
-    onClick={onClose}
-    className="px-4 py-2 text-xs font-medium text-slate-600 hover:text-slate-800 rounded-lg hover:bg-slate-100"
-  >
+                type="button"
+                onClick={onClose}
+                className="px-4 py-2 text-xs font-semibold text-gray-500 hover:text-gray-900 rounded-lg hover:bg-gray-100 cursor-pointer"
+              >
                 Cancel
               </button>
               <button
-    type="submit"
-    className="px-5 py-2 text-xs font-bold bg-[#fa005a] hover:bg-[#e00050] text-white rounded-lg transition-colors flex items-center gap-1.5 shadow-sm"
-  >
+                type="submit"
+                className="px-5 py-2 text-xs font-bold bg-[#FFA800] hover:bg-[#FFB51A] text-black rounded-lg transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer"
+              >
                 <Send size={13} />
                 <span>Publish to Community</span>
               </button>
             </div>
-          </form> : (
-    /* View Discussion Mode with Real Picture */
-    <div className="p-5 sm:p-6 overflow-y-auto flex-1">
-            {
-      /* Thread Header */
-    }
+          </form>
+        ) : (
+          <div className="p-5 sm:p-6 overflow-y-auto flex-1">
+            {/* Thread Header */}
             <div className="flex items-start gap-3.5 mb-4">
-              <div className="shrink-0 w-16 h-16 rounded-xl overflow-hidden border border-slate-200 bg-slate-100 shadow-xs">
+              <div className="shrink-0 w-16 h-16 rounded-xl overflow-hidden border border-gray-200 bg-black shadow-xs">
                 <img
-      src={discussion?.thumbnail}
-      alt={discussion?.title}
-      className="w-full h-full object-cover"
-    />
+                  src={discussion?.thumbnail}
+                  alt={discussion?.title}
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-tight">
+                <h3 className="text-base sm:text-lg font-bold text-gray-900 leading-tight">
                   {discussion?.title}
                 </h3>
-                <div className="flex items-center gap-2 mt-1.5 text-xs text-slate-500">
-                  <div className="w-5 h-5 rounded-full bg-slate-200 flex items-center justify-center font-bold text-[10px] text-slate-700">
-                    {discussion?.author[0].toUpperCase()}
+                <div className="flex items-center gap-2 mt-1.5 text-xs text-gray-500">
+                  <div className="w-5 h-5 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center font-bold text-[10px] text-[#FFA800]">
+                    {discussion?.author?.[0]?.toUpperCase() || "U"}
                   </div>
-                  <span className="font-semibold text-slate-700">{discussion?.author}</span>
+                  <span className="font-semibold text-gray-900">{discussion?.author}</span>
                   <span>•</span>
                   <span>{discussion?.timeAgo}</span>
                 </div>
               </div>
             </div>
 
-            {
-      /* Post Content */
-    }
-            <div className="bg-slate-50/80 rounded-xl p-4 text-xs sm:text-sm text-slate-800 leading-relaxed border border-slate-100 mb-5">
+            {/* Post Content */}
+            <div className="bg-[#F8F9FA] rounded-xl p-4 text-xs sm:text-sm text-gray-900 leading-relaxed border border-gray-200 mb-5">
               {discussion?.body}
             </div>
 
-            {
-      /* Like and Stats action */
-    }
-            <div className="flex items-center justify-between py-2 border-b border-slate-100 mb-5 text-xs">
+            {/* Like and Stats action */}
+            <div className="flex items-center justify-between py-2 border-b border-gray-200 mb-5 text-xs">
               <button
-      onClick={() => discussion && onLike(discussion.id)}
-      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold transition-colors ${isLiked ? "bg-rose-50 text-[#fa005a]" : "bg-slate-100 text-slate-700 hover:bg-slate-200"}`}
-    >
-                <Heart size={14} fill={isLiked ? "#fa005a" : "none"} />
+                onClick={() => discussion && onLike(discussion.id)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold transition-colors cursor-pointer ${
+                  isLiked
+                    ? "bg-rose-500/20 text-rose-400 border border-rose-500/30"
+                    : "bg-gray-100 text-gray-500 hover:text-gray-900 border border-gray-200"
+                }`}
+              >
+                <Heart size={14} fill={isLiked ? "#f43f5e" : "none"} />
                 <span>{(discussion?.likes || 0) + (isLiked ? 1 : 0)} Likes</span>
               </button>
 
-              <div className="flex items-center gap-1.5 text-slate-500 font-medium">
+              <div className="flex items-center gap-1.5 text-gray-500 font-medium">
                 <MessageSquare size={14} />
                 <span>{replies.length} Replies</span>
               </div>
             </div>
 
-            {
-      /* Replies List */
-    }
+            {/* Replies List */}
             <div className="space-y-3 mb-5">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500">
                 Thread Replies
               </h4>
-              {replies.map((r) => <div key={r.id} className="p-3 bg-white rounded-lg border border-slate-100 text-xs">
+              {replies.map((r) => (
+                <div key={r.id} className="p-3 bg-[#F8F9FA] rounded-lg border border-gray-200 text-xs">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="font-bold text-slate-800">{r.user}</span>
-                    <span className="text-[10px] text-slate-400">{r.time}</span>
+                    <span className="font-bold text-gray-900">{r.user}</span>
+                    <span className="text-[10px] text-gray-500">{r.time}</span>
                   </div>
-                  <p className="text-slate-600">{r.text}</p>
-                </div>)}
+                  <p className="text-gray-500">{r.text}</p>
+                </div>
+              ))}
             </div>
 
-            {
-      /* Post Reply */
-    }
+            {/* Post Reply */}
             <form onSubmit={handleAddReply} className="flex gap-2">
               <input
-      type="text"
-      value={replyText}
-      onChange={(e) => setReplyText(e.target.value)}
-      placeholder="Write a reply to the author..."
-      className="flex-1 text-xs border border-slate-300 rounded-lg px-3 py-2.5 focus:outline-none focus:border-[#fa005a]"
-    />
+                type="text"
+                value={replyText}
+                onChange={(e) => setReplyText(e.target.value)}
+                placeholder="Write a reply to the author..."
+                className="flex-1 text-xs border border-gray-200 bg-[#F8F9FA] text-gray-900 placeholder:text-gray-500/60 rounded-lg px-3 py-2.5 focus:outline-none focus:border-[#FFA800]"
+              />
               <button
-      type="submit"
-      disabled={!replyText.trim()}
-      className="bg-[#fa005a] hover:bg-[#e00050] disabled:opacity-40 text-white text-xs font-bold px-4 py-2.5 rounded-lg flex items-center gap-1 transition-colors"
-    >
+                type="submit"
+                disabled={!replyText.trim()}
+                className="bg-[#FFA800] hover:bg-[#FFB51A] disabled:opacity-40 text-black text-xs font-bold px-4 py-2.5 rounded-lg flex items-center gap-1 transition-colors cursor-pointer"
+              >
                 <Send size={13} />
                 <span>Reply</span>
               </button>
             </form>
           </div>
-  )}
+        )}
       </div>
-    </div>;
+    </div>
+  );
 };
-export {
-  DiscussionModal
-};
+
+export { DiscussionModal };

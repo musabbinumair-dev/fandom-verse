@@ -40,7 +40,8 @@ const ContentCard = ({
   isSaved = false,
   onSelect,
   onOpenAuth,
-  onToggleSave
+  onToggleSave,
+  isLoggedIn = true
 }) => {
   const [localSaved, setLocalSaved] = useState(isSaved);
   const handleBookmarkClick = (e) => {
@@ -101,14 +102,16 @@ const ContentCard = ({
           <span className="bg-black/55 backdrop-blur-md border border-white/25 text-white text-[10.5px] font-bold px-2 py-1 rounded-none shadow-sm flex items-center gap-1">
             ★ {item.rating}
           </span>
-          <button
-    type="button"
-    onClick={handleBookmarkClick}
-    className={`w-7.5 h-7.5 rounded-none flex items-center justify-center transition-all duration-200 hover:scale-110 cursor-pointer shadow-lg ${localSaved ? "bg-[#FF5F1F] text-white border border-[#FF5F1F]" : "bg-black/55 hover:bg-black/80 backdrop-blur-md border border-white/25 text-white"}`}
-    title={localSaved ? "Saved to library" : "Bookmark title"}
-  >
-            {localSaved ? <Check size={12} strokeWidth={2.8} /> : <Bookmark size={12} strokeWidth={2.2} />}
-          </button>
+          {isLoggedIn && (
+            <button
+              type="button"
+              onClick={handleBookmarkClick}
+              className={`w-7.5 h-7.5 rounded-none flex items-center justify-center transition-all duration-200 hover:scale-110 cursor-pointer shadow-lg ${localSaved ? "bg-[#FF5F1F] text-white border border-[#FF5F1F]" : "bg-black/55 hover:bg-black/80 backdrop-blur-md border border-white/25 text-white"}`}
+              title={localSaved ? "Saved to library" : "Bookmark title"}
+            >
+              {localSaved ? <Check size={12} strokeWidth={2.8} /> : <Bookmark size={12} strokeWidth={2.2} />}
+            </button>
+          )}
         </div>
       </div>
 

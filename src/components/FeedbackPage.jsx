@@ -10,7 +10,7 @@ import {
   CheckCircle2,
   AlertCircle
 } from "lucide-react";
-const FeedbackPage = ({ onNavigateHome }) => {
+const FeedbackPage = ({ onNavigateHome, isLoggedIn = true, onOpenAuth }) => {
   const [feedbackType, setFeedbackType] = useState("Suggestion");
   const [subject, setSubject] = useState("");
   const [category, setCategory] = useState("");
@@ -71,6 +71,11 @@ const FeedbackPage = ({ onNavigateHome }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!isLoggedIn) {
+      if (onOpenAuth) onOpenAuth("login");
+      setToastMessage("Please sign in to send feedback.");
+      return;
+    }
     if (!validateForm()) return;
     setIsSubmitting(true);
     setTimeout(() => {
@@ -109,24 +114,6 @@ const FeedbackPage = ({ onNavigateHome }) => {
   }
         <div className="pt-0.5">
           <div className="flex items-center gap-2.5">
-            {
-    /* Speech bubble with waveform icon matching screenshot */
-  }
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-[#1C1917]">
-              <svg
-    width="28"
-    height="28"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.4"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                <path d="M8 10l2 2 2-3 2 2" />
-              </svg>
-            </div>
             <h1 className="text-2xl sm:text-[30px] font-black text-[#1C1917] tracking-tight uppercase font-titan leading-none">
               FEEDBACK
             </h1>

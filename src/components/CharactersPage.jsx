@@ -453,7 +453,6 @@ const CharactersPage = ({
   }
         <div>
           <div className="flex items-center gap-2.5">
-            <Users size={32} className="fill-[#1C1917] text-[#1C1917] stroke-none shrink-0" />
             <h1 className="text-3xl sm:text-4xl font-black text-[#1C1917] tracking-tight uppercase font-titan">
               CHARACTERS
             </h1>

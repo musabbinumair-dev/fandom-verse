@@ -138,7 +138,6 @@ const MerchandisePage = ({
   }
         <div className="pt-0.5">
           <div className="flex items-center gap-2.5">
-            <ShoppingBag size={28} className="stroke-[2.4] text-[#1C1917] shrink-0" />
             <h1 className="text-2xl sm:text-[30px] font-black text-[#1C1917] tracking-tight uppercase font-titan leading-none">
               MERCHANDISE AND UPCOMING RELEASES
             </h1>
@@ -201,9 +200,6 @@ const MerchandisePage = ({
     /* Header: Merchandise icon + MERCHANDISE SHOWCASE */
   }
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded bg-[#171717] text-white flex items-center justify-center">
-              <Package size={12} className="stroke-[2.5]" />
-            </div>
             <h2 className="text-[15px] font-black uppercase tracking-tight font-titan text-[#171717]">
               MERCHANDISE SHOWCASE
             </h2>
@@ -818,7 +814,6 @@ const MerchandisePage = ({
     /* Header: Calendar Icon + UPCOMING RELEASES */
   }
           <div className="flex items-center gap-2">
-            <Calendar size={18} className="stroke-[2.2] text-[#171717]" />
             <h2 className="text-[15px] font-black uppercase tracking-tight font-titan text-[#171717]">
               UPCOMING RELEASES
             </h2>

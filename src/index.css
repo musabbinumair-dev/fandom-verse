@@ -1,40 +1,63 @@
 @import "tailwindcss";
 
+@theme {
+  --font-heading: "Space Grotesk", sans-serif;
+  --font-body: "Plus Jakarta Sans", sans-serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-mono: "Space Grotesk", sans-serif;
+}
+
+:root {
+  --font-heading: "Space Grotesk", sans-serif;
+  --font-body: "Plus Jakarta Sans", sans-serif;
+}
+
 @layer base {
   * {
     border-color: #F0E8DD;
   }
   
   html, body {
-    font-family: 'Baloo 2', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: var(--font-body);
     color: #231C14;
     background-color: #FFFDF7;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+  }
+
+  p, span, a, button, input, textarea, select, label, table, th, td, li, ul, ol, div {
+    font-family: inherit;
+  }
 }
 
-.font-titan {
-  font-family: 'Titan One', cursive, sans-serif;
-  letter-spacing: 0.02em;
+.font-heading {
+  font-family: var(--font-heading) !important;
 }
 
-.font-baloo {
-  font-family: 'Baloo 2', cursive, sans-serif;
+.font-body {
+  font-family: var(--font-body) !important;
 }
 
-.font-bebas {
-  font-family: 'Bebas Neue', cursive, sans-serif;
-  letter-spacing: 0.04em;
-}
-
-.font-stencil-rank {
-  font-family: 'Big Shoulders Display', 'Bebas Neue', 'Oswald', sans-serif;
-  letter-spacing: 0.01em;
-}
-
+/* Fallback mappings for legacy font classes to the new typography system */
+.font-titan,
+.font-bebas,
+.font-stencil-rank,
 .font-oswald {
-  font-family: 'Oswald', sans-serif;
+  font-family: var(--font-heading) !important;
+}
+
+.font-baloo,
+.font-sans {
+  font-family: var(--font-body) !important;
+}
+
+.font-mono {
+  font-family: var(--font-heading) !important;
 }
 
 /* Outline / Stencil ranking numbers matching reference image */
@@ -64,4 +87,3 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #FF5F1F;
 }
-

@@ -232,6 +232,7 @@ export const MOCK_USERS_DATA = [
     name: "Rayan Frost",
     username: "@rayanfrost",
     email: "rayan.frost@fandomverse.io",
+    role: "Admin",
     joinedDate: "2025-04-12",
     favoriteFandoms: ["Anime", "Gaming", "Comics", "Movies"],
     categoriesOfInterest: ["Anime", "Gaming", "Comics", "Movies", "Manga"],
@@ -249,6 +250,7 @@ export const MOCK_USERS_DATA = [
     name: "Sana Rivers",
     username: "@sanarivers",
     email: "sana.rivers@fandomverse.io",
+    role: "Moderator",
     joinedDate: "2025-03-28",
     favoriteFandoms: ["K-Pop", "Movies", "TV Shows", "Cosplay"],
     categoriesOfInterest: ["K-Pop", "Movies", "TV Shows", "Cosplay", "Anime"],
@@ -266,6 +268,7 @@ export const MOCK_USERS_DATA = [
     name: "Kai Summers",
     username: "@kaisummers",
     email: "kai.summers@fandomverse.io",
+    role: "User",
     joinedDate: "2025-03-15",
     favoriteFandoms: ["Gaming", "Manga", "Cosplay", "Comics"],
     categoriesOfInterest: ["Gaming", "Manga", "Cosplay", "Comics", "Anime"],
@@ -283,6 +286,7 @@ export const MOCK_USERS_DATA = [
     name: "Elara Voss",
     username: "@elaravoss",
     email: "elara.voss@fandomverse.io",
+    role: "User",
     joinedDate: "2025-02-21",
     favoriteFandoms: ["Anime", "TV Shows", "Comics", "Gaming", "Manga"],
     categoriesOfInterest: ["Anime", "Gaming", "Movies", "K-Pop", "Comics", "Manga", "TV Shows"],
@@ -300,6 +304,7 @@ export const MOCK_USERS_DATA = [
     name: "Tobias Reed",
     username: "@tobiasreed",
     email: "tobias.reed@fandomverse.io",
+    role: "Moderator",
     joinedDate: "2025-01-30",
     favoriteFandoms: ["Movies", "Gaming", "Cosplay", "TV Shows"],
     categoriesOfInterest: ["Movies", "Gaming", "Cosplay", "TV Shows", "Comics"],
@@ -317,6 +322,7 @@ export const MOCK_USERS_DATA = [
     name: "Lila Chen",
     username: "@lilachen",
     email: "lila.chen@fandomverse.io",
+    role: "User",
     joinedDate: "2025-01-18",
     favoriteFandoms: ["Comics", "Manga", "Anime", "Movies"],
     categoriesOfInterest: ["Comics", "Manga", "Anime", "Movies", "Gaming"],
@@ -334,6 +340,7 @@ export const MOCK_USERS_DATA = [
     name: "Zane Patel",
     username: "@zanepatel",
     email: "zane.patel@fandomverse.io",
+    role: "Admin",
     joinedDate: "2024-12-04",
     favoriteFandoms: ["Gaming", "Movies", "TV Shows", "Anime"],
     categoriesOfInterest: ["Gaming", "Movies", "TV Shows", "Anime", "Comics"],
@@ -351,6 +358,7 @@ export const MOCK_USERS_DATA = [
     name: "Mira Sullivan",
     username: "@mirasullivan",
     email: "mira.sullivan@fandomverse.io",
+    role: "User",
     joinedDate: "2024-11-20",
     favoriteFandoms: ["K-Pop", "Cosplay", "Manga", "Anime"],
     categoriesOfInterest: ["K-Pop", "Cosplay", "Manga", "Anime", "TV Shows"],
@@ -378,6 +386,37 @@ export const updateUserStatus = async (userId, newStatus) => {
     user.status = newStatus;
   }
   return Promise.resolve(user);
+};
+
+export const updateUserRole = async (userId, newRole) => {
+  const user = MOCK_USERS_DATA.find((u) => u.id === userId);
+  if (user) {
+    user.role = newRole;
+  }
+  return Promise.resolve(user);
+};
+
+export const createUser = async (userData) => {
+  const newUser = {
+    id: `user-${Date.now()}`,
+    avatar: userData.avatar || "/src/assets/images/kael_vex_1790281397401.jpg",
+    name: userData.name || "New User",
+    username: userData.username || `@user${Date.now()}`,
+    email: userData.email || "user@fandomverse.io",
+    joinedDate: new Date().toISOString().split("T")[0],
+    favoriteFandoms: userData.favoriteFandoms || ["Anime", "Gaming"],
+    categoriesOfInterest: userData.categoriesOfInterest || ["Anime", "Gaming"],
+    status: userData.status || "ACTIVE",
+    role: userData.role || "USER",
+    bio: userData.bio || "",
+    bookmarksCount: 0,
+    fanSubmissionsCount: 0,
+    feedbackSentCount: 0,
+    postsCount: 0,
+    commentsCount: 0
+  };
+  MOCK_USERS_DATA.unshift(newUser);
+  return Promise.resolve(newUser);
 };
 
 export const updateUserDetails = async (userId, updatedFields) => {

@@ -260,8 +260,46 @@ const SavedBookmarksPage = ({
   onSelectStory,
   onRemoveSavedStory,
   onNavigateHome,
-  parentLabel = "Dashboard"
+  parentLabel = "Dashboard",
+  isLoggedIn = true,
+  onOpenAuth
 }) => {
+  if (!isLoggedIn) {
+    return (
+      <div className="w-full bg-[#FAF8F5] min-h-[70vh] flex items-center justify-center py-12 px-4 select-none font-sans">
+        <div className="max-w-md w-full bg-white rounded-2xl border border-[#EDE4D6] p-8 text-center shadow-xl space-y-4">
+          <div className="w-16 h-16 rounded-full bg-[#FFEBE5] text-[#FF5F1F] flex items-center justify-center mx-auto shadow-xs">
+            <Bookmark size={32} className="stroke-[2.2]" />
+          </div>
+          <div className="space-y-1.5">
+            <h2 className="text-xl sm:text-2xl font-black text-[#171717] tracking-tight font-titan uppercase">
+              SIGN IN REQUIRED
+            </h2>
+            <p className="text-xs sm:text-sm text-[#737373]">
+              Bookmarks are private to registered user accounts. Please sign in or create an account to save and view your favorite fandoms.
+            </p>
+          </div>
+          <div className="pt-3 flex flex-col gap-2">
+            <button
+              type="button"
+              onClick={() => onOpenAuth && onOpenAuth("login")}
+              className="w-full py-2.5 px-4 bg-[#FF5F1F] hover:bg-[#E04F13] text-white font-extrabold text-xs tracking-wider uppercase rounded-xl transition-all cursor-pointer shadow-sm active:scale-[0.98]"
+            >
+              Sign In To Access Bookmarks
+            </button>
+            <button
+              type="button"
+              onClick={onNavigateHome}
+              className="w-full py-2 px-4 text-xs font-bold text-stone-500 hover:text-stone-800 transition-colors cursor-pointer"
+            >
+              Back to Explorer
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const [bookmarks, setBookmarks] = useState(INITIAL_BOOKMARKS);
   const [activeFilter, setActiveFilter] = useState("all");
   const [editingItem, setEditingItem] = useState(null);

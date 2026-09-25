@@ -18,13 +18,13 @@ const TopHeader = ({
   const [isFocused, setIsFocused] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const isDark = theme === "dark";
+  const isDark = theme === "dark" || theme === "detail";
 
   return (
     <header
       className={`sticky top-0 z-30 px-4 sm:px-6 h-14 flex items-center justify-between gap-4 font-baloo select-none shrink-0 transition-colors duration-200 ${
         isDark
-          ? "bg-[#1a1a1a] border-b border-[#2a2a2a] text-stone-200"
+          ? "bg-[#121212] border-b border-[#27272a] text-stone-200 shadow-md"
           : "bg-white border-b border-[#F0E8DD] text-[#231C14]"
       }`}
     >
@@ -56,18 +56,18 @@ const TopHeader = ({
         </button>
       </div>
 
-      {/* Center Search Bar: Exact structure */}
+      {/* Center Search Bar */}
       <div className="flex-1 max-w-xl mx-2 sm:mx-6">
         <div
           className={`flex items-center gap-2 px-3 py-1.5 sm:py-2 rounded-xl border transition-colors ${
             isDark
-              ? `bg-[#242424] ${isFocused ? "border-[#FFCC00]" : "border-[#333333] hover:border-[#FFCC00]/60"}`
+              ? `bg-[#242424] ${isFocused ? "border-[#FF5F1F]" : "border-[#333333] hover:border-[#FF5F1F]/60"}`
               : `bg-white ${isFocused ? "border-[#FF5F1F]" : "border-[#F0E8DD] hover:border-[#D6C9BB]"}`
           }`}
         >
           <Search
             size={16}
-            className={`shrink-0 transition-colors ${isDark ? "text-stone-400 group-hover:text-[#FFCC00]" : "text-[#7A6F64]"}`}
+            className={`shrink-0 transition-colors ${isDark ? "text-stone-400 group-hover:text-[#FF5F1F]" : "text-[#7A6F64]"}`}
             strokeWidth={2}
           />
           <input
@@ -78,13 +78,15 @@ const TopHeader = ({
             onBlur={() => setIsFocused(false)}
             placeholder="Search"
             className={`w-full bg-transparent text-sm font-baloo focus:outline-none ${
-              isDark ? "text-white placeholder:text-stone-400" : "text-[#231C14] placeholder:text-[#9C8F82]"
+              isDark
+                ? "text-white placeholder:text-stone-400"
+                : "text-[#231C14] placeholder:text-[#9C8F82]"
             }`}
           />
           {searchQuery && (
             <button
               onClick={() => onSearchChange("")}
-              className={`p-0.5 cursor-pointer ${isDark ? "text-stone-400 hover:text-[#FFCC00]" : "text-[#7A6F64] hover:text-[#231C14]"}`}
+              className={`p-0.5 cursor-pointer ${isDark ? "text-stone-400 hover:text-[#FF5F1F]" : "text-[#7A6F64] hover:text-[#231C14]"}`}
             >
               <X size={14} />
             </button>
@@ -92,7 +94,7 @@ const TopHeader = ({
         </div>
       </div>
 
-      {/* Right controls: light neutral at rest, yellow accent on hover in dark mode */}
+      {/* Right controls */}
       <div className="flex items-center gap-2.5 sm:gap-3.5 shrink-0">
         {/* Saved Bookmark button */}
         <button
@@ -101,7 +103,7 @@ const TopHeader = ({
           title="Bookmarks"
           className={`p-1.5 rounded-full transition-colors cursor-pointer active:scale-95 ${
             isDark
-              ? "text-stone-300 hover:text-[#FFCC00]"
+              ? "text-stone-300 hover:text-[#FF5F1F]"
               : "text-[#7A6F64] hover:text-[#FF5F1F]"
           }`}
         >
@@ -115,7 +117,7 @@ const TopHeader = ({
           title="Notifications"
           className={`relative p-1.5 rounded-full transition-colors cursor-pointer active:scale-95 ${
             isDark
-              ? "text-stone-300 hover:text-[#FFCC00]"
+              ? "text-stone-300 hover:text-[#FF5F1F]"
               : "text-[#7A6F64] hover:text-[#FF5F1F]"
           }`}
         >
@@ -123,7 +125,9 @@ const TopHeader = ({
           {unreadCount > 0 && (
             <span
               className={`absolute top-1 right-1 w-2 h-2 rounded-full ring-2 ${
-                isDark ? "bg-[#FFCC00] ring-[#1a1a1a]" : "bg-[#FF5F1F] ring-white"
+                isDark
+                  ? "bg-[#FF5F1F] ring-[#121212]"
+                  : "bg-[#FF5F1F] ring-white"
               }`}
             />
           )}

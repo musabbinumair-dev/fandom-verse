@@ -84,22 +84,6 @@ const ArticlesAndEventsPage = ({
   }
         <div className="pt-0.5">
           <div className="flex items-center gap-2.5">
-            <svg
-    width="27"
-    height="27"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="#1C1917"
-    strokeWidth="2.4"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="shrink-0"
-  >
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-              <polyline points="14 2 14 8 20 8" />
-              <line x1="8" y1="13" x2="16" y2="13" />
-              <line x1="8" y1="17" x2="14" y2="17" />
-            </svg>
             <h1 className="text-2xl sm:text-[30px] font-black text-[#1C1917] tracking-tight uppercase font-titan leading-none">
               FEATURED ARTICLES AND EVENT HIGHLIGHTS
             </h1>
@@ -137,7 +121,6 @@ const ArticlesAndEventsPage = ({
     /* Section Header: Solid Star icon + FEATURED ARTICLES */
   }
           <div className="flex items-center gap-1.5">
-            <Star size={16} className="fill-[#171717] text-[#171717]" />
             <h2 className="text-[15px] font-black uppercase tracking-tight font-titan text-[#171717]">
               FEATURED ARTICLES
             </h2>
@@ -408,22 +391,6 @@ const ArticlesAndEventsPage = ({
     /* Header: Calendar Icon + EVENT HIGHLIGHTS */
   }
           <div className="flex items-center gap-2">
-            <svg
-    width="21"
-    height="21"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="#171717"
-    strokeWidth="2.4"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="shrink-0"
-  >
-              <rect x="3" y="4" width="18" height="18" rx="2.5" ry="2.5" />
-              <line x1="16" y1="2" x2="16" y2="6" />
-              <line x1="8" y1="2" x2="8" y2="6" />
-              <line x1="3" y1="10" x2="21" y2="10" />
-            </svg>
             <h2 className="text-[16px] font-black uppercase tracking-tight font-titan text-[#171717]">
               EVENT HIGHLIGHTS
             </h2>
@@ -576,26 +543,6 @@ const ArticlesAndEventsPage = ({
     /* Left Content */
   }
             <div className="relative z-10 flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-[#171717] flex items-center justify-center text-white shrink-0 shadow-2xs">
-                {
-    /* Tilted pen icon */
-  }
-                <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="#FFFFFF"
-    strokeWidth="2.4"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-                  <path d="M12 19l7-7 3 3-7 7-3-3z" />
-                  <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
-                  <path d="M2 2l7.586 7.586" />
-                </svg>
-              </div>
-
               <div>
                 <h3 className="text-sm sm:text-[15px] font-black uppercase tracking-tight font-titan text-[#171717]">
                   Submit your fan content

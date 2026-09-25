@@ -175,7 +175,6 @@ const EventsPage = ({
   }
         <div className="pt-0.5">
           <div className="flex items-center gap-2.5">
-            <CalendarIcon size={27} className="stroke-[2.5] text-[#1C1917] shrink-0" />
             <h1 className="text-2xl sm:text-[32px] font-black text-[#1C1917] tracking-tight uppercase font-titan leading-none">
               EVENTS
             </h1>
@@ -280,9 +279,6 @@ const EventsPage = ({
   }
           <div className="lg:col-span-6 space-y-3 flex flex-col justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-5 h-5 rounded bg-[#171717] text-white flex items-center justify-center">
-                <Ticket size={12} className="stroke-[2.5]" />
-              </div>
               <h2 className="text-[15px] font-black uppercase tracking-tight font-titan text-[#171717]">
                 Nearby Events
               </h2>
@@ -573,7 +569,6 @@ const EventsPage = ({
   }
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <CalendarIcon size={18} className="stroke-[2.2] text-[#171717]" />
                 <h3 className="text-sm sm:text-[15px] font-black uppercase tracking-tight font-titan text-[#171717]">
                   Event Calendar
                 </h3>
@@ -930,10 +925,6 @@ const EventsPage = ({
     /* Left Content */
   }
             <div className="relative z-10 flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-[#171717] flex items-center justify-center text-white shrink-0 shadow-2xs">
-                <CalendarIcon size={16} className="stroke-[2.5]" />
-              </div>
-
               <div>
                 <h3 className="text-sm sm:text-[15px] font-black uppercase tracking-tight font-titan text-[#171717]">
                   Submit your fan content

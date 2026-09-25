@@ -5,25 +5,25 @@ import {
   Pencil,
   Trash2,
   FileText,
-  PlaySquare,
   User,
   ShoppingBag,
   Upload,
   Folder,
   X,
-  ChevronsUpDown,
-  Check
+  ChevronsUpDown
 } from "lucide-react";
 
 /* ========================================================================= */
-/*   MOCK DATA FOR ALL 4 CONTENT TABS (ARTICLES, MEDIA, CHARACTERS, MERCH)  */
+/*   MOCK DATA FOR ALL 4 TABS: CONTENT, CHARACTERS, MERCHANDISE, CATEGORY   */
 /* ========================================================================= */
 
-const ARTICLES_DATA = [
+const INITIAL_CONTENT_DATA = [
   {
-    id: "art-1",
+    id: "cnt-1",
     title: "The Floating Realms",
     subtitle: "A breathtaking journey through sky islands.",
+    contentType: "Article",
+    type: "Article",
     category: "ANIME",
     categoryBadge: "bg-[#F5EADF] text-[#B87033]",
     date: "May 28, 2025",
@@ -32,20 +32,50 @@ const ARTICLES_DATA = [
     image: "/src/assets/images/aetheria_wanderer_1790282784893.jpg"
   },
   {
-    id: "art-2",
-    title: "The Next Level: Future of Gaming",
-    subtitle: "How innovation is shaping the next generation.",
+    id: "cnt-2",
+    title: "Neon Drift Racing Trailer",
+    subtitle: "High-speed racing in a futuristic city.",
+    contentType: "Trailer",
+    type: "Trailer",
     category: "GAMING",
     categoryBadge: "bg-[#E2E8F0] text-[#475569]",
-    date: "May 26, 2025",
+    date: "May 27, 2025",
     status: "PUBLISHED",
     statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
     image: "/src/assets/images/cyberpunk_2077_art_1790255907017.jpg"
   },
   {
-    id: "art-3",
+    id: "cnt-3",
+    title: "Interstellar Space Theme",
+    subtitle: "Space exploration orchestral theme.",
+    contentType: "Audio",
+    type: "Audio",
+    category: "MOVIES",
+    categoryBadge: "bg-[#DCEEFE] text-[#0284C7]",
+    date: "May 26, 2025",
+    status: "DRAFT",
+    statusBadge: "bg-[#F5EADF] text-[#B87033]",
+    image: "/src/assets/images/interstellar_space_1790270312783.jpg"
+  },
+  {
+    id: "cnt-4",
+    title: "Aetheria Sky Islands Breakdown",
+    subtitle: "Breathtaking world exploration video.",
+    contentType: "Video",
+    type: "Video",
+    category: "ANIME",
+    categoryBadge: "bg-[#F5EADF] text-[#B87033]",
+    date: "May 25, 2025",
+    status: "PUBLISHED",
+    statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
+    image: "/src/assets/images/aetheria_wanderer_1790282784893.jpg"
+  },
+  {
+    id: "cnt-5",
     title: "Voices from the Beyond",
     subtitle: "An in-depth look at the science of space exploration.",
+    contentType: "Article",
+    type: "Article",
     category: "MOVIES",
     categoryBadge: "bg-[#DCEEFE] text-[#0284C7]",
     date: "May 24, 2025",
@@ -54,9 +84,11 @@ const ARTICLES_DATA = [
     image: "/src/assets/images/interstellar_space_1790270312783.jpg"
   },
   {
-    id: "art-4",
-    title: "The Hidden City",
+    id: "cnt-6",
+    title: "The Hidden City Lore Wiki",
     subtitle: "Secrets, legends and the people who keep it alive.",
+    contentType: "Media",
+    type: "Media",
     category: "TV SHOWS",
     categoryBadge: "bg-[#F3E8FF] text-[#9333EA]",
     date: "May 21, 2025",
@@ -65,9 +97,11 @@ const ARTICLES_DATA = [
     image: "/src/assets/images/midnight_signal_rain_1790283977485.jpg"
   },
   {
-    id: "art-5",
-    title: "Rising Stars: The Next Wave",
-    subtitle: "Meet the artists shaping tomorrow's sound.",
+    id: "cnt-7",
+    title: "Starlight Live Concert Highlight",
+    subtitle: "K-Pop concert highlight performance.",
+    contentType: "Video",
+    type: "Video",
     category: "K-POP",
     categoryBadge: "bg-[#FCE7F3] text-[#C026D3]",
     date: "May 18, 2025",
@@ -76,136 +110,17 @@ const ARTICLES_DATA = [
     image: "/src/assets/images/neon_beat_festival_1790282824470.jpg"
   },
   {
-    id: "art-6",
-    title: "The Art of Heroism",
-    subtitle: "What makes a hero in today's world?",
+    id: "cnt-8",
+    title: "The Art of Heroism Artwork",
+    subtitle: "High resolution digital art gallery showcase.",
+    contentType: "Image",
+    type: "Image",
     category: "COMICS",
     categoryBadge: "bg-[#CCFBF1] text-[#0F766E]",
     date: "May 15, 2025",
     status: "DRAFT",
     statusBadge: "bg-[#F5EADF] text-[#B87033]",
     image: "/src/assets/images/spiderman_comic_1790270342039.jpg"
-  },
-  {
-    id: "art-7",
-    title: "The Silent Library",
-    subtitle: "A story about memory, time and forgotten books.",
-    category: "MANGA",
-    categoryBadge: "bg-[#FEF3C7] text-[#92400E]",
-    date: "May 12, 2025",
-    status: "PUBLISHED",
-    statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
-    image: "/src/assets/images/sora_hayashi_1790281509190.jpg"
-  },
-  {
-    id: "art-8",
-    title: "Beyond the Costume",
-    subtitle: "How cosplay builds community and confidence.",
-    category: "COSPLAY",
-    categoryBadge: "bg-[#FFE4E6] text-[#E11D48]",
-    date: "May 10, 2025",
-    status: "PUBLISHED",
-    statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
-    image: "/src/assets/images/sae_jihyun_1790281620416.jpg"
-  }
-];
-
-const MEDIA_DATA = [
-  {
-    id: "med-1",
-    title: "Neon Drift Racing",
-    subtitle: "High-speed racing in a futuristic city.",
-    type: "Trailer",
-    duration: "02:35",
-    category: "GAMING",
-    categoryBadge: "bg-[#E2E8F0] text-[#475569]",
-    status: "PUBLISHED",
-    statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
-    image: "/src/assets/images/cyberpunk_2077_art_1790255907017.jpg"
-  },
-  {
-    id: "med-2",
-    title: "Aetheria Sky Islands",
-    subtitle: "Breathtaking world exploration video.",
-    type: "Video",
-    duration: "08:42",
-    category: "ANIME",
-    categoryBadge: "bg-[#F5EADF] text-[#B87033]",
-    status: "PUBLISHED",
-    statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
-    image: "/src/assets/images/aetheria_wanderer_1790282784893.jpg"
-  },
-  {
-    id: "med-3",
-    title: "Interstellar Journey",
-    subtitle: "Space exploration orchestral theme.",
-    type: "Audio",
-    duration: "04:15",
-    category: "MOVIES",
-    categoryBadge: "bg-[#DCEEFE] text-[#0284C7]",
-    status: "DRAFT",
-    statusBadge: "bg-[#F5EADF] text-[#B87033]",
-    image: "/src/assets/images/interstellar_space_1790270312783.jpg"
-  },
-  {
-    id: "med-4",
-    title: "Midnight City OST",
-    subtitle: "Rain ambient city audio recording.",
-    type: "Audio",
-    duration: "05:20",
-    category: "TV SHOWS",
-    categoryBadge: "bg-[#F3E8FF] text-[#9333EA]",
-    status: "PUBLISHED",
-    statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
-    image: "/src/assets/images/midnight_signal_rain_1790283977485.jpg"
-  },
-  {
-    id: "med-5",
-    title: "Starlight Live Concert",
-    subtitle: "K-Pop concert highlight performance.",
-    type: "Video",
-    duration: "12:56",
-    category: "K-POP",
-    categoryBadge: "bg-[#FCE7F3] text-[#C026D3]",
-    status: "PUBLISHED",
-    statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
-    image: "/src/assets/images/neon_beat_festival_1790282824470.jpg"
-  },
-  {
-    id: "med-6",
-    title: "Crimson Shield Motion Comic",
-    subtitle: "Animated comic teaser trailer.",
-    type: "Trailer",
-    duration: "01:45",
-    category: "COMICS",
-    categoryBadge: "bg-[#CCFBF1] text-[#0F766E]",
-    status: "DRAFT",
-    statusBadge: "bg-[#F5EADF] text-[#B87033]",
-    image: "/src/assets/images/spiderman_comic_1790270342039.jpg"
-  },
-  {
-    id: "med-7",
-    title: "Whispers of Moon Lore",
-    subtitle: "Manga explainer video breakdowns.",
-    type: "Video",
-    duration: "06:10",
-    category: "MANGA",
-    categoryBadge: "bg-[#FEF3C7] text-[#92400E]",
-    status: "PUBLISHED",
-    statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
-    image: "/src/assets/images/sora_hayashi_1790281509190.jpg"
-  },
-  {
-    id: "med-8",
-    title: "Realm Walker Cosplay Showcase",
-    subtitle: "Costume craftsmanship video tutorial.",
-    type: "Video",
-    duration: "07:30",
-    category: "COSPLAY",
-    categoryBadge: "bg-[#FFE4E6] text-[#E11D48]",
-    status: "PUBLISHED",
-    statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
-    image: "/src/assets/images/sae_jihyun_1790281620416.jpg"
   }
 ];
 
@@ -257,153 +172,144 @@ const CHARACTERS_DATA = [
     status: "PUBLISHED",
     statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
     image: "/src/assets/images/midnight_signal_rain_1790283977485.jpg"
-  },
-  {
-    id: "char-5",
-    title: "Min-jun Star",
-    subtitle: "Lead vocalist and main dancer.",
-    fandom: "Starlight Idol Group",
-    bio: "Global icon of modern pop culture.",
-    category: "K-POP",
-    categoryBadge: "bg-[#FCE7F3] text-[#C026D3]",
-    status: "PUBLISHED",
-    statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
-    image: "/src/assets/images/neon_beat_festival_1790282824470.jpg"
-  },
-  {
-    id: "char-6",
-    title: "Captain Aegis",
-    subtitle: "Protector of the realm.",
-    fandom: "Crimson Vanguard",
-    bio: "Wields the unbreakable shield.",
-    category: "COMICS",
-    categoryBadge: "bg-[#CCFBF1] text-[#0F766E]",
-    status: "DRAFT",
-    statusBadge: "bg-[#F5EADF] text-[#B87033]",
-    image: "/src/assets/images/spiderman_comic_1790270342039.jpg"
-  },
-  {
-    id: "char-7",
-    title: "Tsukiko Moon",
-    subtitle: "Ancient shrine priestess.",
-    fandom: "Moonlit Whispers",
-    bio: "Guardian of ancestral magic.",
-    category: "MANGA",
-    categoryBadge: "bg-[#FEF3C7] text-[#92400E]",
-    status: "PUBLISHED",
-    statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
-    image: "/src/assets/images/sora_hayashi_1790281509190.jpg"
-  },
-  {
-    id: "char-8",
-    title: "Sae Jihyun",
-    subtitle: "Artisan armorsmith & cosplayer.",
-    fandom: "Realm Walker",
-    bio: "Crafts fantasy costumes and props.",
-    category: "COSPLAY",
-    categoryBadge: "bg-[#FFE4E6] text-[#E11D48]",
-    status: "PUBLISHED",
-    statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
-    image: "/src/assets/images/sae_jihyun_1790281620416.jpg"
   }
 ];
 
 const MERCHANDISE_DATA = [
   {
     id: "merch-1",
-    title: "Skybound Pilot Figurine",
-    subtitle: "Limited Edition Hand-Painted Model.",
-    tag: "Collectible",
-    releaseStatus: "Pre-Order",
+    title: "Aetheria Sky Compass",
+    subtitle: "Authentic metallic collector prop with LED lights.",
+    tag: "Prop Replica",
+    releaseStatus: "In Stock",
     category: "ANIME",
     categoryBadge: "bg-[#F5EADF] text-[#B87033]",
     status: "PUBLISHED",
     statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
-    image: "/src/assets/images/aetheria_wanderer_1790282784893.jpg"
+    image: "/src/assets/images/cloud_drake_plush_1790285563088.jpg"
   },
   {
     id: "merch-2",
-    title: "Neon Cyberpunk Jacket",
-    subtitle: "Futuristic glow LED embroidered wear.",
+    title: "Neon Drift Bomber Jacket",
+    subtitle: "Waterproof cyberpunk jacket with embroidered crest.",
     tag: "Apparel",
-    releaseStatus: "In Stock",
+    releaseStatus: "Pre-order",
     category: "GAMING",
     categoryBadge: "bg-[#E2E8F0] text-[#475569]",
     status: "PUBLISHED",
     statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
-    image: "/src/assets/images/cyberpunk_2077_art_1790255907017.jpg"
+    image: "/src/assets/images/emberwing_hoodie_1790285536763.jpg"
   },
   {
     id: "merch-3",
-    title: "Space Horizon Poster",
-    subtitle: "High-grade metallic foil art print.",
-    tag: "Poster",
+    title: "Commander Vance Diecast Model",
+    subtitle: "1:18 scale metallic spaceship model with stand.",
+    tag: "Collectible",
     releaseStatus: "In Stock",
     category: "MOVIES",
     categoryBadge: "bg-[#DCEEFE] text-[#0284C7]",
     status: "DRAFT",
     statusBadge: "bg-[#F5EADF] text-[#B87033]",
-    image: "/src/assets/images/interstellar_space_1790270312783.jpg"
+    image: "/src/assets/images/celestial_archer_fig_1790285506979.jpg"
+  }
+];
+
+const CATEGORIES_DATA = [
+  {
+    id: "cat-1",
+    title: "Anime",
+    subtitle: "Japanese animated series, movies & OVA lore.",
+    itemCount: "142 items",
+    description: "Japanese animated series, films, and OVA lore.",
+    category: "ANIME",
+    categoryBadge: "bg-[#F5EADF] text-[#B87033]",
+    status: "PUBLISHED",
+    statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
+    image: "/src/assets/images/category_anime_1790259342339.jpg"
   },
   {
-    id: "merch-4",
-    title: "Midnight Noir Vinyl OST",
-    subtitle: "Double 180g heavy vinyl record set.",
-    tag: "Vinyl",
-    releaseStatus: "Limited Stock",
+    id: "cat-2",
+    title: "Gaming",
+    subtitle: "Video games, mechanics & esports.",
+    itemCount: "289 items",
+    description: "Video games, speedruns, esports, and mechanics.",
+    category: "GAMING",
+    categoryBadge: "bg-[#E2E8F0] text-[#475569]",
+    status: "PUBLISHED",
+    statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
+    image: "/src/assets/images/category_gaming_1790259361539.jpg"
+  },
+  {
+    id: "cat-3",
+    title: "Movies",
+    subtitle: "Cinematic universes & feature films.",
+    itemCount: "95 items",
+    description: "Feature films, cinematic universes, and directors.",
+    category: "MOVIES",
+    categoryBadge: "bg-[#DCEEFE] text-[#0284C7]",
+    status: "PUBLISHED",
+    statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
+    image: "/src/assets/images/category_movies_1790259375752.jpg"
+  },
+  {
+    id: "cat-4",
+    title: "TV Shows",
+    subtitle: "Drama, sci-fi & streaming hits.",
+    itemCount: "110 items",
+    description: "Television series, drama, sci-fi, and streaming hits.",
     category: "TV SHOWS",
     categoryBadge: "bg-[#F3E8FF] text-[#9333EA]",
     status: "PUBLISHED",
     statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
-    image: "/src/assets/images/midnight_signal_rain_1790283977485.jpg"
+    image: "/src/assets/images/category_tvshows_1790259388971.jpg"
   },
   {
-    id: "merch-5",
-    title: "Starlight Lightstick v2",
-    subtitle: "Official wireless bluetooth concert rod.",
-    tag: "Lightstick",
-    releaseStatus: "In Stock",
+    id: "cat-5",
+    title: "K-Pop",
+    subtitle: "Korean idol groups, MVs & culture.",
+    itemCount: "76 items",
+    description: "Korean idol groups, music videos, and fan culture.",
     category: "K-POP",
     categoryBadge: "bg-[#FCE7F3] text-[#C026D3]",
     status: "PUBLISHED",
     statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
-    image: "/src/assets/images/neon_beat_festival_1790282824470.jpg"
+    image: "/src/assets/images/category_kpop_1790259404900.jpg"
   },
   {
-    id: "merch-6",
-    title: "Crimson Shield Replica",
-    subtitle: "1:1 scale metal alloy prop shield.",
-    tag: "Replica Prop",
-    releaseStatus: "Out of Stock",
+    id: "cat-6",
+    title: "Comics",
+    subtitle: "Graphic novels & superheroes.",
+    itemCount: "124 items",
+    description: "Graphic novels, Western superheroes, and indie comics.",
     category: "COMICS",
     categoryBadge: "bg-[#CCFBF1] text-[#0F766E]",
-    status: "DRAFT",
-    statusBadge: "bg-[#F5EADF] text-[#B87033]",
-    image: "/src/assets/images/spiderman_comic_1790270342039.jpg"
+    status: "PUBLISHED",
+    statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
+    image: "/src/assets/images/category_comics_1790259419220.jpg"
   },
   {
-    id: "merch-7",
-    title: "Moonlit Lore Artbook",
-    subtitle: "250-page collector hardcover edition.",
-    tag: "Artbook",
-    releaseStatus: "In Stock",
+    id: "cat-7",
+    title: "Manga",
+    subtitle: "Serialized Japanese comics & manhwa.",
+    itemCount: "205 items",
+    description: "Serialized Japanese comics and graphic storytelling.",
     category: "MANGA",
     categoryBadge: "bg-[#FEF3C7] text-[#92400E]",
     status: "PUBLISHED",
     statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
-    image: "/src/assets/images/sora_hayashi_1790281509190.jpg"
+    image: "/src/assets/images/category_manga_1790259433020.jpg"
   },
   {
-    id: "merch-8",
-    title: "Realm Walker Cosplay Wig",
-    subtitle: "Heat-resistant styled cosplay hair.",
-    tag: "Cosplay Prop",
-    releaseStatus: "In Stock",
+    id: "cat-8",
+    title: "Cosplay",
+    subtitle: "Costume craft & conventions.",
+    itemCount: "68 items",
+    description: "Costume craft, armor making, wig design, and conventions.",
     category: "COSPLAY",
     categoryBadge: "bg-[#FFE4E6] text-[#E11D48]",
     status: "PUBLISHED",
     statusBadge: "bg-[#DCFCE7] text-[#16A34A]",
-    image: "/src/assets/images/sae_jihyun_1790281620416.jpg"
+    image: "/src/assets/images/category_cosplay_1790259445408.jpg"
   }
 ];
 
@@ -412,27 +318,15 @@ const MERCHANDISE_DATA = [
 /* ========================================================================= */
 
 const TAB_CONFIGS = {
-  articles: {
-    label: "ARTICLES",
-    searchPlaceholder: "Search articles by title, author or keyword...",
+  content: {
+    label: "CONTENT",
+    searchPlaceholder: "Search content by title, type, category or keyword...",
     columns: [
       { key: "thumbnail", header: "THUMBNAIL" },
       { key: "title", header: "TITLE" },
+      { key: "contentType", header: "CONTENT TYPE" },
       { key: "category", header: "CATEGORY" },
       { key: "date", header: "DATE" },
-      { key: "status", header: "STATUS" },
-      { key: "actions", header: "ACTIONS", align: "right" }
-    ]
-  },
-  media: {
-    label: "MEDIA",
-    searchPlaceholder: "Search media by title, type or keyword...",
-    columns: [
-      { key: "thumbnail", header: "THUMBNAIL" },
-      { key: "title", header: "TITLE" },
-      { key: "type", header: "TYPE" },
-      { key: "duration", header: "DURATION" },
-      { key: "category", header: "CATEGORY" },
       { key: "status", header: "STATUS" },
       { key: "actions", header: "ACTIONS", align: "right" }
     ]
@@ -462,11 +356,23 @@ const TAB_CONFIGS = {
       { key: "status", header: "STATUS" },
       { key: "actions", header: "ACTIONS", align: "right" }
     ]
+  },
+  category: {
+    label: "CATEGORY",
+    searchPlaceholder: "Search categories by title or description...",
+    columns: [
+      { key: "thumbnail", header: "COVER" },
+      { key: "title", header: "CATEGORY NAME" },
+      { key: "itemCount", header: "TOTAL ITEMS" },
+      { key: "description", header: "DESCRIPTION" },
+      { key: "status", header: "STATUS" },
+      { key: "actions", header: "ACTIONS", align: "right" }
+    ]
   }
 };
 
 const ManageContentPage = ({ onOpenArticle }) => {
-  const [activeTab, setActiveTab] = useState("articles");
+  const [activeTab, setActiveTab] = useState("content");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedStatus, setSelectedStatus] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
@@ -480,18 +386,19 @@ const ManageContentPage = ({ onOpenArticle }) => {
 
   // Store data per tab
   const [allData, setAllData] = useState({
-    articles: ARTICLES_DATA,
-    media: MEDIA_DATA,
+    content: INITIAL_CONTENT_DATA,
     characters: CHARACTERS_DATA,
-    merchandise: MERCHANDISE_DATA
+    merchandise: MERCHANDISE_DATA,
+    category: CATEGORIES_DATA
   });
 
   // Modal Form State
-  const [modalType, setModalType] = useState("articles"); // "articles" | "media" | "characters" | "merchandise"
+  const [modalType, setModalType] = useState("content");
   const [formData, setFormData] = useState({
     title: "The Forgotten Island",
     category: "Anime",
-    mediaType: "Trailer",
+    contentType: "Article",
+    mediaType: "Article",
     duration: "02:35",
     fandom: "Skybound Aetheria",
     roleTitle: "Master Sky Pilot",
@@ -502,7 +409,7 @@ const ManageContentPage = ({ onOpenArticle }) => {
     releaseDate: "2025-07-18",
     popularityScore: "8.7",
     description:
-      "A young explorer sets out on a mysterious island where ancient ruins, strange creatures and forgotten secrets await. This is a journey of discovery, courage and the unknown.",
+      "A young explorer sets out on a mysterious island where ancient ruins, strange creatures and forgotten secrets await.",
     status: "Published",
     image: "/src/assets/images/interstellar_space_1790270312783.jpg"
   });
@@ -525,6 +432,7 @@ const ManageContentPage = ({ onOpenArticle }) => {
       (item.title && item.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (item.subtitle && item.subtitle.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (item.category && item.category.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (item.contentType && item.contentType.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (item.type && item.type.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (item.fandom && item.fandom.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (item.tag && item.tag.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -535,20 +443,20 @@ const ManageContentPage = ({ onOpenArticle }) => {
   const handleOpenAddModal = () => {
     setModalType(activeTab);
     setFormData({
-      title: "The Forgotten Island",
+      title: "",
       category: "Anime",
-      mediaType: "Trailer",
+      contentType: "Article",
+      mediaType: "Article",
       duration: "02:35",
       fandom: "Skybound Aetheria",
       roleTitle: "Master Sky Pilot",
       tag: "Collectible",
       releaseStatus: "In Stock",
-      tags: ["Adventure", "Drama", "Sci-Fi"],
+      tags: ["Adventure", "Drama"],
       tagInput: "",
       releaseDate: "2025-07-18",
-      popularityScore: "8.7",
-      description:
-        "A young explorer sets out on a mysterious island where ancient ruins, strange creatures and forgotten secrets await. This is a journey of discovery, courage and the unknown.",
+      popularityScore: "8.5",
+      description: "",
       status: "Published",
       image: "/src/assets/images/interstellar_space_1790270312783.jpg"
     });
@@ -561,17 +469,18 @@ const ManageContentPage = ({ onOpenArticle }) => {
     setFormData({
       title: item.title,
       category: item.category ? item.category.charAt(0).toUpperCase() + item.category.slice(1).toLowerCase() : "Anime",
-      mediaType: item.type || "Trailer",
+      contentType: item.contentType || item.type || "Article",
+      mediaType: item.type || "Article",
       duration: item.duration || "02:35",
       fandom: item.fandom || "Skybound Aetheria",
       roleTitle: item.subtitle || "Master Sky Pilot",
       tag: item.tag || "Collectible",
       releaseStatus: item.releaseStatus || "In Stock",
-      tags: ["Adventure", "Drama", "Sci-Fi"],
+      tags: ["Adventure", "Drama"],
       tagInput: "",
       releaseDate: "2025-07-18",
       popularityScore: "8.7",
-      description: item.subtitle || item.bio || "Content details and descriptions.",
+      description: item.subtitle || item.description || item.bio || "",
       status: item.status === "DRAFT" || item.status === "Draft" ? "Draft" : "Published",
       image: item.image || "/src/assets/images/interstellar_space_1790270312783.jpg"
     });
@@ -585,18 +494,21 @@ const ManageContentPage = ({ onOpenArticle }) => {
       id: `${modalType}-${Date.now()}`,
       title: formData.title,
       subtitle: formData.description || "Fandom feature content",
+      contentType: formData.contentType,
+      type: formData.contentType,
       category: formData.category.toUpperCase(),
       categoryBadge: getCategoryBadgeStyle(formData.category),
       date: formData.releaseDate ? "Jul 18, 2025" : "May 28, 2025",
       status: formData.status === "Published" ? "PUBLISHED" : "DRAFT",
       statusBadge: formData.status === "Published" ? "bg-[#DCFCE7] text-[#16A34A]" : "bg-[#F5EADF] text-[#B87033]",
       image: formData.image || "/src/assets/images/interstellar_space_1790270312783.jpg",
-      type: formData.mediaType,
       duration: formData.duration || "02:35",
       fandom: formData.fandom || "Skybound Aetheria",
       bio: formData.description,
       tag: formData.tag || "Collectible",
-      releaseStatus: formData.releaseStatus || "In Stock"
+      releaseStatus: formData.releaseStatus || "In Stock",
+      itemCount: "1 item",
+      description: formData.description
     };
 
     setAllData((prev) => ({
@@ -618,10 +530,13 @@ const ManageContentPage = ({ onOpenArticle }) => {
             ...item,
             title: formData.title,
             subtitle: formData.description,
+            contentType: formData.contentType,
+            type: formData.contentType,
             category: formData.category.toUpperCase(),
             categoryBadge: getCategoryBadgeStyle(formData.category),
             status: formData.status === "Published" ? "PUBLISHED" : "DRAFT",
-            statusBadge: formData.status === "Published" ? "bg-[#DCFCE7] text-[#16A34A]" : "bg-[#F5EADF] text-[#B87033]"
+            statusBadge: formData.status === "Published" ? "bg-[#DCFCE7] text-[#16A34A]" : "bg-[#F5EADF] text-[#B87033]",
+            description: formData.description
           };
         }
         return item;
@@ -699,7 +614,7 @@ const ManageContentPage = ({ onOpenArticle }) => {
     }
   };
 
-  const currentConfig = TAB_CONFIGS[activeTab];
+  const currentConfig = TAB_CONFIGS[activeTab] || TAB_CONFIGS.content;
 
   // Helper to render cell content dynamically based on column key
   const renderCellContent = (item, colKey) => {
@@ -725,9 +640,16 @@ const ManageContentPage = ({ onOpenArticle }) => {
               {item.title}
             </h3>
             <p className="text-[11px] font-semibold text-[#7A6F64] line-clamp-1 mt-0.5">
-              {item.subtitle}
+              {item.subtitle || item.description || item.bio}
             </p>
           </div>
+        );
+
+      case "contentType":
+        return (
+          <span className="text-xs font-bold text-[#171717] bg-[#EAE6DE] px-2.5 py-1 rounded-md uppercase text-[10px] tracking-wider inline-block">
+            {item.contentType || item.type || "Article"}
+          </span>
         );
 
       case "category":
@@ -738,29 +660,33 @@ const ManageContentPage = ({ onOpenArticle }) => {
         );
 
       case "date":
-        return <span className="text-xs font-semibold text-[#7A6F64]">{item.date}</span>;
-
-      case "type":
-        return <span className="text-xs font-bold text-[#171717]">{item.type}</span>;
-
-      case "duration":
-        return <span className="text-xs font-semibold text-[#7A6F64]">{item.duration}</span>;
+        return <span className="text-xs font-semibold text-[#7A6F64]">{item.date || "May 28, 2025"}</span>;
 
       case "fandom":
         return <span className="text-xs font-bold text-[#171717]">{item.fandom}</span>;
 
       case "bio":
-        return <span className="text-[11px] font-semibold text-[#7A6F64] line-clamp-1">{item.bio}</span>;
+        return <span className="text-xs font-semibold text-[#7A6F64] line-clamp-1">{item.bio}</span>;
 
       case "tag":
         return <span className="text-xs font-bold text-[#171717]">{item.tag}</span>;
 
       case "releaseStatus":
-        return <span className="text-xs font-semibold text-[#7A6F64]">{item.releaseStatus}</span>;
+        return (
+          <span className="text-xs font-bold text-[#FF5F1F] bg-[#FFF2ED] px-2.5 py-1 rounded-md inline-block">
+            {item.releaseStatus}
+          </span>
+        );
+
+      case "itemCount":
+        return <span className="text-xs font-extrabold text-[#171717]">{item.itemCount || "100+ items"}</span>;
+
+      case "description":
+        return <span className="text-xs font-semibold text-[#7A6F64] line-clamp-1">{item.description || item.subtitle}</span>;
 
       case "status":
         return (
-          <span className={`text-[9.5px] font-black px-3 py-1 rounded-full uppercase tracking-wider inline-block ${item.statusBadge}`}>
+          <span className={`text-[10px] font-black px-3 py-1 rounded-md uppercase tracking-wider inline-block ${item.statusBadge}`}>
             {item.status}
           </span>
         );
@@ -771,18 +697,18 @@ const ManageContentPage = ({ onOpenArticle }) => {
             <button
               type="button"
               onClick={() => handleOpenEditModal(item)}
-              className="p-1.5 rounded-md hover:bg-[#F0E8DD] text-[#7A6F64] hover:text-[#171717] transition-colors cursor-pointer"
-              title="Edit Item"
+              className="p-1.5 rounded-lg border border-[#EDE4D6] bg-white hover:bg-[#F7F2EA] text-[#171717] transition-colors cursor-pointer shadow-2xs"
+              title="Edit"
             >
-              <Pencil size={15} className="stroke-[2.2]" />
+              <Pencil size={13} />
             </button>
             <button
               type="button"
               onClick={() => setDeletingItem(item)}
-              className="p-1.5 rounded-md hover:bg-rose-50 text-[#E11D48] transition-colors cursor-pointer"
-              title="Delete Item"
+              className="p-1.5 rounded-lg border border-[#EDE4D6] bg-white hover:bg-[#FFEBEB] text-[#E11D48] transition-colors cursor-pointer shadow-2xs"
+              title="Delete"
             >
-              <Trash2 size={15} className="stroke-[2.2]" />
+              <Trash2 size={13} />
             </button>
           </div>
         );
@@ -793,17 +719,17 @@ const ManageContentPage = ({ onOpenArticle }) => {
   };
 
   return (
-    <div className="w-full bg-[#FAF8F5] min-h-full font-sans select-none pb-16 text-[#171717]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 space-y-6">
-
-        {/* 1. PAGE TITLE & TOP ACTION BUTTON */}
+    <div className="w-full bg-[#FFFDF7] min-h-screen text-[#231C14] font-baloo pb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
+        
+        {/* 1. HEADER ROW */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl sm:text-3.5xl font-black tracking-tight uppercase font-titan text-[#171717]">
               MANAGE CONTENT
             </h1>
             <p className="text-xs sm:text-sm font-semibold text-[#7A6F64] mt-0.5">
-              Add, edit and remove content across all types and categories.
+              Add, edit and remove content, characters, merchandise and categories.
             </p>
           </div>
 
@@ -818,38 +744,24 @@ const ManageContentPage = ({ onOpenArticle }) => {
           </button>
         </div>
 
-        {/* 2. SEGMENTED TAB BAR */}
+        {/* 2. SEGMENTED TAB BAR WITH EXACT 4 REQUESTED BUTTONS */}
         <div className="space-y-2">
           <div className="bg-[#F0EBE1] border border-[#E5DFD3] rounded-2xl p-1.5 flex flex-wrap items-center gap-1.5 shadow-2xs">
-            {/* Articles Tab */}
+            {/* 1. Content Button */}
             <button
               type="button"
-              onClick={() => handleTabChange("articles")}
+              onClick={() => handleTabChange("content")}
               className={`flex-1 sm:flex-initial px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer ${
-                activeTab === "articles"
+                activeTab === "content"
                   ? "bg-[#FFCC00] text-black shadow-2xs font-titan"
                   : "text-[#7A6F64] hover:bg-[#E2DDD3] hover:text-[#171717]"
               }`}
             >
               <FileText size={16} className="stroke-[2.2]" />
-              <span>ARTICLES</span>
+              <span>CONTENT</span>
             </button>
 
-            {/* Media Tab */}
-            <button
-              type="button"
-              onClick={() => handleTabChange("media")}
-              className={`flex-1 sm:flex-initial px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer ${
-                activeTab === "media"
-                  ? "bg-[#FFCC00] text-black shadow-2xs font-titan"
-                  : "text-[#7A6F64] hover:bg-[#E2DDD3] hover:text-[#171717]"
-              }`}
-            >
-              <PlaySquare size={16} className="stroke-[2.2]" />
-              <span>MEDIA</span>
-            </button>
-
-            {/* Characters Tab */}
+            {/* 2. Characters Button */}
             <button
               type="button"
               onClick={() => handleTabChange("characters")}
@@ -863,7 +775,7 @@ const ManageContentPage = ({ onOpenArticle }) => {
               <span>CHARACTERS</span>
             </button>
 
-            {/* Merchandise Tab */}
+            {/* 3. Merchandise Button */}
             <button
               type="button"
               onClick={() => handleTabChange("merchandise")}
@@ -876,11 +788,25 @@ const ManageContentPage = ({ onOpenArticle }) => {
               <ShoppingBag size={16} className="stroke-[2.2]" />
               <span>MERCHANDISE</span>
             </button>
+
+            {/* 4. Category Button */}
+            <button
+              type="button"
+              onClick={() => handleTabChange("category")}
+              className={`flex-1 sm:flex-initial px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                activeTab === "category"
+                  ? "bg-[#FFCC00] text-black shadow-2xs font-titan"
+                  : "text-[#7A6F64] hover:bg-[#E2DDD3] hover:text-[#171717]"
+              }`}
+            >
+              <Folder size={16} className="stroke-[2.2]" />
+              <span>CATEGORY</span>
+            </button>
           </div>
 
           {/* Tab Helper Description */}
           <p className="text-[11px] font-semibold text-[#9C8F82] pl-1">
-            Media adds Type &amp; Duration &nbsp;·&nbsp; Characters adds Fandom &amp; Bio &nbsp;·&nbsp; Merchandise adds Tag &amp; Release status.
+            Content allows selecting Content Type (Media, Article, Audio, Video, Trailer, Image, etc.) &nbsp;·&nbsp; Manage Characters, Merchandise &amp; Categories.
           </p>
         </div>
 
@@ -966,7 +892,7 @@ const ManageContentPage = ({ onOpenArticle }) => {
                 {filteredList.length === 0 ? (
                   <tr>
                     <td colSpan={currentConfig.columns.length} className="py-8 text-center text-xs font-bold text-[#7A6F64]">
-                      No content items found matching filters.
+                      No items found matching filters.
                     </td>
                   </tr>
                 ) : (
@@ -1032,10 +958,10 @@ const ManageContentPage = ({ onOpenArticle }) => {
                 <FileText className="w-6 h-6 text-stone-900 stroke-[2.2] shrink-0 mt-0.5" />
                 <div>
                   <h3 className="text-xl sm:text-2xl font-black font-titan uppercase tracking-tight text-stone-900 leading-none">
-                    ADD NEW CONTENT
+                    {editingItem ? "EDIT ITEM" : "ADD NEW ITEM"}
                   </h3>
                   <p className="text-xs font-medium text-stone-500 mt-1">
-                    Create a new content item for the platform.
+                    Manage content, category, characters or merchandise item for the platform.
                   </p>
                 </div>
               </div>
@@ -1064,7 +990,7 @@ const ManageContentPage = ({ onOpenArticle }) => {
                   <input
                     type="text"
                     required
-                    placeholder="Enter content title..."
+                    placeholder="Enter item title..."
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     className="w-full text-xs font-medium px-3.5 py-2.5 rounded-xl border border-stone-200 bg-[#FAF9F5] text-stone-900 focus:outline-none focus:border-[#FF5F1F] shadow-2xs"
@@ -1080,11 +1006,11 @@ const ManageContentPage = ({ onOpenArticle }) => {
                     <select
                       value={formData.category}
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                      className="w-full text-xs font-medium px-3.5 py-2.5 rounded-xl border border-stone-200 bg-[#FAF9F5] text-stone-900 appearance-none focus:outline-none focus:border-[#FF5F1F] cursor-pointer pr-9 shadow-2xs"
+                      className="w-full text-xs font-medium px-3.5 py-2.5 rounded-xl border border-stone-200 bg-[#FAF9F5] text-stone-900 appearance-none focus:outline-none focus:border-[#FF5F1F] cursor-pointer pr-9 shadow-2xs font-bold"
                     >
-                      <option value="Movies">Movies</option>
                       <option value="Anime">Anime</option>
                       <option value="Gaming">Gaming</option>
+                      <option value="Movies">Movies</option>
                       <option value="TV Shows">TV Shows</option>
                       <option value="K-Pop">K-Pop</option>
                       <option value="Comics">Comics</option>
@@ -1096,23 +1022,32 @@ const ManageContentPage = ({ onOpenArticle }) => {
                 </div>
               </div>
 
-              {/* Row 2: Content Type & Genre / Tags */}
+              {/* Row 2: Content Type Selector (Media, Article, Audio, Video, Trailer, Image, etc.) */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Content Type */}
+                {/* Content Type Selector */}
                 <div>
                   <label className="text-xs font-bold text-stone-800 block mb-1.5">
                     Content Type <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
                     <select
-                      value={formData.type}
-                      onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                      className="w-full text-xs font-medium px-3.5 py-2.5 rounded-xl border border-stone-200 bg-[#FAF9F5] text-stone-900 appearance-none focus:outline-none focus:border-[#FF5F1F] cursor-pointer pr-9 shadow-2xs"
+                      value={formData.contentType}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          contentType: e.target.value,
+                          mediaType: e.target.value
+                        })
+                      }
+                      className="w-full text-xs font-bold px-3.5 py-2.5 rounded-xl border border-stone-200 bg-[#FAF9F5] text-stone-900 appearance-none focus:outline-none focus:border-[#FF5F1F] cursor-pointer pr-9 shadow-2xs"
                     >
                       <option value="Article">Article</option>
-                      <option value="Video">Video</option>
-                      <option value="Image">Image</option>
+                      <option value="Media">Media</option>
                       <option value="Audio">Audio</option>
+                      <option value="Video">Video</option>
+                      <option value="Trailer">Trailer</option>
+                      <option value="Image">Image</option>
+                      <option value="Wiki / Review">Wiki / Review</option>
                     </select>
                     <ChevronsUpDown size={14} className="absolute right-3 top-3 text-stone-500 pointer-events-none" />
                   </div>
@@ -1121,7 +1056,7 @@ const ManageContentPage = ({ onOpenArticle }) => {
                 {/* Genre / Tags */}
                 <div>
                   <label className="text-xs font-bold text-stone-800 block mb-1.5">
-                    Genre / Tags <span className="text-red-500">*</span>
+                    Genre / Tags
                   </label>
                   <div className="w-full min-h-[40px] px-2.5 py-1.5 rounded-xl border border-stone-200 bg-[#FAF9F5] flex flex-wrap items-center gap-1.5 focus-within:border-[#FF5F1F] shadow-2xs">
                     {formData.tags.map((tag, idx) => (
@@ -1151,45 +1086,10 @@ const ManageContentPage = ({ onOpenArticle }) => {
                 </div>
               </div>
 
-              {/* Row 3: Release Date & Popularity Score */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Release Date */}
-                <div>
-                  <label className="text-xs font-bold text-stone-800 block mb-1.5">
-                    Release Date <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="date"
-                    required
-                    value={formData.releaseDate}
-                    onChange={(e) => setFormData({ ...formData, releaseDate: e.target.value })}
-                    className="w-full text-xs font-medium px-3.5 py-2.5 rounded-xl border border-stone-200 bg-[#FAF9F5] text-stone-900 focus:outline-none focus:border-[#FF5F1F] shadow-2xs"
-                  />
-                </div>
-
-                {/* Popularity Score */}
-                <div>
-                  <label className="text-xs font-bold text-stone-800 block mb-1.5">
-                    Popularity Score <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="number"
-                    step="0.1"
-                    min="0"
-                    max="10"
-                    required
-                    placeholder="8.7"
-                    value={formData.popularityScore}
-                    onChange={(e) => setFormData({ ...formData, popularityScore: e.target.value })}
-                    className="w-full text-xs font-medium px-3.5 py-2.5 rounded-xl border border-stone-200 bg-[#FAF9F5] text-stone-900 focus:outline-none focus:border-[#FF5F1F] shadow-2xs"
-                  />
-                </div>
-              </div>
-
-              {/* Row 4: Description */}
+              {/* Row 3: Description */}
               <div>
                 <label className="text-xs font-bold text-stone-800 block mb-1.5">
-                  Description <span className="text-red-500">*</span>
+                  Description / Subtitle <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   required
@@ -1197,22 +1097,19 @@ const ManageContentPage = ({ onOpenArticle }) => {
                   maxLength={1000}
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  placeholder="A group of explorers discover a mysterious island..."
+                  placeholder="Enter content summary, lore details or description..."
                   className="w-full text-xs font-medium p-3 rounded-xl border border-stone-200 bg-[#FAF9F5] text-stone-900 leading-relaxed focus:outline-none focus:border-[#FF5F1F] shadow-2xs resize-y"
                 />
-                <div className="text-[11px] font-medium text-stone-400 text-right mt-1">
-                  {formData.description.length}/1000
-                </div>
               </div>
 
-              {/* Row 5: Media / Image */}
+              {/* Row 4: Media / Image */}
               <div>
                 <label className="text-xs font-bold text-stone-800 block mb-1.5">
-                  Media / Image <span className="text-red-500">*</span>
+                  Cover Image / Media Asset <span className="text-red-500">*</span>
                 </label>
                 
                 {/* Drag and Drop Zone */}
-                <div className="border-2 border-dashed border-stone-300 bg-[#FAF9F5] rounded-2xl p-6 flex flex-col items-center justify-center text-center space-y-2 relative transition-colors hover:border-stone-400">
+                <div className="border-2 border-dashed border-stone-300 bg-[#FAF9F5] rounded-2xl p-5 flex flex-col items-center justify-center text-center space-y-2 relative transition-colors hover:border-stone-400">
                   <input
                     type="file"
                     ref={fileInputRef}
@@ -1221,61 +1118,49 @@ const ManageContentPage = ({ onOpenArticle }) => {
                     className="hidden"
                   />
 
-                  {/* Icon */}
-                  <div className="w-10 h-10 rounded-full border border-stone-300 bg-white flex items-center justify-center text-stone-700 shadow-2xs">
-                    <Upload size={18} className="stroke-[2.2]" />
+                  <div className="w-9 h-9 rounded-full border border-stone-300 bg-white flex items-center justify-center text-stone-700 shadow-2xs">
+                    <Upload size={16} className="stroke-[2.2]" />
                   </div>
 
-                  {/* Instruction text */}
                   <div>
                     <p className="text-xs font-bold text-stone-800">
-                      Drag & drop file here
+                      Drag &amp; drop media file here
                     </p>
-                    <p className="text-[11px] font-medium text-stone-500">
-                      or click to browse
-                    </p>
-                    <p className="text-[10px] font-medium text-stone-400 mt-0.5">
+                    <p className="text-[10px] font-medium text-stone-500">
                       (JPG, PNG, MP4, MP3)
                     </p>
                   </div>
 
-                  {/* Browse files yellow button */}
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="bg-[#FFCC00] hover:bg-[#F2C200] text-black font-black text-[11px] uppercase tracking-wider px-4 py-2 rounded-xl shadow-2xs flex items-center gap-1.5 cursor-pointer transition-transform active:scale-95 mt-1"
+                    className="bg-[#FFCC00] hover:bg-[#F2C200] text-black font-black text-[11px] uppercase tracking-wider px-4 py-1.5 rounded-xl shadow-2xs flex items-center gap-1.5 cursor-pointer transition-transform active:scale-95"
                   >
-                    <Folder size={14} className="fill-black" />
+                    <Folder size={13} className="fill-black" />
                     <span>BROWSE FILES</span>
                   </button>
                 </div>
               </div>
 
-              {/* Row 6: Status */}
+              {/* Row 5: Status */}
               <div>
                 <label className="text-xs font-bold text-stone-800 block mb-1.5">
                   Status <span className="text-red-500">*</span>
                 </label>
 
-                {/* Pill Switcher */}
                 <div className="bg-[#EAE6DE] p-1 inline-flex items-center rounded-full border border-stone-200/60 shadow-2xs">
-                  {/* Published Pill */}
                   <button
                     type="button"
                     onClick={() => setFormData({ ...formData, status: "Published" })}
-                    className={`px-5 py-1.5 rounded-full text-xs font-extrabold flex items-center gap-3 transition-all cursor-pointer ${
+                    className={`px-5 py-1.5 rounded-full text-xs font-extrabold flex items-center gap-2 transition-all cursor-pointer ${
                       formData.status === "Published"
                         ? "bg-[#0B6636] text-white shadow-xs"
                         : "text-stone-700 hover:text-stone-900"
                     }`}
                   >
                     <span>Published</span>
-                    {formData.status === "Published" && (
-                      <span className="w-2.5 h-2.5 rounded-full bg-white shadow-2xs" />
-                    )}
                   </button>
 
-                  {/* Draft Pill */}
                   <button
                     type="button"
                     onClick={() => setFormData({ ...formData, status: "Draft" })}
@@ -1285,18 +1170,12 @@ const ManageContentPage = ({ onOpenArticle }) => {
                         : "text-stone-700 hover:text-stone-900"
                     }`}
                   >
-                    {formData.status !== "Draft" && (
-                      <span className="w-3 h-3 rounded-full border-2 border-stone-400 inline-block" />
-                    )}
                     <span>Draft</span>
-                    {formData.status === "Draft" && (
-                      <span className="w-2.5 h-2.5 rounded-full bg-white shadow-2xs" />
-                    )}
                   </button>
                 </div>
               </div>
 
-              {/* Footer Divider & Action Buttons */}
+              {/* Footer Buttons */}
               <div className="pt-4 border-t border-stone-200 flex items-center justify-end gap-3">
                 <button
                   type="button"
@@ -1313,7 +1192,7 @@ const ManageContentPage = ({ onOpenArticle }) => {
                   type="submit"
                   className="px-6 py-2.5 bg-[#FFCC00] hover:bg-[#F2C200] text-black font-black text-xs uppercase tracking-wider rounded-xl cursor-pointer shadow-2xs transition-transform active:scale-95"
                 >
-                  SAVE CONTENT
+                  SAVE ITEM
                 </button>
               </div>
 

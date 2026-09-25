@@ -74,7 +74,8 @@ const CategoryPage = ({
   categoryName = "ANIME",
   categoryDesc = "Explore a world of amazing stories, unique characters, and breathtaking animation.",
   onOpenArticle,
-  onOpenAuth
+  onOpenAuth,
+  isLoggedIn = false
 }) => {
   const [selectedGenre, setSelectedGenre] = useState("All");
   const [sortBy, setSortBy] = useState("Latest");
@@ -211,46 +212,48 @@ const CategoryPage = ({
           ))}
         </div>
 
-        {/* 5. SIGN UP CTA BANNER AT BOTTOM */}
-        <div className="mt-12 relative rounded-[20px] overflow-hidden border border-[#EBE6DD] bg-[#FAF8F5] shadow-sm p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-          {/* Background Illustration */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-85">
-            <img
-              src="/src/assets/images/aetheria_wanderer_1790282784893.jpg"
-              alt="Sign Up Background"
-              className="w-full h-full object-cover object-bottom brightness-[0.95]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/90 to-transparent sm:w-2/3" />
-          </div>
-
-          {/* Left Text & Icon */}
-          <div className="relative z-10 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-full bg-white/90 border border-[#EBE6DD] flex items-center justify-center text-[#171717] shrink-0 shadow-sm">
-              <User size={24} className="stroke-[2.2]" />
+        {/* 5. SIGN UP CTA BANNER AT BOTTOM (ONLY FOR GUEST USERS) */}
+        {!isLoggedIn && (
+          <div className="mt-12 relative rounded-[20px] overflow-hidden border border-[#EBE6DD] bg-[#FAF8F5] shadow-sm p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+            {/* Background Illustration */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-85">
+              <img
+                src="/src/assets/images/aetheria_wanderer_1790282784893.jpg"
+                alt="Sign Up Background"
+                className="w-full h-full object-cover object-bottom brightness-[0.95]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/90 to-transparent sm:w-2/3" />
             </div>
 
-            <div>
-              <h2 className="text-lg sm:text-xl font-bold text-[#171717] leading-tight font-baloo">
-                Sign up to unlock bookmarks,
-              </h2>
-              <h2 className="text-lg sm:text-xl font-bold text-[#171717] leading-tight font-baloo">
-                ratings, and more
-              </h2>
+            {/* Left Text & Icon */}
+            <div className="relative z-10 flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-white/90 border border-[#EBE6DD] flex items-center justify-center text-[#171717] shrink-0 shadow-sm">
+                <User size={24} className="stroke-[2.2]" />
+              </div>
+
+              <div>
+                <h2 className="text-lg sm:text-xl font-bold text-[#171717] leading-tight font-baloo">
+                  Sign up to unlock bookmarks,
+                </h2>
+                <h2 className="text-lg sm:text-xl font-bold text-[#171717] leading-tight font-baloo">
+                  ratings, and more
+                </h2>
+              </div>
+            </div>
+
+            {/* Right Action Button */}
+            <div className="relative z-10 w-full sm:w-auto">
+              <button
+                type="button"
+                onClick={() => onOpenAuth && onOpenAuth("register")}
+                className="w-full sm:w-auto bg-[#FF451A] hover:bg-[#E0340A] text-white font-black text-xs uppercase tracking-wider px-8 py-3.5 rounded-xl shadow-md transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2"
+              >
+                <span>Register</span>
+                <span className="text-sm font-bold">&rarr;</span>
+              </button>
             </div>
           </div>
-
-          {/* Right Action Button */}
-          <div className="relative z-10 w-full sm:w-auto">
-            <button
-              type="button"
-              onClick={() => onOpenAuth && onOpenAuth("register")}
-              className="w-full sm:w-auto bg-[#FF451A] hover:bg-[#E0340A] text-white font-black text-xs uppercase tracking-wider px-8 py-3.5 rounded-xl shadow-md transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2"
-            >
-              <span>Register</span>
-              <span className="text-sm font-bold">&rarr;</span>
-            </button>
-          </div>
-        </div>
+        )}
 
       </div>
     </div>
