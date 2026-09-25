@@ -281,28 +281,55 @@ const LeftSidebar = ({
             </button>
           )}
 
-          {/* 11. Profile */}
-          <button
-            type="button"
-            onClick={() => onSelectTab("profile")}
-            className={getTabClass("profile")}
-            title="Profile"
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+          {/* 10. Submit Fan Content */}
+          {isLoggedIn && (
+            <button
+              type="button"
+              onClick={() => onSelectTab("submit-content")}
+              className={getTabClass("submit-content")}
+              title="Submit Content"
             >
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-            <span className="text-[11px] mt-1 font-semibold tracking-tight">Profile</span>
-          </button>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
+              </svg>
+              <span className="text-[10px] mt-1 font-semibold tracking-tight">Submit</span>
+            </button>
+          )}
+
+          {/* 11. Profile */}
+          {isLoggedIn && (
+            <button
+              type="button"
+              onClick={() => onSelectTab("profile")}
+              className={getTabClass("profile")}
+              title="Profile"
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              <span className="text-[11px] mt-1 font-semibold tracking-tight">Profile</span>
+            </button>
+          )}
         </div>
       </aside>
     </div>

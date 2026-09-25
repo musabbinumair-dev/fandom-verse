@@ -13,7 +13,8 @@ import {
   Gamepad2,
   BookOpen,
   X,
-  Check
+  Check,
+  Search
 } from "lucide-react";
 const CHARACTERS_DATA = [
   // ROW 1
@@ -335,7 +336,8 @@ const CHARACTERS_DATA = [
   }
 ];
 const CharactersPage = ({
-  onNavigateHome
+  onNavigateHome,
+  onOpenCharacter
 }) => {
   const [fandomFilters, setFandomFilters] = useState({
     "Star Chasers": false,
@@ -356,7 +358,7 @@ const CharactersPage = ({
   });
   const [bookmarkedIds, setBookmarkedIds] = useState(/* @__PURE__ */ new Set(["char-1"]));
   const [toastMessage, setToastMessage] = useState(null);
-  const [selectedCharacter, setSelectedCharacter] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const toggleFandom = (fandom) => {
     setFandomFilters((prev) => ({
       ...prev,
@@ -408,7 +410,8 @@ const CharactersPage = ({
   const filteredCharacters = CHARACTERS_DATA.filter((char) => {
     const fandomMatch = activeFandoms.length === 0 || activeFandoms.includes(char.fandom);
     const categoryMatch = activeCategories.length === 0 || activeCategories.some((cat) => cat.toUpperCase() === char.category);
-    return fandomMatch && categoryMatch;
+    const searchMatch = !searchQuery.trim() || char.name.toLowerCase().includes(searchQuery.toLowerCase()) || char.bio.toLowerCase().includes(searchQuery.toLowerCase());
+    return fandomMatch && categoryMatch && searchMatch;
   });
   const renderFandomIcon = (iconType) => {
     switch (iconType) {
@@ -433,33 +436,37 @@ const CharactersPage = ({
   };
   return <div className="w-full bg-[#FAF8F5] min-h-full py-6 px-4 sm:px-6 select-none font-sans">
       <div className="max-w-7xl mx-auto space-y-6">
-        {
-    /* 1. BREADCRUMB: Home > Characters */
-  }
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-[#737373] font-medium">
-          <button
-    type="button"
-    onClick={onNavigateHome}
-    className="hover:text-[#171717] transition-colors cursor-pointer"
-  >
-            Home
-          </button>
-          <ChevronRight size={13} className="text-[#A3A3A3] shrink-0" />
-          <span className="text-[#171717] font-semibold">Characters</span>
-        </nav>
 
-        {
-    /* 2. TITLE SECTION (Exact matching Double Avatar Silhouette + Bold Block Heading) */
-  }
-        <div>
-          <div className="flex items-center gap-2.5">
-            <h1 className="text-3xl sm:text-4xl font-black text-[#1C1917] tracking-tight uppercase font-titan">
-              CHARACTERS
-            </h1>
-          </div>
-          <p className="text-xs sm:text-[13px] text-[#737373] font-medium mt-1">
+        {/* PAGE HEADER TITLE */}
+        <div className="pt-2 pb-1">
+          <h1 className="text-2xl sm:text-3.5xl font-black tracking-tight uppercase font-titan text-[#171717]">
+            CHARACTERS
+          </h1>
+          <p className="text-xs sm:text-sm font-semibold text-[#7A6F64] mt-0.5">
             Discover and explore your favorite characters from across all fandoms.
           </p>
+        </div>
+
+        {/* Small Page-specific Search Bar */}
+        <div className="max-w-md w-full relative">
+          <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-[#737373] pointer-events-none">
+            <Search size={14} />
+          </span>
+          <input
+            type="text"
+            placeholder="Search characters..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full text-xs font-bold pl-9 pr-8 py-2 border border-[#E5E7EB] rounded-none bg-white text-[#171717] focus:outline-none focus:border-[#FFA800] transition-colors"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery("")}
+              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-stone-400 hover:text-[#FFA800]"
+            >
+              <X size={14} />
+            </button>
+          )}
         </div>
 
         {
@@ -475,12 +482,12 @@ const CharactersPage = ({
   }
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {
-    /* LEFT 3 COLUMNS: FILTER SIDEBAR */
-  }
-          <aside className="lg:col-span-3 space-y-5 bg-transparent">
+            /* LEFT 3 COLUMNS: FILTER SIDEBAR */
+          }
+          <aside className="lg:col-span-3 space-y-5 bg-transparent lg:sticky lg:top-24">
             {
-    /* Filter by Fandom */
-  }
+              /* Filter by Fandom */
+            }
             <div className="space-y-2.5">
               <div className="flex items-center gap-1.5 text-xs font-bold text-[#171717]">
                 <Sparkles size={14} className="text-[#171717]" />
@@ -489,32 +496,34 @@ const CharactersPage = ({
 
               <div className="space-y-2">
                 {[
-    "Star Chasers",
-    "Neon Knights",
-    "Shadow Realm",
-    "Mystic Legends",
-    "Pixel Warriors"
-  ].map((fandom) => {
-    const isChecked = !!fandomFilters[fandom];
-    return <div
-      key={fandom}
-      onClick={() => toggleFandom(fandom)}
-      className="flex items-center gap-2.5 text-[12px] text-[#404040] hover:text-[#171717] font-medium cursor-pointer"
-    >
+                  "Star Chasers",
+                  "Neon Knights",
+                  "Shadow Realm",
+                  "Mystic Legends",
+                  "Pixel Warriors"
+                ].map((fandom) => {
+                  const isChecked = !!fandomFilters[fandom];
+                  return (
+                    <div
+                      key={fandom}
+                      onClick={() => toggleFandom(fandom)}
+                      className="flex items-center gap-2.5 text-[12px] text-[#404040] hover:text-[#171717] font-medium cursor-pointer"
+                    >
                       <div
-      className={`w-4 h-4 rounded-[4px] flex items-center justify-center transition-all ${isChecked ? "bg-[#FFA800] border border-[#FFA800]" : "bg-white border border-[#D4D4D8] hover:border-[#A1A1AA]"}`}
-    >
+                        className={`w-4 h-4 rounded-none flex items-center justify-center transition-all ${isChecked ? "bg-[#FFA800] border border-[#FFA800]" : "bg-white border border-[#D4D4D8] hover:border-[#A1A1AA]"}`}
+                      >
                         {isChecked && <Check size={11} className="text-white stroke-[3.5]" />}
                       </div>
                       <span>{fandom}</span>
-                    </div>;
-  })}
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
             {
-    /* Filter by Category */
-  }
+              /* Filter by Category */
+            }
             <div className="space-y-2.5 pt-2">
               <div className="flex items-center gap-1.5 text-xs font-bold text-[#171717]">
                 <Filter size={14} className="text-[#171717]" />
@@ -523,41 +532,43 @@ const CharactersPage = ({
 
               <div className="space-y-2">
                 {[
-    "Anime",
-    "Gaming",
-    "Movies",
-    "TV Shows",
-    "K-Pop",
-    "Comics",
-    "Manga",
-    "Cosplay"
-  ].map((cat) => {
-    const isChecked = !!categoryFilters[cat];
-    return <div
-      key={cat}
-      onClick={() => toggleCategory(cat)}
-      className="flex items-center gap-2.5 text-[12px] text-[#404040] hover:text-[#171717] font-medium cursor-pointer"
-    >
+                  "Anime",
+                  "Gaming",
+                  "Movies",
+                  "TV Shows",
+                  "K-Pop",
+                  "Comics",
+                  "Manga",
+                  "Cosplay"
+                ].map((cat) => {
+                  const isChecked = !!categoryFilters[cat];
+                  return (
+                    <div
+                      key={cat}
+                      onClick={() => toggleCategory(cat)}
+                      className="flex items-center gap-2.5 text-[12px] text-[#404040] hover:text-[#171717] font-medium cursor-pointer"
+                    >
                       <div
-      className={`w-4 h-4 rounded-[4px] flex items-center justify-center transition-all ${isChecked ? "bg-[#FFA800] border border-[#FFA800]" : "bg-white border border-[#D4D4D8] hover:border-[#A1A1AA]"}`}
-    >
+                        className={`w-4 h-4 rounded-none flex items-center justify-center transition-all ${isChecked ? "bg-[#FFA800] border border-[#FFA800]" : "bg-white border border-[#D4D4D8] hover:border-[#A1A1AA]"}`}
+                      >
                         {isChecked && <Check size={11} className="text-white stroke-[3.5]" />}
                       </div>
                       <span>{cat}</span>
-                    </div>;
-  })}
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
             {
-    /* Clear filters Button (Exact yellow rounded-xl button) */
-  }
+              /* Clear filters Button (Exact yellow rounded-xl button) */
+            }
             <div className="pt-2">
               <button
-    type="button"
-    onClick={handleClearFilters}
-    className="w-full bg-[#FFA800] hover:bg-[#FFB51A] active:scale-[0.98] text-black font-extrabold text-[12px] py-2 px-3.5 rounded-xl flex items-center justify-center gap-2 shadow-[0_1px_2px_rgba(0,0,0,0.06)] transition-all cursor-pointer"
-  >
+                type="button"
+                onClick={handleClearFilters}
+                className="w-full bg-[#FFA800] hover:bg-[#FFB51A] active:scale-[0.98] text-black font-extrabold text-[12px] py-2 px-3.5 rounded-none flex items-center justify-center gap-2 shadow-[0_1px_2px_rgba(0,0,0,0.06)] transition-all cursor-pointer"
+              >
                 <RotateCcw size={13} className="stroke-[2.5]" />
                 <span>Clear filters</span>
               </button>
@@ -578,215 +589,102 @@ const CharactersPage = ({
             {
     /* 4-Column Grid */
   }
-            {filteredCharacters.length === 0 ? <div className="text-center py-20 bg-white rounded-2xl border border-[#E5E7EB] p-8 shadow-xs">
+            {filteredCharacters.length === 0 ? <div className="text-center py-20 bg-white rounded-none border border-[#E5E7EB] p-8 shadow-xs">
                 <Users size={36} className="mx-auto mb-3 text-stone-400 stroke-1" />
                 <h3 className="text-sm font-bold text-stone-800">No characters match the selected filters</h3>
                 <p className="text-xs text-stone-500 mt-1 max-w-sm mx-auto">
                   Try adjusting your checkboxes or click Clear filters to reset the list.
                 </p>
                 <button
-    type="button"
-    onClick={handleClearFilters}
-    className="mt-4 px-4 py-2 bg-[#FFA800] text-black font-bold text-xs rounded-xl hover:brightness-105 transition cursor-pointer"
-  >
+                  type="button"
+                  onClick={handleClearFilters}
+                  className="mt-4 px-4 py-2 bg-[#FFA800] text-black font-bold text-xs rounded-none hover:brightness-105 transition cursor-pointer"
+                >
                   Clear filters
                 </button>
               </div> : <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
                 {filteredCharacters.map((char) => {
-    const isBookmarked = bookmarkedIds.has(char.id);
-    return <div
-      key={char.id}
-      className="bg-white rounded-[14px] overflow-hidden border border-[#E5E7EB] shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)] transition-all duration-200 flex flex-col justify-between group"
-    >
-                      {
-      /* Top Character Image with Bookmark Button */
-    }
+                  const isBookmarked = bookmarkedIds.has(char.id);
+                  return (
+                    <div
+                      key={char.id}
+                      onClick={() => onOpenCharacter && onOpenCharacter(char)}
+                      className="bg-white rounded-none overflow-hidden border border-[#E5E7EB] shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)] transition-all duration-200 flex flex-col justify-between group cursor-pointer"
+                    >
+                      {/* Top Character Image with Bookmark Button */}
                       <div className="relative aspect-square w-full overflow-hidden bg-[#181A20]">
                         <img
-      src={char.image}
-      alt={char.name}
-      className="w-full h-full object-cover group-hover:scale-104 transition-transform duration-300"
-      loading="lazy"
-    />
+                          src={char.image}
+                          alt={char.name}
+                          className="w-full h-full object-cover group-hover:scale-104 transition-transform duration-300"
+                          loading="lazy"
+                        />
 
-                        {
-      /* Bookmark Button Top Right */
-    }
+                        {/* Bookmark Button Top Right */}
                         <button
-      type="button"
-      onClick={(e) => handleToggleBookmark(e, char.id)}
-      className="absolute top-2.5 right-2.5 w-[26px] h-[26px] rounded-[5px] bg-black/50 hover:bg-black/75 backdrop-blur-[2px] flex items-center justify-center text-white transition-colors cursor-pointer shadow-xs"
-      title={isBookmarked ? "Bookmarked" : "Save bookmark"}
-    >
+                          type="button"
+                          onClick={(e) => handleToggleBookmark(e, char.id)}
+                          className="absolute top-2.5 right-2.5 w-[26px] h-[26px] rounded-none bg-black/50 hover:bg-black/75 backdrop-blur-[2px] flex items-center justify-center text-white transition-colors cursor-pointer shadow-xs"
+                          title={isBookmarked ? "Bookmarked" : "Save bookmark"}
+                        >
                           <Bookmark
-      size={13}
-      className={isBookmarked ? "fill-[#FFA800] text-[#FFA800]" : "text-white stroke-[2]"}
-    />
+                            size={13}
+                            className={isBookmarked ? "fill-[#FFA800] text-[#FFA800]" : "text-white stroke-[2]"}
+                          />
                         </button>
                       </div>
 
-                      {
-      /* Content Section */
-    }
+                      {/* Content Section */}
                       <div className="p-3.5 flex-1 flex flex-col justify-between">
                         <div>
-                          {
-      /* Character Name */
-    }
+                          {/* Character Name */}
                           <h3 className="font-bold text-[15px] text-[#171717] tracking-tight leading-snug truncate">
                             {char.name}
                           </h3>
 
-                          {
-      /* Fandom Row */
-    }
+                          {/* Fandom Row */}
                           <div className="flex items-center gap-1.5 text-[11px] text-[#737373] font-medium mt-1">
                             {renderFandomIcon(char.fandomIcon)}
                             <span className="truncate">{char.fandom}</span>
                           </div>
 
-                          {
-      /* Category Badge */
-    }
+                          {/* Category Badge */}
                           <div className="mt-2 mb-2">
                             <span
-      className={`text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider inline-block ${char.categoryBg}`}
-    >
+                              className={`text-[9px] font-black px-2 py-0.5 rounded-none uppercase tracking-wider inline-block ${char.categoryBg}`}
+                            >
                               {char.category}
                             </span>
                           </div>
 
-                          {
-      /* Bio Description (Exact 3-line clamp) */
-    }
+                          {/* Bio Description (Exact 3-line clamp) */}
                           <p className="text-[11px] text-[#737373] font-normal leading-[1.4] line-clamp-3 min-h-[44px]">
                             {char.bio}
                           </p>
                         </div>
 
-                        {
-      /* View Profile Button (Exact matching dark #181A20 pill) */
-    }
+                        {/* View Profile Button (Exact matching dark #181A20 pill) */}
                         <div className="pt-3">
                           <button
-      type="button"
-      onClick={() => setSelectedCharacter(char)}
-      className="w-full bg-[#181A20] hover:bg-[#252834] active:scale-[0.98] text-white font-bold text-[12px] py-2 px-3 rounded-[8px] flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-    >
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (onOpenCharacter) onOpenCharacter(char);
+                            }}
+                            className="w-full bg-[#181A20] hover:bg-[#252834] active:scale-[0.98] text-white font-bold text-[12px] py-2 px-3 rounded-none flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                          >
                             <Eye size={13} className="stroke-[2.2]" />
                             <span>View profile</span>
                           </button>
                         </div>
                       </div>
-                    </div>;
-  })}
+                    </div>
+                  );
+                })}
               </div>}
           </main>
         </div>
       </div>
-
-      {
-    /* 4. CHARACTER DETAILED PROFILE MODAL */
-  }
-      {selectedCharacter && <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-          <div className="bg-[#181A20] border border-[#2B2F3D] text-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl animate-in zoom-in-95 duration-150">
-            {
-    /* Header with image banner */
-  }
-            <div className="relative aspect-[16/9] w-full overflow-hidden bg-black">
-              <img
-    src={selectedCharacter.image}
-    alt={selectedCharacter.name}
-    className="w-full h-full object-cover brightness-[0.85]"
-  />
-              <button
-    type="button"
-    onClick={() => setSelectedCharacter(null)}
-    className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/70 hover:bg-black text-white flex items-center justify-center transition-colors cursor-pointer"
-  >
-                <X size={16} />
-              </button>
-
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#181A20] via-black/60 to-transparent p-4 flex items-end justify-between">
-                <div>
-                  <h2 className="text-xl sm:text-2xl font-black text-white">{selectedCharacter.name}</h2>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="text-xs text-amber-400 font-bold flex items-center gap-1">
-                      {renderFandomIcon(selectedCharacter.fandomIcon)}
-                      {selectedCharacter.fandom}
-                    </span>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-white/20 text-white uppercase">
-                      {selectedCharacter.category}
-                    </span>
-                  </div>
-                </div>
-
-                <button
-    type="button"
-    onClick={(e) => handleToggleBookmark(e, selectedCharacter.id)}
-    className="w-8 h-8 rounded-lg bg-black/70 border border-white/20 flex items-center justify-center text-white hover:text-[#FFA800] transition-colors cursor-pointer"
-    title="Bookmark character"
-  >
-                  <Bookmark
-    size={15}
-    className={bookmarkedIds.has(selectedCharacter.id) ? "fill-[#FFA800] text-[#FFA800]" : ""}
-  />
-                </button>
-              </div>
-            </div>
-
-            {
-    /* Modal Body */
-  }
-            <div className="p-5 space-y-4 max-h-[380px] overflow-y-auto">
-              {selectedCharacter.role && <div className="bg-[#212530] border border-[#2B3040] rounded-xl p-3">
-                  <span className="text-[11px] text-[#9CA3AF] uppercase font-bold tracking-wider block">
-                    Role & Title
-                  </span>
-                  <span className="text-xs sm:text-sm font-semibold text-white mt-0.5 block">
-                    {selectedCharacter.role}
-                  </span>
-                </div>}
-
-              <div>
-                <h4 className="text-xs font-bold text-[#FFA800] uppercase tracking-wider mb-1">
-                  Background Lore
-                </h4>
-                <p className="text-xs text-[#C5CAD6] leading-relaxed">
-                  {selectedCharacter.lore || selectedCharacter.bio}
-                </p>
-              </div>
-
-              {selectedCharacter.abilities && <div>
-                  <h4 className="text-xs font-bold text-[#FFA800] uppercase tracking-wider mb-1.5">
-                    Signature Abilities
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedCharacter.abilities.map((ability) => <span
-    key={ability}
-    className="text-[11px] font-semibold bg-[#262B38] border border-[#343B4D] text-white px-2.5 py-1 rounded-lg"
-  >
-                        ⚡ {ability}
-                      </span>)}
-                  </div>
-                </div>}
-            </div>
-
-            {
-    /* Footer */
-  }
-            <div className="bg-[#121418] border-t border-[#262A36] px-5 py-3 flex items-center justify-between">
-              <span className="text-[11px] text-[#8E95A5]">Official Fandomverse Canon Archive</span>
-              <button
-    type="button"
-    onClick={() => setSelectedCharacter(null)}
-    className="px-4 py-1.5 bg-[#FFA800] hover:bg-[#FFB51A] text-black font-extrabold text-xs rounded-lg transition-colors cursor-pointer"
-  >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>}
     </div>;
 };
 export {

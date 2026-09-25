@@ -25,7 +25,7 @@ const TopNewsSection = ({ onSelectStory }) => {
   }
       <div
     onClick={() => onSelectStory(TOP_NEWS_HERO)}
-    className="group mb-3.5 bg-[#151517] rounded-lg overflow-hidden border border-[#232326] transition-colors hover:border-[#35353a] cursor-pointer"
+    className="group mb-3.5 bg-[#151517] rounded-none overflow-hidden border border-[#232326] transition-colors hover:border-[#35353a] cursor-pointer"
   >
         {
     /* Real Thumbnail Artwork */
@@ -40,7 +40,7 @@ const TopNewsSection = ({ onSelectStory }) => {
           {
     /* IMDb-style Rating Badge: Black chip with red star and white number in top-left */
   }
-          <div className="absolute top-2.5 left-2.5 bg-[#0B0B0D]/95 border border-[#232326] px-2 py-0.5 rounded text-[11px] font-bold text-[#F5F5F5] flex items-center gap-1 select-none">
+          <div className="absolute top-2.5 left-2.5 bg-[#0B0B0D]/95 border border-[#232326] px-2 py-0.5 rounded-none text-[11px] font-bold text-[#F5F5F5] flex items-center gap-1 select-none">
             <span className="text-[#E1121E]">★</span> 9.2
           </div>
         </div>
@@ -72,9 +72,9 @@ const TopNewsSection = ({ onSelectStory }) => {
   }
           <div className="mt-3.5">
             <button
-    type="button"
-    className="inline-flex items-center px-3.5 py-1.5 rounded bg-[#E1121E] hover:bg-[#c90f1a] text-white text-xs font-semibold tracking-wide transition-colors"
-  >
+              type="button"
+              className="inline-flex items-center px-3.5 py-1.5 rounded-none bg-[#E1121E] hover:bg-[#c90f1a] text-white text-xs font-semibold tracking-wide transition-colors"
+            >
               Read article
             </button>
           </div>
@@ -82,36 +82,36 @@ const TopNewsSection = ({ onSelectStory }) => {
       </div>
 
       {
-    /* Secondary Stories Grid: 2-column with poster artwork and IMDb rating badge */
-  }
+        /* Secondary Stories Grid: 2-column with poster artwork and IMDb rating badge */
+      }
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {TOP_NEWS_GRID.map((story, idx) => {
-    const ratings = ["8.8", "8.5"];
-    const counts = ["34K reading", "22K reading"];
-    const tags = ["Industry", "Hardware"];
-    return <div
-      key={story.id}
-      onClick={() => onSelectStory(story)}
-      className="group bg-[#151517] rounded-lg overflow-hidden border border-[#232326] hover:border-[#35353a] transition-colors cursor-pointer flex flex-col justify-between"
-    >
-              <div>
-                {
-      /* Poster image filling top */
-    }
-                <div className="relative aspect-[16/9] w-full bg-[#0B0B0D] overflow-hidden">
-                  <img
-      src={story.image}
-      alt={story.title}
-      referrerPolicy="no-referrer"
-      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.01]"
-    />
-                  {
-      /* Rating Badge */
-    }
-                  <div className="absolute top-2 left-2 bg-[#0B0B0D]/95 border border-[#232326] px-1.5 py-0.5 rounded text-[10px] font-bold text-[#F5F5F5] flex items-center gap-1 select-none">
-                    <span className="text-[#E1121E]">★</span> {ratings[idx % ratings.length]}
-                  </div>
-                </div>
+          const ratings = ["8.8", "8.5"];
+          const counts = ["34K reading", "22K reading"];
+          const tags = ["Industry", "Hardware"];
+          return <div
+            key={story.id}
+            onClick={() => onSelectStory(story)}
+            className="group bg-[#151517] rounded-none overflow-hidden border border-[#232326] hover:border-[#35353a] transition-colors cursor-pointer flex flex-col justify-between"
+          >
+                    <div>
+                      {
+                        /* Poster image filling top */
+                      }
+                      <div className="relative aspect-[16/9] w-full bg-[#0B0B0D] overflow-hidden">
+                        <img
+                          src={story.image}
+                          alt={story.title}
+                          referrerPolicy="no-referrer"
+                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.01]"
+                        />
+                        {
+                          /* Rating Badge */
+                        }
+                        <div className="absolute top-2 left-2 bg-[#0B0B0D]/95 border border-[#232326] px-1.5 py-0.5 rounded-none text-[10px] font-bold text-[#F5F5F5] flex items-center gap-1 select-none">
+                          <span className="text-[#E1121E]">★</span> {ratings[idx % ratings.length]}
+                        </div>
+                      </div>
 
                 <div className="p-3 sm:p-3.5">
                   <h4 className="text-xs sm:text-sm font-semibold text-[#F5F5F5] group-hover:text-white transition-colors line-clamp-2 leading-snug">

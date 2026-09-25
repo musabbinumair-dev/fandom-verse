@@ -66,19 +66,7 @@ const ContentDetailPage = ({
       </div>
 
       {/* CONTENT LAYER OVER BACKGROUND PICTURE */}
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-4 space-y-7">
-        {/* 1. BREADCRUMBS HEADER ROW */}
-        <div className="text-xs font-medium text-slate-300 flex items-center gap-2 pt-2">
-          <button onClick={onBack} className="hover:text-[#FF3B30] transition-colors cursor-pointer text-slate-200">
-            Home
-          </button>
-          <span className="text-slate-500 font-bold">&gt;</span>
-          <button onClick={onBack} className="hover:text-[#FF3B30] transition-colors cursor-pointer text-slate-200">
-            {category}
-          </button>
-          <span className="text-slate-500 font-bold">&gt;</span>
-          <span className="text-white font-semibold truncate max-w-xs">{title}</span>
-        </div>
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-6 space-y-7">
 
         {/* 2. HERO VIDEO PLAYER SECTION */}
         <div className="relative w-full aspect-video sm:aspect-[21/9] rounded-2xl overflow-hidden bg-black shadow-2xl border border-white/20 group">

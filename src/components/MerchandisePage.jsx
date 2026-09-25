@@ -7,7 +7,8 @@ import {
   Check,
   X,
   Package,
-  Sparkles
+  Sparkles,
+  Search
 } from "lucide-react";
 const CATEGORIES = [
   "All",
@@ -101,6 +102,12 @@ const MerchandisePage = ({
   const [bookmarkedIds, setBookmarkedIds] = useState(/* @__PURE__ */ new Set(["merch-1", "merch-4", "merch-8", "rel-1", "rel-2", "rel-3", "rel-4", "rel-5", "rel-6"]));
   const [toastMessage, setToastMessage] = useState(null);
   const [activeModalItem, setActiveModalItem] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const matchesSearch = (texts) => {
+    if (!searchQuery.trim()) return true;
+    return texts.some(t => t && t.toLowerCase().includes(searchQuery.toLowerCase()));
+  };
   const toggleBookmark = (e, id) => {
     e.stopPropagation();
     setBookmarkedIds((prev) => {
@@ -118,33 +125,37 @@ const MerchandisePage = ({
   };
   return <div className="w-full bg-[#FAF8F5] min-h-full py-6 px-4 sm:px-6 font-sans select-none text-[#171717]">
       <div className="max-w-7xl mx-auto space-y-6">
-        {
-    /* 1. BREADCRUMBS: Home > Merchandise */
-  }
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-[#737373] font-medium">
-          <button
-    type="button"
-    onClick={onNavigateHome}
-    className="hover:text-black transition-colors cursor-pointer"
-  >
-            Home
-          </button>
-          <ChevronRight size={13} className="text-[#A3A3A3] shrink-0" />
-          <span className="text-[#171717] font-semibold">Merchandise</span>
-        </nav>
 
-        {
-    /* 2. TITLE SECTION (Shopping Bag Icon + Heading + Subtitle) */
-  }
-        <div className="pt-0.5">
-          <div className="flex items-center gap-2.5">
-            <h1 className="text-2xl sm:text-[30px] font-black text-[#1C1917] tracking-tight uppercase font-titan leading-none">
-              MERCHANDISE AND UPCOMING RELEASES
-            </h1>
-          </div>
-          <p className="text-xs sm:text-[13px] text-[#737373] font-medium mt-1">
+        {/* PAGE HEADER TITLE */}
+        <div className="pt-2 pb-1">
+          <h1 className="text-2xl sm:text-3.5xl font-black tracking-tight uppercase font-titan text-[#171717]">
+            MERCHANDISE AND UPCOMING RELEASES
+          </h1>
+          <p className="text-xs sm:text-sm font-semibold text-[#7A6F64] mt-0.5">
             Discover exclusive merchandise, limited editions, and upcoming releases from your favorite fandoms.
           </p>
+        </div>
+
+        {/* Small Page-specific Search Bar */}
+        <div className="max-w-md w-full relative">
+          <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-[#737373] pointer-events-none">
+            <Search size={14} className="text-[#737373]" />
+          </span>
+          <input
+            type="text"
+            placeholder="Search merchandise..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full text-xs font-bold pl-9 pr-8 py-2 border border-[#E5E7EB] rounded-none bg-white text-[#171717] focus:outline-none focus:border-[#FFA800] transition-colors"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery("")}
+              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-stone-400 hover:text-[#FFA800]"
+            >
+              <X size={14} />
+            </button>
+          )}
         </div>
 
         {
@@ -837,7 +848,7 @@ const MerchandisePage = ({
     /* Table Rows */
   }
             <div className="divide-y divide-[#F3F4F6]">
-              {UPCOMING_RELEASES.map((item) => <div
+              {UPCOMING_RELEASES.filter(item => !searchQuery.trim() || item.title.toLowerCase().includes(searchQuery.toLowerCase()) || item.subtitle.toLowerCase().includes(searchQuery.toLowerCase())).map((item) => <div
     key={item.id}
     className="grid grid-cols-12 px-4 py-3 items-center hover:bg-stone-50/70 transition-colors"
   >

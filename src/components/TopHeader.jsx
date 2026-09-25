@@ -56,43 +56,8 @@ const TopHeader = ({
         </button>
       </div>
 
-      {/* Center Search Bar */}
-      <div className="flex-1 max-w-xl mx-2 sm:mx-6">
-        <div
-          className={`flex items-center gap-2 px-3 py-1.5 sm:py-2 rounded-xl border transition-colors ${
-            isDark
-              ? `bg-[#242424] ${isFocused ? "border-[#FF5F1F]" : "border-[#333333] hover:border-[#FF5F1F]/60"}`
-              : `bg-white ${isFocused ? "border-[#FF5F1F]" : "border-[#F0E8DD] hover:border-[#D6C9BB]"}`
-          }`}
-        >
-          <Search
-            size={16}
-            className={`shrink-0 transition-colors ${isDark ? "text-stone-400 group-hover:text-[#FF5F1F]" : "text-[#7A6F64]"}`}
-            strokeWidth={2}
-          />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            placeholder="Search"
-            className={`w-full bg-transparent text-sm font-baloo focus:outline-none ${
-              isDark
-                ? "text-white placeholder:text-stone-400"
-                : "text-[#231C14] placeholder:text-[#9C8F82]"
-            }`}
-          />
-          {searchQuery && (
-            <button
-              onClick={() => onSearchChange("")}
-              className={`p-0.5 cursor-pointer ${isDark ? "text-stone-400 hover:text-[#FF5F1F]" : "text-[#7A6F64] hover:text-[#231C14]"}`}
-            >
-              <X size={14} />
-            </button>
-          )}
-        </div>
-      </div>
+      {/* Center Spacer instead of Search Bar */}
+      <div className="flex-1" />
 
       {/* Right controls */}
       <div className="flex items-center gap-2.5 sm:gap-3.5 shrink-0">

@@ -304,7 +304,7 @@ const ManageEventsPage = () => {
           <button
             type="button"
             onClick={handleOpenAddModal}
-            className="bg-[#FFCC00] hover:bg-[#F2C200] text-black font-black text-xs uppercase tracking-wider px-5 py-3 rounded-xl shadow-2xs transition-all active:scale-95 cursor-pointer flex items-center gap-2 shrink-0 self-start sm:self-auto"
+            className="bg-[#FFCC00] hover:bg-[#F2C200] text-black font-black text-xs uppercase tracking-wider px-5 py-3 rounded-none shadow-2xs transition-all active:scale-95 cursor-pointer flex items-center gap-2 shrink-0 self-start sm:self-auto"
           >
             <Plus size={16} className="stroke-[3]" />
             <span>ADD EVENT</span>
@@ -314,8 +314,8 @@ const ManageEventsPage = () => {
         {/* 2. STAT CARDS ROW */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
           {/* Card 1: Total Events */}
-          <div className="bg-white border border-[#EBE6DD] rounded-2xl p-4 shadow-2xs flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#FFF2ED] text-[#FF5F1F] flex items-center justify-center shrink-0">
+          <div className="bg-white border border-[#EBE6DD] rounded-none p-4 shadow-2xs flex items-center gap-3">
+            <div className="w-10 h-10 rounded-none bg-[#FFF2ED] text-[#FF5F1F] flex items-center justify-center shrink-0">
               <Calendar size={20} className="stroke-[2.2]" />
             </div>
             <div>
@@ -325,8 +325,8 @@ const ManageEventsPage = () => {
           </div>
 
           {/* Card 2: Upcoming */}
-          <div className="bg-white border border-[#EBE6DD] rounded-2xl p-4 shadow-2xs flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#DCFCE7] text-[#16A34A] flex items-center justify-center shrink-0">
+          <div className="bg-white border border-[#EBE6DD] rounded-none p-4 shadow-2xs flex items-center gap-3">
+            <div className="w-10 h-10 rounded-none bg-[#DCFCE7] text-[#16A34A] flex items-center justify-center shrink-0">
               <Sparkles size={20} className="stroke-[2.2]" />
             </div>
             <div>
@@ -336,8 +336,8 @@ const ManageEventsPage = () => {
           </div>
 
           {/* Card 3: Ongoing */}
-          <div className="bg-white border border-[#EBE6DD] rounded-2xl p-4 shadow-2xs flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#FEF3C7] text-[#D97706] flex items-center justify-center shrink-0">
+          <div className="bg-white border border-[#EBE6DD] rounded-none p-4 shadow-2xs flex items-center gap-3">
+            <div className="w-10 h-10 rounded-none bg-[#FEF3C7] text-[#D97706] flex items-center justify-center shrink-0">
               <Clock size={20} className="stroke-[2.2]" />
             </div>
             <div>
@@ -347,8 +347,8 @@ const ManageEventsPage = () => {
           </div>
 
           {/* Card 4: Completed */}
-          <div className="bg-white border border-[#EBE6DD] rounded-2xl p-4 shadow-2xs flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#F1F5F9] text-[#64748B] flex items-center justify-center shrink-0">
+          <div className="bg-white border border-[#EBE6DD] rounded-none p-4 shadow-2xs flex items-center gap-3">
+            <div className="w-10 h-10 rounded-none bg-[#F1F5F9] text-[#64748B] flex items-center justify-center shrink-0">
               <Users size={20} className="stroke-[2.2]" />
             </div>
             <div>
@@ -369,7 +369,7 @@ const ManageEventsPage = () => {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full text-xs font-bold px-3.5 py-2.5 rounded-xl border border-[#EDE4D6] bg-white text-[#171717] appearance-none focus:outline-none focus:border-[#FF5F1F] cursor-pointer shadow-2xs pr-8"
+                className="w-full text-xs font-bold px-3.5 py-2.5 rounded-none border border-[#EDE4D6] bg-white text-[#171717] appearance-none focus:outline-none focus:border-[#FF5F1F] cursor-pointer shadow-2xs pr-8"
               >
                 <option value="All">All Categories</option>
                 <option value="Anime">Anime</option>
@@ -392,7 +392,7 @@ const ManageEventsPage = () => {
               placeholder="Search events by title, location, category..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full text-xs font-semibold pl-9 pr-4 py-2.5 rounded-xl border border-[#EDE4D6] bg-white text-[#171717] placeholder:text-[#A09485] focus:outline-none focus:border-[#FF5F1F] shadow-2xs"
+              className="w-full text-xs font-semibold pl-9 pr-4 py-2.5 rounded-none border border-[#EDE4D6] bg-white text-[#171717] placeholder:text-[#A09485] focus:outline-none focus:border-[#FF5F1F] shadow-2xs"
             />
           </div>
 
@@ -405,7 +405,7 @@ const ManageEventsPage = () => {
               <select
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
-                className="w-full text-xs font-bold px-3.5 py-2.5 rounded-xl border border-[#EDE4D6] bg-white text-[#171717] appearance-none focus:outline-none focus:border-[#FF5F1F] cursor-pointer shadow-2xs pr-8"
+                className="w-full text-xs font-bold px-3.5 py-2.5 rounded-none border border-[#EDE4D6] bg-white text-[#171717] appearance-none focus:outline-none focus:border-[#FF5F1F] cursor-pointer shadow-2xs pr-8"
               >
                 <option value="All">All Statuses</option>
                 <option value="Upcoming">Upcoming</option>
@@ -419,7 +419,7 @@ const ManageEventsPage = () => {
         </div>
 
         {/* 4. EVENTS TABLE */}
-        <div className="bg-white border border-[#EBE6DD] rounded-2xl overflow-hidden shadow-2xs">
+        <div className="bg-white border border-[#EBE6DD] rounded-none overflow-hidden shadow-2xs">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse min-w-[850px]">
               <thead>
@@ -447,7 +447,7 @@ const ManageEventsPage = () => {
                     <tr key={evt.id} className="hover:bg-[#FAF8F5] transition-colors group">
                       {/* Cover */}
                       <td className="py-3.5 px-4">
-                        <div className="w-14 h-10 rounded-lg overflow-hidden border border-[#EBE6DD] bg-stone-900 shrink-0">
+                        <div className="w-14 h-10 rounded-none overflow-hidden border border-[#EBE6DD] bg-stone-900 shrink-0">
                           <img
                             src={evt.image}
                             alt={evt.title}
@@ -470,7 +470,7 @@ const ManageEventsPage = () => {
 
                       {/* Category */}
                       <td className="py-3.5 px-4">
-                        <span className={`text-[10px] font-black px-2.5 py-1 rounded-md uppercase tracking-wider inline-block ${evt.categoryBadge}`}>
+                        <span className={`text-[10px] font-black px-2.5 py-1 rounded-none uppercase tracking-wider inline-block ${evt.categoryBadge}`}>
                           {evt.category}
                         </span>
                       </td>
@@ -506,7 +506,7 @@ const ManageEventsPage = () => {
 
                       {/* Status */}
                       <td className="py-3.5 px-4">
-                        <span className={`text-[10px] font-black px-2.5 py-1 rounded-md uppercase tracking-wider inline-block ${evt.statusBadge}`}>
+                        <span className={`text-[10px] font-black px-2.5 py-1 rounded-none uppercase tracking-wider inline-block ${evt.statusBadge}`}>
                           {evt.status}
                         </span>
                       </td>
@@ -517,7 +517,7 @@ const ManageEventsPage = () => {
                           <button
                             type="button"
                             onClick={() => handleOpenEditModal(evt)}
-                            className="p-1.5 rounded-lg border border-[#EDE4D6] bg-white hover:bg-[#F7F2EA] text-[#171717] transition-colors cursor-pointer shadow-2xs"
+                            className="p-1.5 rounded-none border border-[#EDE4D6] bg-white hover:bg-[#F7F2EA] text-[#171717] transition-colors cursor-pointer shadow-2xs"
                             title="Edit Event"
                           >
                             <Pencil size={13} />
@@ -525,7 +525,7 @@ const ManageEventsPage = () => {
                           <button
                             type="button"
                             onClick={() => setDeletingEvent(evt)}
-                            className="p-1.5 rounded-lg border border-[#EDE4D6] bg-white hover:bg-[#FFEBEB] text-[#E11D48] transition-colors cursor-pointer shadow-2xs"
+                            className="p-1.5 rounded-none border border-[#EDE4D6] bg-white hover:bg-[#FFEBEB] text-[#E11D48] transition-colors cursor-pointer shadow-2xs"
                             title="Delete Event"
                           >
                             <Trash2 size={13} />
@@ -552,7 +552,7 @@ const ManageEventsPage = () => {
       {/* ADD / EDIT EVENT MODAL */}
       {isAddModalOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-          <div className="bg-white rounded-2xl border border-stone-200 max-w-2xl w-full shadow-2xl overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200 text-stone-900 font-sans">
+          <div className="bg-white rounded-none border border-stone-200 max-w-2xl w-full shadow-2xl overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200 text-stone-900 font-sans">
             
             {/* Modal Header */}
             <div className="px-6 py-4 border-b border-stone-200 flex items-start justify-between bg-white">
@@ -591,7 +591,7 @@ const ManageEventsPage = () => {
                     placeholder="E.g. Tokyo Anime Con 2025"
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    className="w-full text-xs font-medium px-3.5 py-2.5 rounded-xl border border-stone-200 bg-[#FAF9F5] text-stone-900 focus:outline-none focus:border-[#FF5F1F] shadow-2xs"
+                    className="w-full text-xs font-medium px-3.5 py-2.5 rounded-none border border-stone-200 bg-[#FAF9F5] text-stone-900 focus:outline-none focus:border-[#FF5F1F] shadow-2xs"
                   />
                 </div>
 
@@ -603,7 +603,7 @@ const ManageEventsPage = () => {
                     <select
                       value={formData.category}
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                      className="w-full text-xs font-bold px-3.5 py-2.5 rounded-xl border border-stone-200 bg-[#FAF9F5] text-stone-900 appearance-none focus:outline-none focus:border-[#FF5F1F] cursor-pointer pr-9 shadow-2xs"
+                      className="w-full text-xs font-bold px-3.5 py-2.5 rounded-none border border-stone-200 bg-[#FAF9F5] text-stone-900 appearance-none focus:outline-none focus:border-[#FF5F1F] cursor-pointer pr-9 shadow-2xs"
                     >
                       <option value="Anime">Anime</option>
                       <option value="Gaming">Gaming</option>
@@ -630,7 +630,7 @@ const ManageEventsPage = () => {
                     placeholder="E.g. Jul 18, 2025"
                     value={formData.date}
                     onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                    className="w-full text-xs font-medium px-3.5 py-2.5 rounded-xl border border-stone-200 bg-[#FAF9F5] text-stone-900 focus:outline-none focus:border-[#FF5F1F] shadow-2xs"
+                    className="w-full text-xs font-medium px-3.5 py-2.5 rounded-none border border-stone-200 bg-[#FAF9F5] text-stone-900 focus:outline-none focus:border-[#FF5F1F] shadow-2xs"
                   />
                 </div>
 
@@ -644,7 +644,7 @@ const ManageEventsPage = () => {
                     placeholder="E.g. 10:00 AM - 08:00 PM"
                     value={formData.time}
                     onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                    className="w-full text-xs font-medium px-3.5 py-2.5 rounded-xl border border-stone-200 bg-[#FAF9F5] text-stone-900 focus:outline-none focus:border-[#FF5F1F] shadow-2xs"
+                    className="w-full text-xs font-medium px-3.5 py-2.5 rounded-none border border-stone-200 bg-[#FAF9F5] text-stone-900 focus:outline-none focus:border-[#FF5F1F] shadow-2xs"
                   />
                 </div>
               </div>
@@ -661,7 +661,7 @@ const ManageEventsPage = () => {
                     placeholder="E.g. Tokyo Expo Center or Live Stream URL"
                     value={formData.location}
                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                    className="w-full text-xs font-medium px-3.5 py-2.5 rounded-xl border border-stone-200 bg-[#FAF9F5] text-stone-900 focus:outline-none focus:border-[#FF5F1F] shadow-2xs"
+                    className="w-full text-xs font-medium px-3.5 py-2.5 rounded-none border border-stone-200 bg-[#FAF9F5] text-stone-900 focus:outline-none focus:border-[#FF5F1F] shadow-2xs"
                   />
                 </div>
 
@@ -673,7 +673,7 @@ const ManageEventsPage = () => {
                     <select
                       value={formData.format}
                       onChange={(e) => setFormData({ ...formData, format: e.target.value })}
-                      className="w-full text-xs font-bold px-3.5 py-2.5 rounded-xl border border-stone-200 bg-[#FAF9F5] text-stone-900 appearance-none focus:outline-none focus:border-[#FF5F1F] cursor-pointer pr-9 shadow-2xs"
+                      className="w-full text-xs font-bold px-3.5 py-2.5 rounded-none border border-stone-200 bg-[#FAF9F5] text-stone-900 appearance-none focus:outline-none focus:border-[#FF5F1F] cursor-pointer pr-9 shadow-2xs"
                     >
                       <option value="In-Person Convention">In-Person Convention</option>
                       <option value="Virtual Watch Party">Virtual Watch Party</option>
@@ -697,7 +697,7 @@ const ManageEventsPage = () => {
                   value={formData.subtitle}
                   onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })}
                   placeholder="Enter event details, guest highlights or schedule summary..."
-                  className="w-full text-xs font-medium p-3 rounded-xl border border-stone-200 bg-[#FAF9F5] text-stone-900 leading-relaxed focus:outline-none focus:border-[#FF5F1F] shadow-2xs resize-y"
+                  className="w-full text-xs font-medium p-3 rounded-none border border-stone-200 bg-[#FAF9F5] text-stone-900 leading-relaxed focus:outline-none focus:border-[#FF5F1F] shadow-2xs resize-y"
                 />
               </div>
 
@@ -706,7 +706,7 @@ const ManageEventsPage = () => {
                 <label className="text-xs font-bold text-stone-800 block mb-1.5">
                   Event Cover Image
                 </label>
-                <div className="border-2 border-dashed border-stone-300 bg-[#FAF9F5] rounded-2xl p-4 flex flex-col items-center justify-center text-center space-y-2">
+                <div className="border-2 border-dashed border-stone-300 bg-[#FAF9F5] rounded-none p-4 flex flex-col items-center justify-center text-center space-y-2">
                   <input
                     type="file"
                     ref={fileInputRef}
@@ -717,7 +717,7 @@ const ManageEventsPage = () => {
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="bg-[#FFCC00] hover:bg-[#F2C200] text-black font-black text-[11px] uppercase tracking-wider px-4 py-1.5 rounded-xl shadow-2xs flex items-center gap-1.5 cursor-pointer"
+                    className="bg-[#FFCC00] hover:bg-[#F2C200] text-black font-black text-[11px] uppercase tracking-wider px-4 py-1.5 rounded-none shadow-2xs flex items-center gap-1.5 cursor-pointer"
                   >
                     <Folder size={13} className="fill-black" />
                     <span>BROWSE COVER IMAGE</span>
@@ -736,7 +736,7 @@ const ManageEventsPage = () => {
                       key={st}
                       type="button"
                       onClick={() => setFormData({ ...formData, status: st })}
-                      className={`px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
+                      className={`px-4 py-1.5 rounded-none text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
                         formData.status === st
                           ? "bg-[#171717] text-white shadow-xs"
                           : "bg-stone-100 text-stone-600 hover:bg-stone-200"
@@ -753,14 +753,14 @@ const ManageEventsPage = () => {
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
-                  className="px-6 py-2.5 border border-stone-300 bg-white hover:bg-stone-50 text-stone-900 font-extrabold text-xs uppercase tracking-wider rounded-xl cursor-pointer transition-colors shadow-2xs"
+                  className="px-6 py-2.5 border border-stone-300 bg-white hover:bg-stone-50 text-stone-900 font-extrabold text-xs uppercase tracking-wider rounded-none cursor-pointer transition-colors shadow-2xs"
                 >
                   CANCEL
                 </button>
 
                 <button
                   type="submit"
-                  className="px-6 py-2.5 bg-[#FFCC00] hover:bg-[#F2C200] text-black font-black text-xs uppercase tracking-wider rounded-xl cursor-pointer shadow-2xs transition-transform active:scale-95"
+                  className="px-6 py-2.5 bg-[#FFCC00] hover:bg-[#F2C200] text-black font-black text-xs uppercase tracking-wider rounded-none cursor-pointer shadow-2xs transition-transform active:scale-95"
                 >
                   SAVE EVENT
                 </button>
@@ -774,7 +774,7 @@ const ManageEventsPage = () => {
       {/* CONFIRM DELETE MODAL */}
       {deletingEvent && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl border border-[#EDE4D6] p-6 max-w-sm w-full shadow-2xl space-y-4">
+          <div className="bg-white rounded-none border border-[#EDE4D6] p-6 max-w-sm w-full shadow-2xl space-y-4">
             <h3 className="text-base font-black text-[#171717] font-titan uppercase">
               Confirm Delete
             </h3>
@@ -786,7 +786,7 @@ const ManageEventsPage = () => {
               <button
                 type="button"
                 onClick={() => setDeletingEvent(null)}
-                className="px-4 py-2 border border-[#EDE4D6] text-xs font-bold text-[#7A6F64] hover:bg-stone-50 uppercase rounded-lg cursor-pointer"
+                className="px-4 py-2 border border-[#EDE4D6] text-xs font-bold text-[#7A6F64] hover:bg-stone-50 uppercase rounded-none cursor-pointer"
               >
                 Cancel
               </button>
@@ -794,7 +794,7 @@ const ManageEventsPage = () => {
               <button
                 type="button"
                 onClick={handleDeleteConfirm}
-                className="px-5 py-2 bg-[#E11D48] hover:bg-[#BE123C] text-white font-extrabold text-xs tracking-wider uppercase rounded-lg cursor-pointer shadow-sm"
+                className="px-5 py-2 bg-[#E11D48] hover:bg-[#BE123C] text-white font-extrabold text-xs tracking-wider uppercase rounded-none cursor-pointer shadow-sm"
               >
                 Delete
               </button>

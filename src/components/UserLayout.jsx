@@ -1,7 +1,6 @@
 import React from 'react';
 import { TopHeader } from './TopHeader.jsx';
 import { LeftSidebar } from './LeftSidebar.jsx';
-import { FandomFooter } from './FandomFooter.jsx';
 
 /**
  * UserLayout - Shared Chassis for all User-Panel Pages

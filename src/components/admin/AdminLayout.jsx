@@ -1,6 +1,5 @@
 import { AdminSidebar } from "./AdminSidebar";
 import { AdminTopHeader } from "./AdminTopHeader";
-import { FandomFooter } from "../FandomFooter";
 
 const AdminLayout = ({
   children,
@@ -15,8 +14,12 @@ const AdminLayout = ({
   onOpenLinkModal,
   navTheme = "light"
 }) => {
+  const isDark = navTheme === "dark";
+
   return (
-    <div className="flex flex-col h-screen w-screen overflow-hidden font-baloo select-none bg-[#F8F9FA] text-[#1E293B]">
+    <div className={`flex flex-col h-screen w-screen overflow-hidden font-baloo select-none ${
+      isDark ? "bg-[#121212] text-stone-200" : "bg-[#FFFDF7] text-[#231C14]"
+    }`}>
       {/* 1. TOP NAVBAR / HEADER */}
       <AdminTopHeader
         searchQuery={searchQuery}
@@ -26,7 +29,7 @@ const AdminLayout = ({
         onNavigateHome={() => onSelectTab && onSelectTab("dashboard")}
         onNavigateToUserPanel={onNavigateToUserPanel}
         onLogout={onLogout}
-        theme="light"
+        theme={navTheme}
       />
 
       {/* 2. BODY CONTENT CHASSIS: Left Sidebar + Main Content Area */}
@@ -36,17 +39,16 @@ const AdminLayout = ({
           activeTab={activeTab}
           onSelectTab={onSelectTab}
           onNavigateToUserPanel={onNavigateToUserPanel}
-          theme="light"
+          theme={navTheme}
         />
 
         {/* Main Content Scrollable Viewport */}
-        <main className="flex-1 h-full min-w-0 overflow-y-auto flex flex-col justify-between bg-[#F8F9FA]">
+        <main className={`flex-1 h-full min-w-0 overflow-y-auto flex flex-col justify-between ${
+          isDark ? "bg-[#121212]" : "bg-[#FFFDF7]"
+        }`}>
           <div className="w-full flex-1">
             {children}
           </div>
-
-          {/* Shared Standardized Footer */}
-          <FandomFooter onOpenLinkModal={onOpenLinkModal} />
         </main>
       </div>
     </div>
@@ -54,4 +56,3 @@ const AdminLayout = ({
 };
 
 export { AdminLayout };
-export default AdminLayout;

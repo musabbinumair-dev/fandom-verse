@@ -12,7 +12,8 @@ import {
   Eye,
   Trash2,
   X,
-  Undo2
+  Undo2,
+  Search
 } from "lucide-react";
 const INITIAL_BOOKMARKS = [
   {
@@ -305,6 +306,7 @@ const SavedBookmarksPage = ({
   const [editingItem, setEditingItem] = useState(null);
   const [noteDraft, setNoteDraft] = useState("");
   const [recentlyRemoved, setRecentlyRemoved] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const handleRemoveBookmark = (id) => {
     const itemToRemove = bookmarks.find((b) => b.id === id);
     if (itemToRemove) {
@@ -333,6 +335,8 @@ const SavedBookmarksPage = ({
     setEditingItem(null);
   };
   const filteredBookmarks = bookmarks.filter((item) => {
+    const matchesQuery = !searchQuery.trim() || item.title.toLowerCase().includes(searchQuery.toLowerCase()) || (item.note && item.note.toLowerCase().includes(searchQuery.toLowerCase()));
+    if (!matchesQuery) return false;
     if (activeFilter === "all") return true;
     if (activeFilter === "article") return item.type === "ARTICLE" || item.type === "MANGA";
     if (activeFilter === "character") return item.type === "CHARACTER";
@@ -372,42 +376,38 @@ const SavedBookmarksPage = ({
   };
   return <div className="w-full bg-[#FAF8F5] min-h-full py-6 px-4 sm:px-6 select-none font-sans">
       <div className="max-w-7xl mx-auto space-y-6">
-        {
-    /* 1. BREADCRUMB: Dashboard > Bookmarks */
-  }
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-[#737373] font-medium mb-3">
-          <button
-    type="button"
-    onClick={onNavigateHome}
-    className="hover:text-black transition-colors cursor-pointer"
-  >
-            {parentLabel}
-          </button>
-          <ChevronRight size={13} className="text-[#A3A3A3] shrink-0" />
-          <span className="text-[#171717] font-semibold">Bookmarks</span>
-        </nav>
 
-        {
-    /* 2. TITLE SECTION */
-  }
-        <div className="flex items-center gap-3 mb-1">
-          <div className="text-[#171717]">
-            <Bookmark className="w-8 h-8 sm:w-9 sm:h-9 stroke-[2.4] fill-transparent text-[#171717]" />
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-[#171717] tracking-tight uppercase font-titan">
-            BOOKMARKS
+        {/* PAGE HEADER TITLE */}
+        <div className="pt-2 pb-1">
+          <h1 className="text-2xl sm:text-3.5xl font-black tracking-tight uppercase font-titan text-[#171717]">
+            BOOKMARKS ({filteredBookmarks.length} {filteredBookmarks.length === 1 ? "item" : "items"})
           </h1>
+          <p className="text-xs sm:text-sm font-semibold text-[#7A6F64] mt-0.5">
+            Your saved content, all in one place.
+          </p>
         </div>
 
-        {
-    /* Subtitle with dynamic item count matching image: (24 items) */
-  }
-        <p className="text-xs sm:text-sm text-[#737373] font-medium mb-6">
-          Your saved content, all in one place.{" "}
-          <span className="text-[#525252] font-semibold">
-            ({filteredBookmarks.length} {filteredBookmarks.length === 1 ? "item" : "items"})
+        {/* Small Page-specific Search Bar */}
+        <div className="max-w-md w-full relative mb-6">
+          <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-[#737373] pointer-events-none">
+            <Search size={14} className="text-[#737373]" />
           </span>
-        </p>
+          <input
+            type="text"
+            placeholder="Search bookmarks..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full text-xs font-bold pl-9 pr-8 py-2 border border-[#E5E7EB] rounded-none bg-white text-[#171717] focus:outline-none focus:border-[#FFA800] transition-colors"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery("")}
+              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-stone-400 hover:text-[#FFA800]"
+            >
+              <X size={14} />
+            </button>
+          )}
+        </div>
 
         {
     /* 3. FILTER TABS matching reference tabs */

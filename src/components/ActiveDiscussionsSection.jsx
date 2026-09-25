@@ -38,19 +38,19 @@ const ActiveDiscussionsSection = ({
     return <div
       key={item.id}
       onClick={() => onSelectDiscussion(item)}
-      className="group bg-[#151517] rounded-lg border border-[#232326] hover:border-[#35353a] p-3.5 transition-colors cursor-pointer flex flex-col justify-between"
+      className="group bg-[#151517] rounded-none border border-[#232326] hover:border-[#35353a] p-3.5 transition-colors cursor-pointer flex flex-col justify-between"
     >
               <div>
                 {
-      /* Real Thumbnail with IMDb Rating Badge */
-    }
-                <div className="relative aspect-[16/9] w-full bg-[#0B0B0D] rounded overflow-hidden mb-3">
+                  /* Real Thumbnail with IMDb Rating Badge */
+                }
+                <div className="relative aspect-[16/9] w-full bg-[#0B0B0D] rounded-none overflow-hidden mb-3">
                   <img
-      src={item.thumbnail}
-      alt={item.title}
-      className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-200"
-    />
-                  <div className="absolute top-1.5 left-1.5 bg-[#0B0B0D]/95 border border-[#232326] px-1.5 py-0.5 rounded text-[10px] font-bold text-[#F5F5F5] flex items-center gap-1 select-none">
+                    src={item.thumbnail}
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-200"
+                  />
+                  <div className="absolute top-1.5 left-1.5 bg-[#0B0B0D]/95 border border-[#232326] px-1.5 py-0.5 rounded-none text-[10px] font-bold text-[#F5F5F5] flex items-center gap-1 select-none">
                     <span className="text-[#E1121E]">★</span> {ratings[idx % ratings.length]}
                   </div>
                 </div>

@@ -6,7 +6,6 @@ import { NewReleaseCategories } from "./components/homepage/NewReleaseCategories
 import { Hero } from "./components/homepage/Hero";
 import { FilterBar } from "./components/homepage/FilterBar";
 import { ContentCard } from "./components/homepage/ContentCard";
-import { Footer } from "./components/homepage/Footer";
 import { SignInPromptModal } from "./components/homepage/SignInPromptModal";
 import { DashboardPage } from "./components/DashboardPage";
 import { UserDashboardPage } from "./components/UserDashboardPage";
@@ -22,6 +21,7 @@ import { UtilitiesView } from "./components/UtilitiesView";
 import { ProfilePage } from "./components/ProfilePage";
 import { ExplorePage } from "./components/ExplorePage";
 import { ContentDetailPage } from "./components/ContentDetailPage";
+import { CharacterDetailPage } from "./components/CharacterDetailPage";
 import { CategoryPage } from "./components/CategoryPage";
 import { MultimediaCenterPage } from "./components/MultimediaCenterPage";
 import { CharactersPage } from "./components/CharactersPage";
@@ -94,6 +94,7 @@ function App() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState("login");
   const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
   const [infoModal, setInfoModal] = useState(null);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -185,7 +186,8 @@ function App() {
 
   const handleSelectTab = (tab) => {
     setSelectedItem(null);
-    if (tab === "saved" && !isLoggedIn) {
+    setSelectedCharacter(null);
+    if ((tab === "saved" || tab === "profile") && !isLoggedIn) {
       handleOpenAuth("login");
       return;
     }
@@ -296,7 +298,7 @@ function App() {
           onLogout={handleLogout}
           unreadCount={2}
           onOpenLinkModal={(title, desc) => setInfoModal({ title, desc })}
-          navTheme={selectedItem ? "detail" : "light"}
+          navTheme={selectedItem || selectedCharacter ? "detail" : "light"}
         >
           {selectedItem ? (
             <div className="w-full">
@@ -317,6 +319,15 @@ function App() {
                 onBack={() => setSelectedItem(null)}
                 onOpenArticle={handleOpenItem}
                 isLoggedIn={true}
+              />
+            </div>
+          ) : selectedCharacter ? (
+            <div className="w-full">
+              <CharacterDetailPage
+                character={selectedCharacter}
+                onBack={() => setSelectedCharacter(null)}
+                isLoggedIn={true}
+                onOpenAuth={handleOpenAuth}
               />
             </div>
           ) : (
@@ -378,7 +389,7 @@ function App() {
                 <div className="w-full">
                   <CharactersPage
                     onNavigateHome={() => setActiveTab("home")}
-                    onOpenArticle={handleOpenItem}
+                    onOpenCharacter={(char) => setSelectedCharacter(char)}
                   />
                 </div>
               )}
@@ -622,17 +633,6 @@ function App() {
                         onNavigateSubmit={() => setActiveTab("submit-content")}
                         onNavigateProfile={() => setActiveTab("profile")}
                         onOpenArticle={handleOpenItem}
-                      />
-                    </div>
-                  )}
-
-                  {activeTab === "profile" && (
-                    <div className="w-full">
-                      <ProfilePage
-                        onBackToHome={() => setActiveTab("home")}
-                        onSaveSuccess={() => {
-                          handleOpenAuth("login");
-                        }}
                       />
                     </div>
                   )}

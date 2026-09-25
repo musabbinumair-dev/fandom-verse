@@ -262,32 +262,17 @@ const ExplorePage = ({ onOpenArticle, isLoggedIn = true }) => {
   };
   return <div className="w-full antialiased select-none bg-[#FAF8F5] min-h-screen font-baloo pb-16">
       
-      {
-    /* 1. BREADCRUMBS */
-  }
-      <div className="px-6 py-3.5 text-[11px] font-black tracking-wider text-[#8E8272] flex items-center gap-2 bg-[#FAF8F5] border-b border-[#EBE6DD]">
-        <span className="uppercase">Home</span>
-        <span className="text-stone-300 font-bold">&gt;</span>
-        <span className="text-[#231C14] uppercase">Explore</span>
-      </div>
-
-      {
-    /* 2. HEADER BANNER */
-  }
+      {/* 2. HEADER BANNER */}
       <div className="relative w-full h-[180px] sm:h-[200px] overflow-hidden bg-zinc-950 border-b border-[#F0E8DD]">
         <img
-    src="/src/assets/images/fandom_banner_1790273074334.jpg"
-    alt="Content Explorer Cover"
-    className="absolute inset-0 w-full h-full object-cover brightness-[0.70] opacity-90 contrast-[1.1]"
-  />
-        {
-    /* Dark mask overlay for optimal text contrast */
-  }
+          src="/src/assets/images/fandom_banner_1790273074334.jpg"
+          alt="Content Explorer Cover"
+          className="absolute inset-0 w-full h-full object-cover brightness-[0.70] opacity-90 contrast-[1.1]"
+        />
+        {/* Dark mask overlay for optimal text contrast */}
         <div className="absolute inset-y-0 left-0 w-full bg-gradient-to-r from-black via-black/40 to-transparent" />
 
-        {
-    /* Content Inside Banner */
-  }
+        {/* Content Inside Banner */}
         <div className="absolute inset-0 flex items-center justify-between px-6 sm:px-12 z-10">
           <div className="flex flex-col text-white">
             <h1 className="text-3xl sm:text-4.5xl font-black tracking-wider uppercase font-titan drop-shadow-md text-white">

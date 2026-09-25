@@ -11,7 +11,8 @@ import {
   X,
   Check,
   Users,
-  Tv
+  Tv,
+  Search
 } from "lucide-react";
 const NEARBY_EVENTS = [
   {
@@ -144,6 +145,7 @@ const EventsPage = ({
   const [ticketQuantity, setTicketQuantity] = useState(1);
   const [ticketSuccess, setTicketSuccess] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const handleUseLocation = () => {
     setToastMessage("Location updated to Karachi, Pakistan (GPS accuracy: 12m)");
     setTimeout(() => setToastMessage(null), 3e3);
@@ -155,33 +157,37 @@ const EventsPage = ({
   };
   return <div className="w-full bg-[#FAF8F5] min-h-full py-6 px-4 sm:px-6 font-sans select-none text-[#171717]">
       <div className="max-w-7xl mx-auto space-y-6">
-        {
-    /* 1. BREADCRUMBS: Home > Events */
-  }
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-[#737373] font-medium">
-          <button
-    type="button"
-    onClick={onNavigateHome}
-    className="hover:text-black transition-colors cursor-pointer"
-  >
-            Home
-          </button>
-          <ChevronRight size={13} className="text-[#A3A3A3] shrink-0" />
-          <span className="text-[#171717] font-semibold">Events</span>
-        </nav>
 
-        {
-    /* 2. TITLE SECTION (Calendar Icon + Bold Heading + Subtitle) */
-  }
-        <div className="pt-0.5">
-          <div className="flex items-center gap-2.5">
-            <h1 className="text-2xl sm:text-[32px] font-black text-[#1C1917] tracking-tight uppercase font-titan leading-none">
-              EVENTS
-            </h1>
-          </div>
-          <p className="text-xs sm:text-[13px] text-[#737373] font-medium mt-1">
+        {/* PAGE HEADER TITLE */}
+        <div className="pt-2 pb-1">
+          <h1 className="text-2xl sm:text-3.5xl font-black tracking-tight uppercase font-titan text-[#171717]">
+            EVENTS
+          </h1>
+          <p className="text-xs sm:text-sm font-semibold text-[#7A6F64] mt-0.5">
             Discover fan conventions, cosplay meetups, and screening events near you.
           </p>
+        </div>
+
+        {/* Small Page-specific Search Bar */}
+        <div className="max-w-md w-full relative">
+          <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-[#737373] pointer-events-none">
+            <Search size={14} className="text-[#737373]" />
+          </span>
+          <input
+            type="text"
+            placeholder="Search events..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full text-xs font-bold pl-9 pr-8 py-2 border border-[#E5E7EB] rounded-none bg-white text-[#171717] focus:outline-none focus:border-[#FFA800] transition-colors"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery("")}
+              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-stone-400 hover:text-[#FFA800]"
+            >
+              <X size={14} />
+            </button>
+          )}
         </div>
 
         {
@@ -285,7 +291,7 @@ const EventsPage = ({
             </div>
 
             <div className="space-y-2.5 flex-1 flex flex-col justify-between">
-              {NEARBY_EVENTS.map((event) => <div
+              {NEARBY_EVENTS.filter(event => !searchQuery.trim() || event.title.toLowerCase().includes(searchQuery.toLowerCase()) || event.venue.toLowerCase().includes(searchQuery.toLowerCase())).map((event) => <div
     key={event.id}
     onClick={() => setActivePopupEvent(event)}
     className={`bg-white rounded-[12px] border p-2.5 sm:p-3 flex gap-3 sm:gap-3.5 items-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-all cursor-pointer group ${activePopupEvent?.id === event.id ? "border-[#FFA800] ring-1 ring-[#FFA800]/30" : "border-[#E5E7EB] hover:border-stone-300"}`}
@@ -844,7 +850,7 @@ const EventsPage = ({
             </h3>
 
             <div className="space-y-2.5">
-              {(DATE_EVENTS[selectedDay] || DATE_EVENTS[17]).map((event) => <div
+              {(DATE_EVENTS[selectedDay] || DATE_EVENTS[17]).filter(event => !searchQuery.trim() || event.title.toLowerCase().includes(searchQuery.toLowerCase()) || event.venue.toLowerCase().includes(searchQuery.toLowerCase())).map((event) => <div
     key={event.id}
     className="bg-white rounded-[12px] border border-[#E5E7EB] p-2.5 sm:p-3 flex gap-3 sm:gap-3.5 items-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] hover:border-stone-300 transition-all group"
   >

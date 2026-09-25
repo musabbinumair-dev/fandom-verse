@@ -63,23 +63,23 @@ const WorldsToDiscoverSection = ({
     return <div
       key={wiki.id}
       onClick={() => onSelectWiki(wiki)}
-      className="group relative flex-none w-[240px] sm:w-[260px] rounded-lg overflow-hidden border border-[#232326] bg-[#151517] hover:border-[#35353a] transition-colors cursor-pointer snap-start flex flex-col justify-between"
+      className="group relative flex-none w-[240px] sm:w-[260px] rounded-none overflow-hidden border border-[#232326] bg-[#151517] hover:border-[#35353a] transition-colors cursor-pointer snap-start flex flex-col justify-between"
     >
               <div>
                 {
-      /* Poster Artwork filling most of the card */
-    }
+                  /* Poster Artwork filling most of the card */
+                }
                 <div className="relative aspect-[16/10] w-full bg-[#0B0B0D] overflow-hidden">
                   <img
-      src={wiki.image}
-      alt={wiki.name}
-      referrerPolicy="no-referrer"
-      className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-300"
-    />
+                    src={wiki.image}
+                    alt={wiki.name}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-300"
+                  />
                   {
-      /* Compact IMDb Rating Badge */
-    }
-                  <div className="absolute top-2 left-2 bg-[#0B0B0D]/95 border border-[#232326] px-1.5 py-0.5 rounded text-[10px] font-bold text-[#F5F5F5] flex items-center gap-1 select-none">
+                    /* Compact IMDb Rating Badge */
+                  }
+                  <div className="absolute top-2 left-2 bg-[#0B0B0D]/95 border border-[#232326] px-1.5 py-0.5 rounded-none text-[10px] font-bold text-[#F5F5F5] flex items-center gap-1 select-none">
                     <span className="text-[#E1121E]">★</span> {ratings[idx % ratings.length]}
                   </div>
                 </div>

@@ -94,31 +94,13 @@ const FeedbackPage = ({ onNavigateHome, isLoggedIn = true, onOpenAuth }) => {
   };
   return <div className="w-full bg-[#FAF8F5] min-h-full py-6 px-4 sm:px-6 font-sans select-none text-[#171717]">
       <div className="max-w-7xl mx-auto space-y-6">
-        {
-    /* 1. BREADCRUMBS: Home > Feedback */
-  }
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-[#737373] font-medium">
-          <button
-    type="button"
-    onClick={onNavigateHome}
-    className="hover:text-black transition-colors cursor-pointer"
-  >
-            Home
-          </button>
-          <ChevronRight size={13} className="text-[#A3A3A3] shrink-0" />
-          <span className="text-[#171717] font-semibold">Feedback</span>
-        </nav>
 
-        {
-    /* 2. TITLE SECTION (Speech Bubble with pulse waveform + Heading + Subtitle) */
-  }
-        <div className="pt-0.5">
-          <div className="flex items-center gap-2.5">
-            <h1 className="text-2xl sm:text-[30px] font-black text-[#1C1917] tracking-tight uppercase font-titan leading-none">
-              FEEDBACK
-            </h1>
-          </div>
-          <p className="text-xs sm:text-[13px] text-[#737373] font-medium mt-1">
+        {/* PAGE HEADER TITLE */}
+        <div className="pt-2 pb-1">
+          <h1 className="text-2xl sm:text-3.5xl font-black tracking-tight uppercase font-titan text-[#171717]">
+            FEEDBACK
+          </h1>
+          <p className="text-xs sm:text-sm font-semibold text-[#7A6F64] mt-0.5">
             Have something to share? Send us your feedback and help us make Fandomverse even better.
           </p>
         </div>

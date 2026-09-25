@@ -14,38 +14,41 @@ const NotificationsDrawer = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
   const notifications = [
     { id: 1, title: "Halo Activision Partnership", desc: "Over 420 fans are discussing the new Activision co-development announcement.", time: "15m ago", unread: true },
-    { id: 2, title: "New Badge Unlocked", desc: 'You received the "Wiki Vanguard" badge for contributing edits to Pok\xE9mon Wiki.', time: "2h ago", unread: true },
+    { id: 2, title: "New Badge Unlocked", desc: 'You received the "Wiki Vanguard" badge for contributing edits to Pokémon Wiki.', time: "2h ago", unread: true },
     { id: 3, title: "Trending in Anime", desc: "One Piece Chapter 1130 discussion reached 1,200 active replies.", time: "1d ago", unread: false }
   ];
-  return <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-xs">
-      <div className="w-full max-w-sm bg-[#0A2A33] border-l border-[#123847] text-[#F2F7F5] h-full shadow-2xl p-5 flex flex-col animate-in slide-in-from-right duration-200">
-        <div className="flex items-center justify-between pb-3 border-b border-[#123847]">
+  return <div className="fixed inset-0 z-50 flex justify-end bg-black/50 backdrop-blur-xs select-none">
+      <div className="w-full max-w-sm bg-[#FAF8F5] border-l border-[#EBE6DD] text-[#171717] h-full shadow-2xl p-5 flex flex-col animate-in slide-in-from-right duration-200 font-sans">
+        <div className="flex items-center justify-between pb-3.5 border-b border-[#EBE6DD]">
           <div className="flex items-center gap-2">
-            <Bell size={18} className="text-[#06F284]" />
-            <h3 className="font-unbounded font-bold text-[#F2F7F5] text-sm">Notifications</h3>
+            <Bell size={18} className="text-[#FF5F1F]" />
+            <h3 className="font-titan font-black tracking-tight uppercase text-sm text-[#171717]">Notifications</h3>
           </div>
-          <button onClick={onClose} className="p-1.5 hover:bg-[#021826] text-[#7FA3A8] hover:text-[#F2F7F5] rounded-lg transition-colors cursor-pointer">
+          <button onClick={onClose} className="p-1.5 hover:bg-stone-200/60 text-[#7A6F64] hover:text-[#171717] transition-colors cursor-pointer">
             <X size={18} />
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto py-3 space-y-3">
+        <div className="flex-1 overflow-y-auto py-4 space-y-3">
           {notifications.map((n) => <div
-    key={n.id}
-    className={`p-3 rounded-lg border text-xs transition-colors ${n.unread ? "bg-[#021826] border-[#06F284]/40 text-[#F2F7F5]" : "bg-[#021826]/60 border-[#123847] text-[#7FA3A8]"}`}
-  >
-              <div className="flex items-center justify-between mb-1">
-                <span className="font-semibold text-[#F2F7F5]">{n.title}</span>
-                <span className="text-[10px] text-[#7FA3A8]">{n.time}</span>
+            key={n.id}
+            className={`p-3.5 border text-xs transition-colors ${n.unread ? "bg-white border-[#FF5F1F]/40 shadow-2xs" : "bg-white/60 border-[#EBE6DD]"}`}
+          >
+              <div className="flex items-center justify-between mb-1.5">
+                <div className="flex items-center gap-2">
+                  {n.unread && <span className="w-2 h-2 rounded-full bg-[#FF5F1F] shrink-0" />}
+                  <span className="font-bold text-[#171717]">{n.title}</span>
+                </div>
+                <span className="text-[10px] font-semibold text-[#8E8272]">{n.time}</span>
               </div>
-              <p className="text-[#7FA3A8] leading-relaxed text-[11px]">{n.desc}</p>
+              <p className="text-[#7A6F64] leading-relaxed text-[11px] font-medium">{n.desc}</p>
             </div>)}
         </div>
 
         <button
-    onClick={onClose}
-    className="w-full py-2.5 bg-[#021826] border border-[#123847] hover:border-[#06F284] text-[#F2F7F5] hover:text-[#06F284] font-semibold text-xs rounded-lg transition-colors cursor-pointer"
-  >
+          onClick={onClose}
+          className="w-full py-2.5 bg-white border border-[#EBE6DD] hover:border-[#FF5F1F] text-[#171717] hover:text-[#FF5F1F] font-bold text-xs shadow-2xs transition-colors cursor-pointer"
+        >
           Mark all as read
         </button>
       </div>

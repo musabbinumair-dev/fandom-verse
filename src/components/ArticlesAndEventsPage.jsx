@@ -5,7 +5,8 @@ import {
   Calendar,
   Bookmark,
   Check,
-  X
+  X,
+  Search
 } from "lucide-react";
 const CATEGORIES = [
   "All",
@@ -27,6 +28,12 @@ const ArticlesAndEventsPage = ({
   const [bookmarkedIds, setBookmarkedIds] = useState(/* @__PURE__ */ new Set(["lead", "art-1", "art-2", "art-3"]));
   const [toastMessage, setToastMessage] = useState(null);
   const [activeModalItem, setActiveModalItem] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const matchesSearch = (texts) => {
+    if (!searchQuery.trim()) return true;
+    return texts.some(t => t && t.toLowerCase().includes(searchQuery.toLowerCase()));
+  };
   const toggleBookmark = (e, id) => {
     e.stopPropagation();
     setBookmarkedIds((prev) => {
@@ -64,33 +71,37 @@ const ArticlesAndEventsPage = ({
   };
   return <div className="w-full bg-[#FAF8F5] min-h-full py-6 px-4 sm:px-6 font-sans select-none text-[#171717]">
       <div className="max-w-7xl mx-auto space-y-6">
-        {
-    /* 1. BREADCRUMBS: Home > Articles and Events */
-  }
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-[#737373] font-medium">
-          <button
-    type="button"
-    onClick={onNavigateHome}
-    className="hover:text-black transition-colors cursor-pointer"
-  >
-            Home
-          </button>
-          <ChevronRight size={13} className="text-[#A3A3A3] shrink-0" />
-          <span className="text-[#171717] font-semibold">Articles and Events</span>
-        </nav>
 
-        {
-    /* 2. TITLE SECTION (Folded newspaper icon + bold uppercase heading + subtitle) */
-  }
-        <div className="pt-0.5">
-          <div className="flex items-center gap-2.5">
-            <h1 className="text-2xl sm:text-[30px] font-black text-[#1C1917] tracking-tight uppercase font-titan leading-none">
-              FEATURED ARTICLES AND EVENT HIGHLIGHTS
-            </h1>
-          </div>
-          <p className="text-xs sm:text-[13px] text-[#737373] font-medium mt-1">
+        {/* PAGE HEADER TITLE */}
+        <div className="pt-2 pb-1">
+          <h1 className="text-2xl sm:text-3.5xl font-black tracking-tight uppercase font-titan text-[#171717]">
+            FEATURED ARTICLES AND EVENT HIGHLIGHTS
+          </h1>
+          <p className="text-xs sm:text-sm font-semibold text-[#7A6F64] mt-0.5">
             Stay updated with the latest articles, exclusive stories, and exciting events from across all fandoms.
           </p>
+        </div>
+
+        {/* Small Page-specific Search Bar */}
+        <div className="max-w-md w-full relative">
+          <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-[#737373] pointer-events-none">
+            <Search size={14} className="text-[#737373]" />
+          </span>
+          <input
+            type="text"
+            placeholder="Search articles & events..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full text-xs font-bold pl-9 pr-8 py-2 border border-[#E5E7EB] rounded-none bg-white text-[#171717] focus:outline-none focus:border-[#FFA800] transition-colors"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery("")}
+              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-stone-400 hover:text-[#FFA800]"
+            >
+              <X size={14} />
+            </button>
+          )}
         </div>
 
         {
