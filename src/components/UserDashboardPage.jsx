@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Clock,
   Star,
@@ -17,7 +16,7 @@ export const UserDashboardPage = ({
 }) => {
   // 1. Favorite Fandoms pills mock data (8 categories)
   const favoriteCategories = [
-    { name: "ANIME", image: "/src/assets/images/category_anime_1790259342339.jpg" },
+    { name: "ANIME", image: "/src/assets/images/luffy_avatar_1790269807034.jpg" },
     { name: "GAMING", image: "/src/assets/images/category_gaming_1790259361539.jpg" },
     { name: "MOVIES", image: "/src/assets/images/category_movies_1790259375752.jpg" },
     { name: "TV SHOWS", image: "/src/assets/images/category_tvshows_1790259388971.jpg" },
@@ -155,24 +154,24 @@ export const UserDashboardPage = ({
   ];
 
   return (
-    <div className="w-full bg-[#FFFDF7] min-h-full font-baloo select-none pb-16 text-[#231C14]">
-      {/* 1. TOP GREETING BANNER - 0 TOP/LEFT/RIGHT SPACING */}
-      <div className="relative w-full h-44 sm:h-52 bg-[#171717] overflow-hidden shadow-md">
-        {/* Background collage image */}
+    <div className="w-full bg-[#FAF9F6] min-h-full font-baloo select-none pb-16 text-[#171717]">
+      {/* 1. TOP GREETING BANNER (Top space right and left 0 like other pages banners, sharp square) */}
+      <div className="relative w-full h-44 sm:h-48 md:h-52 overflow-hidden bg-[#121212] border-b border-[#EBE6DD]">
+        {/* Background banner illustration */}
         <img
           src="/src/assets/images/fandom_banner_1790273074334.jpg"
           alt="Fandom Banner"
-          className="w-full h-full object-cover opacity-70"
+          className="absolute inset-0 w-full h-full object-cover opacity-85 object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/70 to-black/30" />
 
-        {/* Content overlay */}
-        <div className="absolute inset-0 max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between">
-          <div className="space-y-1.5 z-10">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black font-titan uppercase text-white tracking-wide">
+        {/* Banner text & CTA button */}
+        <div className="absolute inset-0 max-w-[1400px] mx-auto px-4 sm:px-6 flex items-center justify-between z-10">
+          <div className="space-y-1 max-w-xl">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black font-titan uppercase text-white tracking-wide leading-none">
               HEY, MUSAB!
             </h1>
-            <p className="text-sm sm:text-lg font-bold text-white">
+            <p className="text-sm sm:text-base md:text-lg font-bold text-white pt-1">
               Welcome back to FandomVerse!
             </p>
             <p className="text-xs sm:text-sm font-medium text-stone-300">
@@ -180,48 +179,56 @@ export const UserDashboardPage = ({
             </p>
           </div>
 
-          <div className="z-10 shrink-0">
+          <div className="shrink-0">
             <button
+              type="button"
               onClick={() => onNavigateSubmit && onNavigateSubmit()}
-              className="bg-[#FFCC00] hover:bg-[#E6B800] text-[#171717] font-black text-xs sm:text-sm uppercase tracking-wider px-5 py-3 rounded-xl transition-all shadow-lg flex items-center gap-2 cursor-pointer active:scale-95"
+              className="bg-[#FBBF24] hover:bg-[#F59E0B] text-[#111827] font-black text-xs sm:text-[13px] uppercase tracking-wider px-4 sm:px-5 py-2.5 sm:py-3 rounded-none transition-all shadow-md flex items-center gap-2 cursor-pointer active:scale-95"
             >
               <span>SUBMIT CONTENT</span>
-              <SquarePen size={16} strokeWidth={2.5} />
+              <SquarePen size={15} strokeWidth={2.5} />
             </button>
           </div>
         </div>
       </div>
 
-      {/* 2. MAIN DASHBOARD CONTENT */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-8 space-y-10">
-
-        {/* SECTION 1: YOUR FAVORITE FANDOMS */}
-        <section className="space-y-4">
-          <div className="flex items-center justify-between pb-1">
-            <h2 className="text-xl sm:text-2xl font-black uppercase tracking-wider font-titan text-[#231C14]">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 pt-6 space-y-7">
+        {/* 2. SECTION: YOUR FAVORITE FANDOMS */}
+        <section className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg sm:text-xl font-black uppercase tracking-tight font-titan text-[#111827]">
               YOUR FAVORITE FANDOMS
             </h2>
             <button
+              type="button"
               onClick={() => onNavigateCategory && onNavigateCategory("All")}
-              className="text-xs font-black text-[#FF5F1F] hover:underline uppercase tracking-wider cursor-pointer flex items-center gap-1"
+              className="text-xs font-bold text-[#E11D48] hover:underline uppercase tracking-wider cursor-pointer flex items-center gap-1.5"
             >
               <span>EDIT FAVORITES</span>
-              <Pencil size={13} strokeWidth={2.5} />
+              <Pencil size={12} strokeWidth={2.5} className="text-[#E11D48]" />
             </button>
           </div>
 
-          {/* 8 Categories grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+          {/* 8 Categories sharp square cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 sm:gap-3">
             {favoriteCategories.map((cat) => (
               <button
                 key={cat.name}
+                type="button"
                 onClick={() => onNavigateCategory && onNavigateCategory(cat.name)}
-                className="bg-[#EAE3D9] hover:bg-[#E0D7C9] border border-[#DDD4C5] rounded-xl px-3 py-2 flex items-center gap-2.5 transition-all cursor-pointer shadow-2xs group"
+                className="bg-[#F5EFE6] hover:bg-[#EBE2D5] border border-[#E7DFD3] rounded-none px-2.5 py-1.5 flex items-center gap-2.5 transition-all cursor-pointer shadow-2xs group text-left"
               >
-                <div className="w-7 h-7 rounded-lg overflow-hidden shrink-0 border border-[#C2B7A5]">
-                  <img src={cat.image} alt={cat.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
+                <div className="w-8 h-8 rounded-none overflow-hidden shrink-0 border border-[#DDD4C5] bg-stone-200">
+                  <img
+                    src={cat.image}
+                    alt={cat.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                    onError={(e) => {
+                      e.currentTarget.src = "/src/assets/images/luffy_avatar_1790269807034.jpg";
+                    }}
+                  />
                 </div>
-                <span className="font-black text-xs text-[#231C14] tracking-wide truncate">
+                <span className="font-black text-[11px] text-[#111827] tracking-wider truncate">
                   {cat.name}
                 </span>
               </button>
@@ -229,41 +236,41 @@ export const UserDashboardPage = ({
           </div>
         </section>
 
-        {/* SECTION 2: RECENT ACTIVITY */}
-        <section className="space-y-4">
-          <div className="flex items-center justify-between pb-1">
-            <h2 className="text-xl sm:text-2xl font-black uppercase tracking-wider font-titan text-[#231C14]">
+        {/* 3. SECTION: RECENT ACTIVITY */}
+        <section className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg sm:text-xl font-black uppercase tracking-tight font-titan text-[#111827]">
               RECENT ACTIVITY
             </h2>
           </div>
 
-          {/* 5 Dark cards grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {/* 5 Dark sharp square cards grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
             {recentActivities.map((item) => (
               <div
                 key={item.id}
                 onClick={() => onOpenArticle && onOpenArticle(item)}
-                className="bg-[#2A282A] hover:bg-[#333033] rounded-2xl overflow-hidden shadow-md transition-all cursor-pointer group flex flex-col justify-between"
+                className="bg-[#1F232B] hover:bg-[#262B35] rounded-none p-3 flex flex-col justify-between shadow-sm transition-all cursor-pointer group border border-white/5 text-white"
               >
-                <div className="relative h-36 w-full bg-stone-900 overflow-hidden">
+                <div className="relative h-32 w-full rounded-none overflow-hidden mb-2.5 bg-stone-900 shrink-0">
                   <img
                     src={item.image}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  {/* Category Pill Tag */}
-                  <span className="absolute bottom-2.5 left-2.5 bg-white text-[#171717] text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md shadow-xs">
+                  {/* Category Pill Tag inside image bottom-left */}
+                  <span className="absolute bottom-2 left-2 bg-[#111827]/85 backdrop-blur-xs text-white text-[9.5px] font-black uppercase tracking-wider px-2 py-0.5 rounded-none border border-white/20">
                     {item.category}
                   </span>
                 </div>
 
-                <div className="p-3.5 space-y-3 flex-1 flex flex-col justify-between text-white">
-                  <h3 className="font-extrabold text-xs sm:text-sm leading-snug text-white group-hover:text-[#FFCC00] transition-colors line-clamp-2">
+                <div className="flex-1 flex flex-col justify-between">
+                  <h3 className="font-bold text-xs sm:text-[13px] leading-snug text-white group-hover:text-[#FBBF24] transition-colors line-clamp-2">
                     {item.title}
                   </h3>
 
-                  <div className="flex items-center gap-1.5 text-[11px] text-stone-400 font-semibold pt-1 border-t border-stone-800">
-                    <Clock size={13} strokeWidth={2} />
+                  <div className="flex items-center gap-1.5 text-[11px] text-stone-400 font-medium mt-3">
+                    <Clock size={12} strokeWidth={2} className="text-stone-400 shrink-0" />
                     <span>{item.time}</span>
                   </div>
                 </div>
@@ -272,59 +279,62 @@ export const UserDashboardPage = ({
           </div>
         </section>
 
-        {/* SECTION 3: YOUR BOOKMARKS */}
-        <section className="space-y-4">
-          <div className="flex items-center justify-between pb-1">
-            <h2 className="text-xl sm:text-2xl font-black uppercase tracking-wider font-titan text-[#231C14]">
+        {/* 4. SECTION: YOUR BOOKMARKS */}
+        <section className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg sm:text-xl font-black uppercase tracking-tight font-titan text-[#111827]">
               YOUR BOOKMARKS
             </h2>
             <button
+              type="button"
               onClick={() => onNavigateSaved && onNavigateSaved()}
-              className="text-xs font-black text-[#FF5F1F] hover:underline uppercase tracking-wider cursor-pointer flex items-center gap-0.5"
+              className="text-xs font-bold text-[#E11D48] hover:underline uppercase tracking-wider cursor-pointer flex items-center gap-1"
             >
               <span>SEE ALL</span>
-              <ChevronRight size={15} strokeWidth={3} />
+              <ChevronRight size={14} strokeWidth={2.5} />
             </button>
           </div>
 
-          {/* 5 Dark cards grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {/* 5 Dark sharp square cards grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
             {bookmarkedItems.map((item) => (
               <div
                 key={item.id}
                 onClick={() => onOpenArticle && onOpenArticle(item)}
-                className="bg-[#2A282A] hover:bg-[#333033] rounded-2xl overflow-hidden shadow-md transition-all cursor-pointer group flex flex-col justify-between"
+                className="bg-[#1F232B] hover:bg-[#262B35] rounded-none p-3 flex flex-col justify-between shadow-sm transition-all cursor-pointer group border border-white/5 text-white"
               >
-                <div className="relative h-36 w-full bg-stone-900 overflow-hidden">
+                {/* Thumbnail with Star Rating on top-left */}
+                <div className="relative h-32 w-full rounded-none overflow-hidden mb-2.5 bg-stone-900 shrink-0">
                   <img
                     src={item.image}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   {/* Star Rating Badge */}
-                  <span className="absolute top-2.5 left-2.5 bg-black/75 backdrop-blur-xs text-white text-[11px] font-black px-2 py-0.5 rounded-md flex items-center gap-1 border border-white/20">
-                    <Star size={11} className="fill-[#FFCC00] text-[#FFCC00]" />
+                  <span className="absolute top-2 left-2 bg-black/75 backdrop-blur-xs text-white text-[10px] font-black px-1.5 py-0.5 rounded-none flex items-center gap-1 border border-white/15">
+                    <Star size={10} className="fill-[#FBBF24] text-[#FBBF24]" />
                     <span>{item.rating}</span>
-                  </span>
-
-                  {/* Category Pill Tag */}
-                  <span className="absolute bottom-2.5 left-2.5 bg-white text-[#171717] text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md shadow-xs">
-                    {item.category}
                   </span>
                 </div>
 
-                <div className="p-3.5 space-y-2 flex-1 flex flex-col justify-between text-white">
+                {/* Content body with Category badge BELOW image */}
+                <div className="flex-1 flex flex-col justify-between">
                   <div>
-                    <h3 className="font-extrabold text-xs sm:text-sm leading-snug text-white group-hover:text-[#FFCC00] transition-colors line-clamp-2">
+                    {/* Category white badge */}
+                    <span className="inline-block bg-white text-[#111827] text-[9.5px] font-black uppercase tracking-wider px-2 py-0.5 rounded-none w-fit mb-1.5 shadow-2xs">
+                      {item.category}
+                    </span>
+
+                    <h3 className="font-bold text-xs sm:text-[13px] leading-snug text-white group-hover:text-[#FBBF24] transition-colors line-clamp-1">
                       {item.title}
                     </h3>
-                    <p className="text-[11px] text-stone-400 font-medium line-clamp-2 mt-1 leading-relaxed">
+                    <p className="text-[11px] text-stone-400 font-normal line-clamp-2 mt-1 leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
 
-                  <div className="pt-2">
-                    <span className="text-[11px] font-black uppercase tracking-wider text-white group-hover:text-[#FFCC00] hover:underline">
+                  <div className="pt-3 mt-1 border-t border-white/10">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-stone-300 group-hover:text-white transition-colors">
                       READ MORE
                     </span>
                   </div>
@@ -334,52 +344,54 @@ export const UserDashboardPage = ({
           </div>
         </section>
 
-        {/* SECTION 4: TRENDING ACROSS FANDOMS */}
-        <section className="space-y-4">
-          <div className="flex items-center justify-between pb-1">
-            <h2 className="text-xl sm:text-2xl font-black uppercase tracking-wider font-titan text-[#231C14]">
+        {/* 5. SECTION: TRENDING ACROSS FANDOMS */}
+        <section className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg sm:text-xl font-black uppercase tracking-tight font-titan text-[#111827]">
               TRENDING ACROSS FANDOMS
             </h2>
           </div>
 
-          {/* 5 Dark cards grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {/* 5 Dark sharp square cards grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
             {trendingItems.map((item) => (
               <div
                 key={item.id}
                 onClick={() => onOpenArticle && onOpenArticle(item)}
-                className="bg-[#2A282A] hover:bg-[#333033] rounded-2xl overflow-hidden shadow-md transition-all cursor-pointer group flex flex-col justify-between"
+                className="bg-[#1F232B] hover:bg-[#262B35] rounded-none p-3 flex flex-col justify-between shadow-sm transition-all cursor-pointer group border border-white/5 text-white"
               >
-                <div className="relative h-36 w-full bg-stone-900 overflow-hidden">
+                {/* Thumbnail with Star Rating on top-left */}
+                <div className="relative h-32 w-full rounded-none overflow-hidden mb-2.5 bg-stone-900 shrink-0">
                   <img
                     src={item.image}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   {/* Star Rating Badge */}
-                  <span className="absolute top-2.5 left-2.5 bg-black/75 backdrop-blur-xs text-white text-[11px] font-black px-2 py-0.5 rounded-md flex items-center gap-1 border border-white/20">
-                    <Star size={11} className="fill-[#FFCC00] text-[#FFCC00]" />
+                  <span className="absolute top-2 left-2 bg-black/75 backdrop-blur-xs text-white text-[10px] font-black px-1.5 py-0.5 rounded-none flex items-center gap-1 border border-white/15">
+                    <Star size={10} className="fill-[#FBBF24] text-[#FBBF24]" />
                     <span>{item.rating}</span>
-                  </span>
-
-                  {/* Category Pill Tag */}
-                  <span className="absolute bottom-2.5 left-2.5 bg-white text-[#171717] text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md shadow-xs">
-                    {item.category}
                   </span>
                 </div>
 
-                <div className="p-3.5 space-y-2 flex-1 flex flex-col justify-between text-white">
+                {/* Content body with Category badge BELOW image */}
+                <div className="flex-1 flex flex-col justify-between">
                   <div>
-                    <h3 className="font-extrabold text-xs sm:text-sm leading-snug text-white group-hover:text-[#FFCC00] transition-colors line-clamp-2">
+                    {/* Category white badge */}
+                    <span className="inline-block bg-white text-[#111827] text-[9.5px] font-black uppercase tracking-wider px-2 py-0.5 rounded-none w-fit mb-1.5 shadow-2xs">
+                      {item.category}
+                    </span>
+
+                    <h3 className="font-bold text-xs sm:text-[13px] leading-snug text-white group-hover:text-[#FBBF24] transition-colors line-clamp-1">
                       {item.title}
                     </h3>
-                    <p className="text-[11px] text-stone-400 font-medium line-clamp-2 mt-1 leading-relaxed">
+                    <p className="text-[11px] text-stone-400 font-normal line-clamp-2 mt-1 leading-relaxed">
                       {item.desc}
                     </p>
                   </div>
 
-                  <div className="pt-2">
-                    <span className="text-[11px] font-black uppercase tracking-wider text-white group-hover:text-[#FFCC00] hover:underline">
+                  <div className="pt-3 mt-1 border-t border-white/10">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-stone-300 group-hover:text-white transition-colors">
                       READ MORE
                     </span>
                   </div>

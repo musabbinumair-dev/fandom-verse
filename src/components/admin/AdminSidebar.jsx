@@ -80,6 +80,76 @@ const AdminSidebar = ({
             </svg>
             <span className="text-[10px] mt-1 font-semibold tracking-tight">Content</span>
           </button>
+
+          {/* 3. Manage Users */}
+          <button
+            type="button"
+            onClick={() => onSelectTab && onSelectTab("users")}
+            className={getTabClass("users")}
+            title="Manage Users"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+            <span className="text-[10px] mt-1 font-semibold tracking-tight">Users</span>
+          </button>
+
+          {/* 4. Pending Approvals */}
+          <button
+            type="button"
+            onClick={() => onSelectTab && onSelectTab("approvals")}
+            className={getTabClass("approvals")}
+            title="Pending Approvals"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M9 11l3 3L22 4" />
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+            </svg>
+            <span className="text-[10px] mt-1 font-semibold tracking-tight text-center leading-tight">Approvals</span>
+          </button>
+
+          {/* 5. Feedback */}
+          <button
+            type="button"
+            onClick={() => onSelectTab && onSelectTab("feedback")}
+            className={getTabClass("feedback")}
+            title="Feedback"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+            <span className="text-[10px] mt-1 font-semibold tracking-tight">Feedback</span>
+          </button>
         </div>
 
         {/* Bottom rail item: Return to User Site */}

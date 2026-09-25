@@ -14,7 +14,8 @@ import {
 } from "lucide-react";
 
 const DashboardPage = ({
-  onOpenArticle
+  onOpenArticle,
+  onNavigateTab
 }) => {
   const [activeTab, setActiveTab] = useState("submissions");
   const [themeDark, setThemeToggle] = useState(false);
@@ -197,7 +198,11 @@ const DashboardPage = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           
           {/* Metric 1: ACTIVE USERS */}
-          <div className="bg-white border border-[#EBE6DD] rounded-2xl p-4 sm:p-5 shadow-2xs flex items-center justify-between gap-3">
+          <div
+            onClick={() => onNavigateTab && onNavigateTab("users")}
+            className="bg-white border border-[#EBE6DD] hover:border-[#FF5F1F]/40 rounded-2xl p-4 sm:p-5 shadow-2xs flex items-center justify-between gap-3 cursor-pointer transition-colors group"
+            title="Manage Users"
+          >
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-xl bg-[#FFEBE5] text-[#FF5F1F] flex items-center justify-center shrink-0">

@@ -11,6 +11,9 @@ import { SignInPromptModal } from "./components/homepage/SignInPromptModal";
 import { DashboardPage } from "./components/DashboardPage";
 import { UserDashboardPage } from "./components/UserDashboardPage";
 import { ManageContentPage } from "./components/ManageContentPage";
+import { ManageUsersPage } from "./components/admin/ManageUsersPage";
+import { PendingApprovalsPage } from "./components/admin/PendingApprovalsPage";
+import { ManageFeedbackPage } from "./components/admin/ManageFeedbackPage";
 import { AdminLayout } from "./components/admin/AdminLayout";
 import { AdminSectionPlaceholder } from "./components/admin/AdminSectionPlaceholder";
 import { SavedBookmarksPage } from "./components/SavedBookmarksPage";
@@ -54,7 +57,7 @@ function App() {
     if (path.includes("/admin/events")) return "events";
     if (path.includes("/admin/users")) return "users";
     if (path.includes("/admin/feedback")) return "feedback";
-    if (path.includes("/admin/submissions")) return "submissions";
+    if (path.includes("/admin/approvals") || path.includes("/admin/pending-approvals") || path.includes("/admin/submissions")) return "approvals";
     if (path.includes("/admin/chatbot-faqs")) return "chatbot-faqs";
     if (path.includes("/admin/settings")) return "settings";
     return "dashboard";
@@ -220,7 +223,7 @@ function App() {
   if (panelMode === "admin") {
     return (
       <AdminLayout
-        activeTab={adminTab === "content" ? "content" : "dashboard"}
+        activeTab={adminTab}
         onSelectTab={handleAdminSelectTab}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -232,8 +235,17 @@ function App() {
       >
         {adminTab === "content" ? (
           <ManageContentPage onOpenArticle={handleOpenItem} />
+        ) : adminTab === "users" ? (
+          <ManageUsersPage />
+        ) : adminTab === "feedback" ? (
+          <ManageFeedbackPage />
+        ) : adminTab === "approvals" || adminTab === "pending-approvals" || adminTab === "submissions" ? (
+          <PendingApprovalsPage />
         ) : (
-          <DashboardPage onOpenArticle={handleOpenItem} />
+          <DashboardPage
+            onOpenArticle={handleOpenItem}
+            onNavigateTab={handleAdminSelectTab}
+          />
         )}
       </AdminLayout>
     );
@@ -301,6 +313,23 @@ function App() {
               {activeTab === "home" && (
                 <div className="w-full">
                   <ExplorePage
+                    onOpenArticle={handleOpenItem}
+                  />
+                </div>
+              )}
+
+              {/* VIEW 1B: USER DASHBOARD PAGE (REGISTERED USER PANEL) */}
+              {activeTab === "dashboard" && (
+                <div className="w-full">
+                  <UserDashboardPage
+                    onNavigateHome={() => setActiveTab("home")}
+                    onNavigateCategory={(cat) => {
+                      setSelectedCategory(cat);
+                      setActiveTab("category");
+                    }}
+                    onNavigateSaved={() => setActiveTab("saved")}
+                    onNavigateSubmit={() => setActiveTab("submit-content")}
+                    onNavigateProfile={() => setActiveTab("profile")}
                     onOpenArticle={handleOpenItem}
                   />
                 </div>
